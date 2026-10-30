@@ -179,6 +179,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
               ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 18, 20, 0),
+                  child: Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      _QuickAction(label: 'Passeport', icon: Icons.qr_code_2, onTap: () {
+                        if (_materials.isNotEmpty) context.push('/passport/${_materials.first['id']}');
+                        else ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Ajoutez d’abord un matériau.')));
+                      }),
+                      _QuickAction(label: 'Analyse IA', icon: Icons.auto_awesome, onTap: () => context.push('/ai-assessment')),
+                      _QuickAction(label: 'Impact CO₂', icon: Icons.eco, onTap: () => context.push('/environment')),
+                      _QuickAction(label: 'Portefeuille', icon: Icons.account_balance_wallet_outlined, onTap: () => context.push('/wallet')),
+                      _QuickAction(label: 'Paiement', icon: Icons.lock_outline, onTap: () => context.push('/payment')),
+                      _QuickAction(label: 'Entreprise', icon: Icons.business_outlined, onTap: () => context.push('/company')),
+                      _QuickAction(label: 'Messages', icon: Icons.chat_bubble_outline, onTap: () => context.push('/messages')),
+                    ],
+                  ),
+                ),
+              ),
               // Section title
               SliverToBoxAdapter(
                 child: Padding(
@@ -399,4 +420,21 @@ class _MaterialCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class _QuickAction extends StatelessWidget {
+  final String label;
+  final IconData icon;
+  final VoidCallback onTap;
+  const _QuickAction({required this.label, required this.icon, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) => ActionChip(
+    avatar: Icon(icon, size: 17, color: AppColors.primary),
+    label: Text(label),
+    onPressed: onTap,
+    backgroundColor: Colors.white,
+    side: const BorderSide(color: AppColors.border),
+    labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+  );
 }
