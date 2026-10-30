@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import '../../../shared/theme/app_theme.dart';
 import '../../../core/api/api_providers.dart';
 
@@ -158,13 +160,45 @@ class _MapDiscoveryScreenState extends ConsumerState<MapDiscoveryScreen> {
   @override
   Widget build(BuildContext context) => _PageFrame(title: 'Carte interactive', child: Column(children: [
     Padding(padding: const EdgeInsets.fromLTRB(16, 12, 16, 10), child: TextField(controller: _search, onChanged: (_) => setState(() {}), decoration: InputDecoration(hintText: 'Rechercher un matériau, une ville…', prefixIcon: const Icon(Icons.search), suffixIcon: IconButton(onPressed: () { _search.clear(); setState(() {}); }, icon: const Icon(Icons.tune))))),
+    const SizedBox(height: 7),
+    if (!_loading && _filtered.every((raw) => raw is! Map || raw['latitude'] == null || raw['longitude'] == null))
+      const Padding(padding: EdgeInsets.symmetric(horizontal: 16), child: Text('Les matériaux sans coordonnées GPS restent visibles dans la liste, mais ne peuvent pas encore apparaître comme repères sur la carte.', style: TextStyle(fontSize: 11, color: AppColors.textSecondary))),
     Expanded(child: Stack(children: [
-      Container(width: double.infinity, decoration: const BoxDecoration(gradient: LinearGradient(colors: [Color(0xFFEAF3EC), Color(0xFFDDEBE2)])), child: CustomPaint(painter: _MapGridPainter(), child: Stack(children: [
-        Positioned(top: 24, left: 18, child: _MapPin(label: 'Zone de recherche', icon: Icons.my_location)),
-        Positioned(top: 105, right: 28, child: _MapPin(label: 'Lomé', icon: Icons.location_on)),
-        Positioned(top: 220, left: 64, child: _MapPin(label: 'Matériaux', icon: Icons.inventory_2)),
-        const Center(child: Icon(Icons.map_outlined, size: 58, color: Color(0x5591B9A0))),
-      ]))),
+      FlutterMap(
+        options: const MapOptions(
+          initialCenter: LatLng(6.1319, 1.2228),
+          initialZoom: 11.5,
+        ),
+        children: [
+          TileLayer(
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            userAgentPackageName: 'com.buildtrace.app',
+          ),
+          MarkerLayer(
+            markers: _filtered.where((raw) {
+              if (raw is! Map) return false;
+              return raw['latitude'] is num && raw['longitude'] is num;
+            }).map((raw) {
+              final item = Map<String, dynamic>.from(raw as Map);
+              return Marker(
+                point: LatLng(
+                  (item['latitude'] as num).toDouble(),
+                  (item['longitude'] as num).toDouble(),
+                ),
+                width: 48,
+                height: 54,
+                child: GestureDetector(
+                  onTap: () => context.push('/materials/${item['id']}'),
+                  child: const Icon(Icons.location_on, color: AppColors.primary, size: 42),
+                ),
+              );
+            }).toList(),
+          ),
+          const RichAttributionWidget(
+            attributions: [TextSourceAttribution('© OpenStreetMap contributors')],
+          ),
+        ],
+      ),
       Align(alignment: Alignment.bottomCenter, child: Container(
         height: 225, width: double.infinity, padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
         decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
