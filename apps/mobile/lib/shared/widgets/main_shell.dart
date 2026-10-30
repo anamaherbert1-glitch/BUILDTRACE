@@ -8,9 +8,9 @@ class MainShell extends StatelessWidget {
 
   int _currentIndex(BuildContext context) {
     final location = GoRouterState.of(context).uri.toString();
-    if (location.startsWith('/search')) return 1;
+    if (location.startsWith('/map') || location.startsWith('/search')) return 1;
     if (location.startsWith('/add')) return 2;
-    if (location.startsWith('/messages')) return 3;
+    if (location.startsWith('/marketplace')) return 3;
     if (location.startsWith('/profile')) return 4;
     return 0; // home
   }
@@ -48,9 +48,9 @@ class MainShell extends StatelessWidget {
                 _NavItem(
                   icon: Icons.search_outlined,
                   activeIcon: Icons.search_rounded,
-                  label: 'Rechercher',
+                  label: 'Carte',
                   isActive: index == 1,
-                  onTap: () => context.go('/search'),
+                  onTap: () => context.go('/map'),
                 ),
                 // Bouton central Ajouter
                 GestureDetector(
@@ -75,9 +75,9 @@ class MainShell extends StatelessWidget {
                 _NavItem(
                   icon: Icons.chat_bubble_outline,
                   activeIcon: Icons.chat_bubble_rounded,
-                  label: 'Messages',
+                  label: 'Marché',
                   isActive: index == 3,
-                  onTap: () => context.go('/messages'),
+                  onTap: () => context.go('/marketplace'),
                 ),
                 _NavItem(
                   icon: Icons.person_outline,
