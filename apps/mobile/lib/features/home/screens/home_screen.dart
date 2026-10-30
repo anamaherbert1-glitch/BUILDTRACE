@@ -66,16 +66,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
                   child: Row(
                     children: [
-                      const Icon(Icons.apartment_rounded, color: AppColors.primary, size: 28),
-                      const SizedBox(width: 8),
-                      const Text(
-                        'BUILDTRACE',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
-                        ),
-                      ),
+                      Container(width: 38, height: 38, decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: BorderRadius.circular(12)), child: const Icon(Icons.apartment_rounded, color: AppColors.primary, size: 24)),
+                      const SizedBox(width: 9),
+                      const Text('BUILDTRACE', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: AppColors.secondary, letterSpacing: -.5)),
                       const Spacer(),
                       IconButton(
                         onPressed: () {},
@@ -92,10 +85,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Bonjour, $firstName 👋',
-                        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                      ),
+                      Text('Bonjour, $firstName 👋', style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w900, color: AppColors.secondary, letterSpacing: -.6)),
                       const SizedBox(height: 4),
                       Text(
                         'Voici ce qui se passe sur vos projets',
@@ -105,37 +95,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                 ),
               ),
-              // Stats
+              // Statistiques réelles disponibles
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: _StatCard(
-                          icon: Icons.apartment,
-                          label: 'Bâtiments',
-                          value: '0',
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _StatCard(
-                          icon: Icons.inventory_2_outlined,
-                          label: 'Matériaux',
-                          value: '${_materials.length}',
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      const Expanded(
-                        child: _StatCard(
-                          icon: Icons.people_outline,
-                          label: 'Contacts',
-                          value: '0',
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: Row(children: [
+                    Expanded(child: _StatCard(icon: Icons.inventory_2_outlined, label: 'Matériaux suivis', value: _loading ? '—' : '${_materials.length}')),
+                    const SizedBox(width: 12),
+                    Expanded(child: _StatCard(icon: Icons.qr_code_2, label: 'Passeports', value: _loading ? '—' : '${_materials.where((m) => m is Map && m['passport'] != null).length}')),
+                  ]),
                 ),
               ),
               // Impact
@@ -148,7 +116,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       gradient: const LinearGradient(
                         colors: [AppColors.primary, AppColors.primaryDark],
                       ),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: [BoxShadow(color: AppColors.primary.withOpacity(.16), blurRadius: 18, offset: const Offset(0, 8))],
                     ),
                     child: Row(
                       children: [
