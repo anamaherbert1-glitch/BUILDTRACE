@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/theme/app_theme.dart';
 import '../../../core/api/api_providers.dart';
+import '../../../shared/widgets/buildtrace_brand.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -80,19 +81,18 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+          padding: const EdgeInsets.fromLTRB(24, 10, 24, 28),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
-                  'Créer un compte',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
+                const Center(child: BuildtraceBrand(iconSize: 46, wordmarkSize: 22)),
+                const SizedBox(height: 24),
+                const Text('Créer votre compte', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800, color: AppColors.secondary)),
                 const SizedBox(height: 8),
                 Text(
-                  'Rejoignez BUILDTRACE et donnez une identité numérique à vos matériaux.',
+                  'Créez votre espace professionnel et commencez à tracer vos matériaux.',
                   style: TextStyle(color: AppColors.textSecondary),
                 ),
                 const SizedBox(height: 24),
