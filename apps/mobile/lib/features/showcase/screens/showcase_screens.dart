@@ -25,51 +25,111 @@ class MarketplaceScreen extends ConsumerStatefulWidget {
   ConsumerState<MarketplaceScreen> createState() => _MarketplaceScreenState();
 }
 class _MarketplaceScreenState extends ConsumerState<MarketplaceScreen> {
+  final _search = TextEditingController();
   List<dynamic> _items = [];
   bool _loading = true;
   String? _error;
-  String _filter = 'Tous';
+  String _category = 'Tous';
+
   @override
   void initState() { super.initState(); _load(); }
+  @override
+  void dispose() { _search.dispose(); super.dispose(); }
+
   Future<void> _load() async {
     setState(() { _loading = true; _error = null; });
     try {
-      final data = await ref.read(materialsRepositoryProvider).list(take: 40);
+      final data = await ref.read(materialsRepositoryProvider).list(take: 60);
       if (mounted) setState(() { _items = data; _loading = false; });
     } catch (e) {
       if (mounted) setState(() { _error = e.toString(); _loading = false; });
     }
   }
+
+  List<dynamic> get _visibleItems {
+    final q = _search.text.trim().toLowerCase();
+    return _items.where((raw) {
+      if (raw is! Map) return false;
+      final item = Map<String, dynamic>.from(raw);
+      final matchesQuery = q.isEmpty || [
+        item['title'], item['category'], item['city'], item['materialType']
+      ].any((v) => v?.toString().toLowerCase().contains(q) ?? false);
+      final matchesCategory = _category == 'Tous' ||
+          item['category']?.toString().toLowerCase() == _category.toLowerCase();
+      return matchesQuery && matchesCategory;
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) => _PageFrame(title: 'Marketplace', child: Column(
     children: [
-      SizedBox(height: 54, child: ListView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 16), children: [
-        for (final f in ['Tous', 'À vendre', 'À donner', 'À réutiliser'])
-          Padding(padding: const EdgeInsets.only(right: 8), child: ChoiceChip(label: Text(f), selected: _filter == f, onSelected: (_) => setState(() => _filter = f))),
+      Padding(padding: const EdgeInsets.fromLTRB(16, 12, 16, 8), child: TextField(
+        controller: _search, onChanged: (_) => setState(() {}),
+        decoration: InputDecoration(hintText: 'Rechercher un matériau…', prefixIcon: const Icon(Icons.search), suffixIcon: IconButton(onPressed: () { _search.clear(); setState(() {}); }, icon: const Icon(Icons.close))),
+      )),
+      SizedBox(height: 48, child: ListView(scrollDirection: Axis.horizontal, padding: const EdgeInsets.symmetric(horizontal: 16), children: [
+        for (final f in ['Tous', ..._items.whereType<Map>().map((e) => e['category']?.toString() ?? '').where((e) => e.isNotEmpty).toSet().take(8)])
+          Padding(padding: const EdgeInsets.only(right: 8), child: ChoiceChip(label: Text(f), selected: _category == f, onSelected: (_) => setState(() => _category = f))),
       ])),
       Expanded(child: _loading ? const Center(child: CircularProgressIndicator()) : _error != null
-        ? Center(child: Column(mainAxisSize: MainAxisSize.min, children: [Text(_error!), TextButton(onPressed: _load, child: const Text('Réessayer'))]))
-        : _items.isEmpty ? const _EmptyState(icon: Icons.storefront_outlined, title: 'Aucun matériau disponible', subtitle: 'Les matériaux publiés apparaîtront ici.')
+        ? _ErrorState(message: _error!, onRetry: _load)
+        : _visibleItems.isEmpty ? const _EmptyState(icon: Icons.storefront_outlined, title: 'Aucun matériau trouvé', subtitle: 'Essayez une autre recherche ou ajoutez un matériau.')
         : RefreshIndicator(onRefresh: _load, child: GridView.builder(
-          padding: const EdgeInsets.all(16), itemCount: _items.length, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: .78),
+          padding: const EdgeInsets.fromLTRB(16, 10, 16, 24), itemCount: _visibleItems.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: .72),
           itemBuilder: (context, i) {
-            final item = Map<String, dynamic>.from(_items[i] as Map);
-            return InkWell(onTap: () => context.push('/materials/${item['id']}'), borderRadius: BorderRadius.circular(16), child: Container(
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.border)),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Expanded(child: Container(width: double.infinity, decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: const BorderRadius.vertical(top: Radius.circular(16))), child: const Icon(Icons.inventory_2_outlined, size: 48, color: AppColors.primary))),
-                Padding(padding: const EdgeInsets.all(10), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(item['title']?.toString() ?? 'Matériau', maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w700)),
-                  const SizedBox(height: 4), Text(item['city']?.toString() ?? 'Localisation non précisée', style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
-                  const SizedBox(height: 6), Text(item['condition']?.toString() ?? 'État non précisé', style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.w600)),
-                ])),
-              ]),
-            ));
+            final item = Map<String, dynamic>.from(_visibleItems[i] as Map);
+            final media = item['media'] is List ? item['media'] as List : const [];
+            final rawUrl = media.isNotEmpty && media.first is Map ? media.first['url']?.toString() ?? '' : '';
+            final imageUrl = rawUrl.isEmpty ? null : rawUrl.startsWith('http') ? rawUrl : 'http://10.0.2.2:3000$rawUrl';
+            return InkWell(
+              onTap: () => context.push('/materials/${item['id']}'),
+              borderRadius: BorderRadius.circular(17),
+              child: Container(
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(17), border: Border.all(color: AppColors.border), boxShadow: [BoxShadow(color: Colors.black.withOpacity(.035), blurRadius: 12, offset: const Offset(0, 4))]),
+                clipBehavior: Clip.antiAlias,
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Expanded(child: Stack(fit: StackFit.expand, children: [
+                    if (imageUrl != null) Image.network(imageUrl, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const _MaterialImagePlaceholder())
+                    else const _MaterialImagePlaceholder(),
+                    Positioned(left: 8, top: 8, child: _StatusPill(status: item['status']?.toString() ?? '')),
+                  ])),
+                  Padding(padding: const EdgeInsets.all(10), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Text(item['title']?.toString() ?? 'Matériau', maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 13)),
+                    const SizedBox(height: 5),
+                    Row(children: [const Icon(Icons.location_on_outlined, size: 13, color: AppColors.textSecondary), const SizedBox(width: 3), Expanded(child: Text(item['city']?.toString() ?? 'Lieu non précisé', maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 11, color: AppColors.textSecondary)))]),
+                    const SizedBox(height: 6),
+                    Text(item['condition']?.toString() ?? 'État non précisé', style: const TextStyle(color: AppColors.primaryDark, fontWeight: FontWeight.w700, fontSize: 11)),
+                  ])),
+                ]),
+              ),
+            );
           },
         )),
       ),
     ],
   ));
+}
+
+class _MaterialImagePlaceholder extends StatelessWidget {
+  const _MaterialImagePlaceholder();
+  @override
+  Widget build(BuildContext context) => Container(color: AppColors.primaryLight, child: const Center(child: Icon(Icons.inventory_2_outlined, size: 42, color: AppColors.primary)));
+}
+class _StatusPill extends StatelessWidget {
+  final String status;
+  const _StatusPill({required this.status});
+  @override
+  Widget build(BuildContext context) {
+    final published = status == 'PUBLISHED';
+    return Container(padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: Colors.white.withOpacity(.94), borderRadius: BorderRadius.circular(20)), child: Text(published ? 'Disponible' : 'Brouillon', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w800, color: published ? AppColors.primaryDark : AppColors.warning)));
+  }
+}
+class _ErrorState extends StatelessWidget {
+  final String message; final VoidCallback onRetry;
+  const _ErrorState({required this.message, required this.onRetry});
+  @override
+  Widget build(BuildContext context) => Center(child: Padding(padding: const EdgeInsets.all(24), child: Column(mainAxisSize: MainAxisSize.min, children: [const Icon(Icons.cloud_off_outlined, size: 42, color: AppColors.textSecondary), const SizedBox(height: 10), const Text('Impossible de charger les données', style: TextStyle(fontWeight: FontWeight.bold)), const SizedBox(height: 6), Text(message, maxLines: 3, overflow: TextOverflow.ellipsis, textAlign: TextAlign.center, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)), TextButton.icon(onPressed: onRetry, icon: const Icon(Icons.refresh), label: const Text('Réessayer'))])));
 }
 
 class MapDiscoveryScreen extends ConsumerStatefulWidget {
@@ -78,35 +138,42 @@ class MapDiscoveryScreen extends ConsumerStatefulWidget {
   ConsumerState<MapDiscoveryScreen> createState() => _MapDiscoveryScreenState();
 }
 class _MapDiscoveryScreenState extends ConsumerState<MapDiscoveryScreen> {
+  final _search = TextEditingController();
   List<dynamic> _items = [];
   bool _loading = true;
   @override
   void initState() { super.initState(); _load(); }
+  @override
+  void dispose() { _search.dispose(); super.dispose(); }
   Future<void> _load() async {
     try {
-      final values = await ref.read(materialsRepositoryProvider).list(take: 20);
+      final values = await ref.read(materialsRepositoryProvider).list(take: 30);
       if (mounted) setState(() { _items = values; _loading = false; });
-    } catch (_) {
-      if (mounted) setState(() => _loading = false);
-    }
+    } catch (_) { if (mounted) setState(() => _loading = false); }
   }
+  List<dynamic> get _filtered => _items.where((v) => v is Map && [
+    v['title'], v['city'], v['category']
+  ].any((x) => x?.toString().toLowerCase().contains(_search.text.toLowerCase()) ?? false)).toList();
+
   @override
-  Widget build(BuildContext context) => _PageFrame(title: 'Carte des matériaux', child: Column(children: [
-    Padding(padding: const EdgeInsets.all(16), child: TextField(decoration: InputDecoration(hintText: 'Rechercher une ville ou un matériau', prefixIcon: const Icon(Icons.search), suffixIcon: IconButton(onPressed: () {}, icon: const Icon(Icons.tune))))),
+  Widget build(BuildContext context) => _PageFrame(title: 'Carte interactive', child: Column(children: [
+    Padding(padding: const EdgeInsets.fromLTRB(16, 12, 16, 10), child: TextField(controller: _search, onChanged: (_) => setState(() {}), decoration: InputDecoration(hintText: 'Rechercher un matériau, une ville…', prefixIcon: const Icon(Icons.search), suffixIcon: IconButton(onPressed: () { _search.clear(); setState(() {}); }, icon: const Icon(Icons.tune))))),
     Expanded(child: Stack(children: [
-      Container(width: double.infinity, color: const Color(0xFFE8F1E9), child: CustomPaint(painter: _MapGridPainter(), child: const Center(child: Icon(Icons.map_outlined, size: 72, color: Color(0xFF91B9A0))))),
-      Positioned(top: 24, left: 24, child: _MapPin(label: 'Matériaux', icon: Icons.inventory_2)),
-      Positioned(top: 110, right: 48, child: _MapPin(label: 'À proximité', icon: Icons.place)),
-      Positioned(bottom: 150, left: 90, child: _MapPin(label: 'Réemploi', icon: Icons.eco)),
+      Container(width: double.infinity, decoration: const BoxDecoration(gradient: LinearGradient(colors: [Color(0xFFEAF3EC), Color(0xFFDDEBE2)])), child: CustomPaint(painter: _MapGridPainter(), child: Stack(children: [
+        Positioned(top: 24, left: 18, child: _MapPin(label: 'Zone de recherche', icon: Icons.my_location)),
+        Positioned(top: 105, right: 28, child: _MapPin(label: 'Lomé', icon: Icons.location_on)),
+        Positioned(top: 220, left: 64, child: _MapPin(label: 'Matériaux', icon: Icons.inventory_2)),
+        const Center(child: Icon(Icons.map_outlined, size: 58, color: Color(0x5591B9A0))),
+      ]))),
       Align(alignment: Alignment.bottomCenter, child: Container(
-        height: 190, width: double.infinity, padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.vertical(top: Radius.circular(22))),
+        height: 225, width: double.infinity, padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+        decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(children: [const Expanded(child: Text('Matériaux disponibles', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16))), Text(_loading ? '…' : '${_items.length} trouvés', style: const TextStyle(color: AppColors.primary))]),
+          Row(children: [const Expanded(child: Text('Matériaux à proximité', style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16, color: AppColors.secondary))), Text(_loading ? '…' : '${_filtered.length} résultats', style: const TextStyle(color: AppColors.primaryDark, fontWeight: FontWeight.w700, fontSize: 12))]),
           const SizedBox(height: 10),
-          Expanded(child: _loading ? const Center(child: CircularProgressIndicator()) : _items.isEmpty ? const Text('Aucun résultat pour le moment.') : ListView.separated(scrollDirection: Axis.horizontal, itemCount: _items.length, separatorBuilder: (_, __) => const SizedBox(width: 10), itemBuilder: (context, i) {
-            final m = Map<String, dynamic>.from(_items[i] as Map);
-            return SizedBox(width: 220, child: ListTile(tileColor: AppColors.background, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), leading: const CircleAvatar(backgroundColor: AppColors.primaryLight, child: Icon(Icons.inventory_2, color: AppColors.primary)), title: Text(m['title']?.toString() ?? 'Matériau', maxLines: 1), subtitle: Text(m['city']?.toString() ?? 'Lieu non précisé'), onTap: () => context.push('/materials/${m['id']}')));
+          Expanded(child: _loading ? const Center(child: CircularProgressIndicator()) : _filtered.isEmpty ? const _EmptyState(icon: Icons.location_searching, title: 'Aucun matériau trouvé', subtitle: 'Les matériaux avec une localisation apparaîtront ici.') : ListView.separated(scrollDirection: Axis.horizontal, itemCount: _filtered.length, separatorBuilder: (_, __) => const SizedBox(width: 10), itemBuilder: (context, i) {
+            final m = Map<String, dynamic>.from(_filtered[i] as Map);
+            return SizedBox(width: 245, child: InkWell(onTap: () => context.push('/materials/${m['id']}'), child: Container(padding: const EdgeInsets.all(12), decoration: BoxDecoration(color: AppColors.background, borderRadius: BorderRadius.circular(14), border: Border.all(color: AppColors.border)), child: Row(children: [const CircleAvatar(backgroundColor: AppColors.primaryLight, child: Icon(Icons.inventory_2, color: AppColors.primary)), const SizedBox(width: 10), Expanded(child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.start, children: [Text(m['title']?.toString() ?? 'Matériau', maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle(fontWeight: FontWeight.w800)), Text(m['city']?.toString() ?? 'Ville non renseignée', style: const TextStyle(fontSize: 11, color: AppColors.textSecondary))]))]))));
           })),
         ]),
       )),
@@ -116,10 +183,10 @@ class _MapDiscoveryScreenState extends ConsumerState<MapDiscoveryScreen> {
 class _MapGridPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final road = Paint()..color = Colors.white..strokeWidth = 9..style = PaintingStyle.stroke;
-    final thin = Paint()..color = const Color(0xFFD0E1D2)..strokeWidth = 1.5;
-    for (var i = 1; i < 7; i++) { final x = size.width * i / 7; canvas.drawLine(Offset(x, 0), Offset(x + 30, size.height), thin); }
-    for (var i = 1; i < 8; i++) { final y = size.height * i / 8; canvas.drawLine(Offset(0, y), Offset(size.width, y + 16), thin); }
+    final road = Paint()..color = Colors.white..strokeWidth = 8..style = PaintingStyle.stroke;
+    final thin = Paint()..color = const Color(0xFFD0E1D2)..strokeWidth = 1.4;
+    for (var i = 1; i < 7; i++) { final x = size.width * i / 7; canvas.drawLine(Offset(x, 0), Offset(x + 28, size.height), thin); }
+    for (var i = 1; i < 8; i++) { final y = size.height * i / 8; canvas.drawLine(Offset(0, y), Offset(size.width, y + 14), thin); }
     final p = Path()..moveTo(0, size.height * .25)..quadraticBezierTo(size.width * .45, size.height * .4, size.width, size.height * .18);
     canvas.drawPath(p, road);
   }
@@ -130,27 +197,34 @@ class _MapPin extends StatelessWidget {
   final String label; final IconData icon;
   const _MapPin({required this.label, required this.icon});
   @override
-  Widget build(BuildContext context) => Column(children: [CircleAvatar(backgroundColor: AppColors.primary, foregroundColor: Colors.white, child: Icon(icon)), Container(margin: const EdgeInsets.only(top: 4), padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)), child: Text(label, style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w600)))]);
+  Widget build(BuildContext context) => Column(children: [CircleAvatar(backgroundColor: AppColors.primary, foregroundColor: Colors.white, child: Icon(icon)), Container(margin: const EdgeInsets.only(top: 4), padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)), child: Text(label, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w700)))]);
 }
 
 class AiAssessmentScreen extends StatelessWidget {
   const AiAssessmentScreen({super.key});
   @override
-  Widget build(BuildContext context) => _PageFrame(title: 'Analyse du matériau', child: ListView(padding: const EdgeInsets.all(20), children: [
-    Container(height: 210, decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: BorderRadius.circular(18)), child: const Icon(Icons.photo_camera_back_outlined, size: 64, color: AppColors.primary)),
-    const SizedBox(height: 18),
-    const Row(children: [Icon(Icons.info_outline, color: AppColors.primary), SizedBox(width: 8), Expanded(child: Text('L’analyse automatique sera activée après connexion du service IA.', style: TextStyle(fontSize: 13)))]),
-    const SizedBox(height: 18),
-    const Text('Aperçu du rapport', style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold)),
-    const SizedBox(height: 12),
-    const _InfoTile(icon: Icons.category_outlined, title: 'Type de matériau', value: 'À déterminer'),
-    const _InfoTile(icon: Icons.straighten, title: 'Dimensions estimées', value: 'À confirmer'),
-    const _InfoTile(icon: Icons.health_and_safety_outlined, title: 'État général', value: 'À vérifier par un professionnel'),
+  Widget build(BuildContext context) => _PageFrame(title: 'Analyse IA', child: ListView(padding: const EdgeInsets.all(18), children: [
+    Container(padding: const EdgeInsets.all(18), decoration: BoxDecoration(color: AppColors.secondary, borderRadius: BorderRadius.circular(20)), child: const Row(children: [CircleAvatar(backgroundColor: Color(0x223FFFFFFF), child: Icon(Icons.auto_awesome, color: Colors.white)), SizedBox(width: 12), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text('Diagnostic intelligent', style: TextStyle(color: Colors.white, fontSize: 17, fontWeight: FontWeight.w800)), SizedBox(height: 4), Text('Préparez les informations pour analyser votre matériau.', style: TextStyle(color: Colors.white70, fontSize: 11))]))])),
     const SizedBox(height: 16),
-    Container(padding: const EdgeInsets.all(14), decoration: BoxDecoration(color: const Color(0xFFFFF7E6), borderRadius: BorderRadius.circular(12)), child: const Text('Important : aucune estimation IA n’est encore calculée. Les informations devront être vérifiées avant la création du passeport.', style: TextStyle(fontSize: 12))),
+    Container(height: 205, decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: BorderRadius.circular(18), border: Border.all(color: AppColors.border)), child: const Column(mainAxisAlignment: MainAxisAlignment.center, children: [Icon(Icons.photo_camera_back_outlined, size: 54, color: AppColors.primary), SizedBox(height: 10), Text('Photo du matériau', style: TextStyle(fontWeight: FontWeight.w800)), SizedBox(height: 4), Text('La photo sera utilisée lorsque le service IA sera connecté.', style: TextStyle(fontSize: 11, color: AppColors.textSecondary))])),
     const SizedBox(height: 18),
-    OutlinedButton.icon(onPressed: () => context.pop(), icon: const Icon(Icons.edit_outlined), label: const Text('Modifier les informations')),
+    const Text('Éléments à analyser', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900, color: AppColors.secondary)),
+    const SizedBox(height: 10),
+    const _AnalysisRow(icon: Icons.category_outlined, title: 'Identification', detail: 'Type et famille du matériau'),
+    const _AnalysisRow(icon: Icons.straighten, title: 'Dimensions', detail: 'Longueur, largeur et hauteur'),
+    const _AnalysisRow(icon: Icons.health_and_safety_outlined, title: 'État général', detail: 'Défauts visibles et réutilisabilité'),
+    const _AnalysisRow(icon: Icons.recycling_outlined, title: 'Recommandation', detail: 'Pistes de réemploi à confirmer'),
+    const SizedBox(height: 14),
+    Container(padding: const EdgeInsets.all(14), decoration: BoxDecoration(color: const Color(0xFFFFF7E6), borderRadius: BorderRadius.circular(14)), child: const Row(crossAxisAlignment: CrossAxisAlignment.start, children: [Icon(Icons.info_outline, color: AppColors.warning), SizedBox(width: 9), Expanded(child: Text('L’analyse automatique n’est pas encore connectée. Aucun score ou diagnostic fictif ne sera affiché.', style: TextStyle(fontSize: 12, height: 1.4)))])),
+    const SizedBox(height: 18),
+    OutlinedButton.icon(onPressed: () => context.pop(), icon: const Icon(Icons.edit_outlined), label: const Text('Retour à la fiche matériau')),
   ]));
+}
+class _AnalysisRow extends StatelessWidget {
+  final IconData icon; final String title; final String detail;
+  const _AnalysisRow({required this.icon, required this.title, required this.detail});
+  @override
+  Widget build(BuildContext context) => Container(margin: const EdgeInsets.only(bottom: 9), padding: const EdgeInsets.all(13), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(13), border: Border.all(color: AppColors.border)), child: Row(children: [Icon(icon, color: AppColors.primary), const SizedBox(width: 12), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(title, style: const TextStyle(fontWeight: FontWeight.w800)), Text(detail, style: const TextStyle(fontSize: 11, color: AppColors.textSecondary))])), const Icon(Icons.schedule, color: AppColors.textSecondary, size: 17)]));
 }
 
 class DigitalPassportScreen extends ConsumerStatefulWidget {
@@ -162,23 +236,54 @@ class DigitalPassportScreen extends ConsumerStatefulWidget {
 class _DigitalPassportScreenState extends ConsumerState<DigitalPassportScreen> {
   Map<String, dynamic>? _material; bool _loading = true; String? _error;
   @override
-  void initState() { super.initState(); ref.read(materialsRepositoryProvider).getOne(widget.materialId).then((v) { if (mounted) setState(() { _material = v; _loading = false; }); }).catchError((e) { if (mounted) setState(() { _error = e.toString(); _loading = false; }); }); }
+  void initState() { super.initState(); _load(); }
+  Future<void> _load() async {
+    try {
+      final v = await ref.read(materialsRepositoryProvider).getOne(widget.materialId);
+      if (mounted) setState(() { _material = v; _loading = false; });
+    } catch (e) { if (mounted) setState(() { _error = e.toString(); _loading = false; }); }
+  }
   @override
-  Widget build(BuildContext context) => _PageFrame(title: 'Passeport numérique', child: _loading ? const Center(child: CircularProgressIndicator()) : _error != null ? Center(child: Text(_error!)) : ListView(padding: const EdgeInsets.all(20), children: [
-    Container(padding: const EdgeInsets.all(18), decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: BorderRadius.circular(16)), child: const Row(children: [Icon(Icons.verified, color: AppColors.primary, size: 28), SizedBox(width: 10), Expanded(child: Text('Fiche matériau enregistrée', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.primaryDark)))])),
-    const SizedBox(height: 16),
-    Container(height: 170, decoration: BoxDecoration(color: AppColors.primaryLight, borderRadius: BorderRadius.circular(16)), child: const Icon(Icons.inventory_2_outlined, size: 64, color: AppColors.primary)),
-    const SizedBox(height: 16),
-    Text(_material?['title']?.toString() ?? 'Matériau', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-    const SizedBox(height: 12),
-    _InfoTile(icon: Icons.tag, title: 'Identifiant', value: _material?['id']?.toString() ?? '—'),
-    _InfoTile(icon: Icons.category_outlined, title: 'Catégorie', value: _material?['category']?.toString() ?? '—'),
-    _InfoTile(icon: Icons.straighten, title: 'Dimensions', value: _material?['dimensions']?.toString() ?? 'Non renseignées'),
-    _InfoTile(icon: Icons.inventory_outlined, title: 'Quantité', value: _material?['quantity']?.toString() ?? '—'),
-    _InfoTile(icon: Icons.location_on_outlined, title: 'Ville', value: _material?['city']?.toString() ?? '—'),
-    const SizedBox(height: 16),
-    Container(padding: const EdgeInsets.all(18), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.border)), child: const Column(children: [Icon(Icons.qr_code_2, size: 86, color: AppColors.secondary), SizedBox(height: 8), Text('QR code dynamique à connecter', style: TextStyle(fontWeight: FontWeight.w600)), Text('Le QR définitif sera généré par le service passeport.', style: TextStyle(fontSize: 11, color: AppColors.textSecondary))])),
-  ]));
+  Widget build(BuildContext context) => _PageFrame(title: 'Passeport numérique', child: _loading ? const Center(child: CircularProgressIndicator()) : _error != null ? _ErrorState(message: _error!, onRetry: _load) : _buildPassport());
+  Widget _buildPassport() {
+    final m = _material!;
+    final passport = m['passport'] is Map ? Map<String, dynamic>.from(m['passport'] as Map) : null;
+    final code = passport?['passportCode']?.toString() ?? 'En attente de publication';
+    final published = m['status'] == 'PUBLISHED';
+    final media = m['media'] is List ? m['media'] as List : const [];
+    final rawUrl = media.isNotEmpty && media.first is Map ? media.first['url']?.toString() ?? '' : '';
+    final imageUrl = rawUrl.isEmpty ? null : rawUrl.startsWith('http') ? rawUrl : 'http://10.0.2.2:3000$rawUrl';
+    return ListView(padding: const EdgeInsets.all(18), children: [
+      Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(color: published ? AppColors.primaryLight : const Color(0xFFFFF7E6), borderRadius: BorderRadius.circular(16)), child: Row(children: [Icon(published ? Icons.verified : Icons.pending_outlined, color: published ? AppColors.primaryDark : AppColors.warning, size: 27), const SizedBox(width: 10), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(published ? 'Matériau publié' : 'Passeport en préparation', style: const TextStyle(fontWeight: FontWeight.w900)), Text(published ? 'Les informations publiques sont consultables.' : 'Publiez le matériau pour activer son passeport.', style: const TextStyle(fontSize: 11, color: AppColors.textSecondary))]))])),
+      const SizedBox(height: 14),
+      ClipRRect(borderRadius: BorderRadius.circular(17), child: SizedBox(height: 180, child: imageUrl == null ? const _MaterialImagePlaceholder() : Image.network(imageUrl, fit: BoxFit.cover, errorBuilder: (_, __, ___) => const _MaterialImagePlaceholder()))),
+      const SizedBox(height: 16),
+      Text(m['title']?.toString() ?? 'Matériau', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: AppColors.secondary)),
+      const SizedBox(height: 5),
+      Text('Code passeport : $code', style: const TextStyle(color: AppColors.primaryDark, fontWeight: FontWeight.w700, fontSize: 12)),
+      const SizedBox(height: 16),
+      const Text('Fiche technique', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900)),
+      const SizedBox(height: 8),
+      _InfoTile(icon: Icons.category_outlined, title: 'Catégorie', value: m['category']?.toString() ?? '—'),
+      _InfoTile(icon: Icons.straighten, title: 'Dimensions', value: m['dimensions']?.toString() ?? 'Non renseignées'),
+      _InfoTile(icon: Icons.inventory_outlined, title: 'Quantité', value: '${m['quantity'] ?? '—'} ${m['unit'] ?? ''}'),
+      _InfoTile(icon: Icons.health_and_safety_outlined, title: 'État', value: _conditionLabel(m['condition'])),
+      _InfoTile(icon: Icons.location_on_outlined, title: 'Localisation', value: m['city']?.toString() ?? '—'),
+      const SizedBox(height: 14),
+      Container(padding: const EdgeInsets.all(18), decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.border)), child: Column(children: [
+        Icon(Icons.qr_code_2, size: 82, color: published ? AppColors.secondary : AppColors.textSecondary),
+        const SizedBox(height: 8),
+        Text(published ? 'Code de passeport : $code' : 'QR code indisponible', style: const TextStyle(fontWeight: FontWeight.w800)),
+        const SizedBox(height: 4),
+        const Text('Le QR code vérifiable sera activé lorsque le service de passeport public sera configuré.', textAlign: TextAlign.center, style: TextStyle(fontSize: 11, color: AppColors.textSecondary)),
+      ])),
+      const SizedBox(height: 12),
+      if (!published) ElevatedButton(onPressed: () => context.push('/materials/${m['id']}'), child: const Text('Vérifier et publier le matériau')),
+    ]);
+  }
+  String _conditionLabel(dynamic c) {
+    switch (c) { case 'EXCELLENT': return 'Excellent'; case 'GOOD': return 'Bon'; case 'FAIR': return 'Moyen'; case 'POOR': return 'Usé'; default: return c?.toString() ?? '—'; }
+  }
 }
 
 class SecurePaymentScreen extends StatefulWidget {
