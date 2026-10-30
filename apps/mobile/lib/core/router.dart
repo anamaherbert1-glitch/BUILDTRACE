@@ -12,6 +12,8 @@ import '../features/messages/screens/conversations_screen.dart';
 import '../features/messages/screens/chat_screen.dart';
 import '../features/subscriptions/screens/subscription_screen.dart';
 import '../shared/widgets/main_shell.dart';
+import '../features/showcase/screens/showcase_screens.dart';
+
 
 final appRouter = GoRouter(
   initialLocation: '/',
