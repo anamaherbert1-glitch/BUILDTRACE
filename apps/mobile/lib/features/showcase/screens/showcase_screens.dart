@@ -81,7 +81,15 @@ class _MapDiscoveryScreenState extends ConsumerState<MapDiscoveryScreen> {
   List<dynamic> _items = [];
   bool _loading = true;
   @override
-  void initState() { super.initState(); ref.read(materialsRepositoryProvider).list(take: 20).then((v) { if (mounted) setState(() { _items = v; _loading = false; }); }).catchError((_) { if (mounted) setState(() => _loading = false); }); }
+  void initState() { super.initState(); _load(); }
+  Future<void> _load() async {
+    try {
+      final values = await ref.read(materialsRepositoryProvider).list(take: 20);
+      if (mounted) setState(() { _items = values; _loading = false; });
+    } catch (_) {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
   @override
   Widget build(BuildContext context) => _PageFrame(title: 'Carte des matériaux', child: Column(children: [
     Padding(padding: const EdgeInsets.all(16), child: TextField(decoration: InputDecoration(hintText: 'Rechercher une ville ou un matériau', prefixIcon: const Icon(Icons.search), suffixIcon: IconButton(onPressed: () {}, icon: const Icon(Icons.tune))))),
