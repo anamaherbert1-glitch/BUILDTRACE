@@ -133,12 +133,16 @@ class _AddMaterialScreenState extends ConsumerState<AddMaterialScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(title: const Text('Ajouter un matériau')),
+      appBar: AppBar(title: const Text('Ajouter un matériau'), leading: IconButton(icon: const Icon(Icons.arrow_back), onPressed: () => context.pop())),
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.fromLTRB(18, 12, 18, 28),
           children: [
+            const Text('Ajoutez les informations du matériau', style: TextStyle(fontSize: 21, fontWeight: FontWeight.w800, color: AppColors.secondary)),
+            const SizedBox(height: 6),
+            Text('Une photo nette aide les autres professionnels à identifier le matériau.', style: TextStyle(color: AppColors.textSecondary, fontSize: 13, height: 1.4)),
+            const SizedBox(height: 18),
             // Photo
             GestureDetector(
               onTap: () {
@@ -170,11 +174,11 @@ class _AddMaterialScreenState extends ConsumerState<AddMaterialScreen> {
                 );
               },
               child: Container(
-                height: 180,
+                height: 205,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.border),
+                  color: AppColors.primaryLight.withOpacity(.42),
+                  borderRadius: BorderRadius.circular(18),
+                  border: Border.all(color: AppColors.primary.withOpacity(.35), width: 1.4),
                   image: _photo != null
                       ? DecorationImage(
                           image: FileImage(_photo!),
@@ -190,9 +194,9 @@ class _AddMaterialScreenState extends ConsumerState<AddMaterialScreen> {
                               size: 40,
                               color: AppColors.primary.withOpacity(0.7)),
                           const SizedBox(height: 8),
-                          const Text('Ajouter une photo',
-                              style: TextStyle(fontWeight: FontWeight.w500)),
-                          Text('Caméra ou galerie',
+                          const Text('Prenez une photo ou choisissez une image', textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.w700)),
+                          Text('Formats JPG et PNG · jusqu’à 5 Mo',
                               style: TextStyle(
                                   color: AppColors.textSecondary, fontSize: 12)),
                         ],
@@ -210,7 +214,9 @@ class _AddMaterialScreenState extends ConsumerState<AddMaterialScreen> {
                       ),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 22),
+            const _FormSectionTitle(title: 'Informations principales', subtitle: 'Décrivez précisément le matériau.'),
+            const SizedBox(height: 14),
 
             if (_error != null) ...[
               Container(
@@ -227,7 +233,7 @@ class _AddMaterialScreenState extends ConsumerState<AddMaterialScreen> {
 
             TextFormField(
               controller: _titleCtrl,
-              decoration: const InputDecoration(labelText: 'Titre *'),
+              decoration: const InputDecoration(labelText: 'Nom du matériau *', hintText: 'Ex. : Poutre en acier', prefixIcon: Icon(Icons.inventory_2_outlined)),
               validator: (v) =>
                   (v == null || v.length < 3) ? 'Minimum 3 caractères' : null,
             ),
@@ -270,7 +276,7 @@ class _AddMaterialScreenState extends ConsumerState<AddMaterialScreen> {
                   child: TextFormField(
                     controller: _quantityCtrl,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: 'Quantité'),
+                    decoration: const InputDecoration(labelText: 'Quantité', prefixIcon: Icon(Icons.numbers)),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -287,11 +293,13 @@ class _AddMaterialScreenState extends ConsumerState<AddMaterialScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 22),
+            const _FormSectionTitle(title: 'Localisation et description', subtitle: 'Indiquez où le matériau peut être récupéré.'),
             const SizedBox(height: 14),
 
             TextFormField(
               controller: _cityCtrl,
-              decoration: const InputDecoration(labelText: 'Ville'),
+              decoration: const InputDecoration(labelText: 'Ville', prefixIcon: Icon(Icons.location_on_outlined)),
             ),
             const SizedBox(height: 14),
 
@@ -314,7 +322,7 @@ class _AddMaterialScreenState extends ConsumerState<AddMaterialScreen> {
                       child: CircularProgressIndicator(
                           strokeWidth: 2, color: Colors.white),
                     )
-                  : const Text('Créer le matériau'),
+                  : const Text('Enregistrer le brouillon  →'),
             ),
             const SizedBox(height: 12),
             Text(
@@ -328,4 +336,16 @@ class _AddMaterialScreenState extends ConsumerState<AddMaterialScreen> {
       ),
     );
   }
+}
+
+class _FormSectionTitle extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  const _FormSectionTitle({required this.title, required this.subtitle});
+  @override
+  Widget build(BuildContext context) => Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+    Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: AppColors.secondary)),
+    const SizedBox(height: 3),
+    Text(subtitle, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+  ]);
 }
