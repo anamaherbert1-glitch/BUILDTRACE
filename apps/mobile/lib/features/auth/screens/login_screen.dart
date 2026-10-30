@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../shared/theme/app_theme.dart';
 import '../../../core/api/api_providers.dart';
+import '../../../shared/widgets/buildtrace_brand.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -60,25 +61,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          padding: const EdgeInsets.fromLTRB(24, 18, 24, 32),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 20),
-                const Icon(Icons.apartment_rounded, size: 56, color: AppColors.primary),
-                const SizedBox(height: 12),
-                const Text(
-                  'BUILDTRACE',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
-                  ),
-                ),
-                const SizedBox(height: 8),
+                Align(alignment: Alignment.center, child: const BuildtraceBrand(iconSize: 48, wordmarkSize: 23)),
+                const SizedBox(height: 28),
                 const Text(
                   'Se connecter',
                   textAlign: TextAlign.center,
@@ -86,7 +76,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Accédez à votre compte pour gérer vos projets et vos matériaux.',
+                  'Retrouvez vos matériaux, vos projets et vos passeports numériques.',
                   textAlign: TextAlign.center,
                   style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
                 ),
@@ -159,7 +149,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 const SizedBox(height: 24),
                 OutlinedButton.icon(
-                  onPressed: () {},
+                  onPressed: null,
                   icon: const Icon(Icons.g_mobiledata, size: 28),
                   label: const Text('Continuer avec Google'),
                 ),
