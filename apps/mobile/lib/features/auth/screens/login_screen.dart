@@ -149,9 +149,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 ),
                 const SizedBox(height: 24),
                 OutlinedButton.icon(
-                  onPressed: null,
+                  onPressed: () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('La connexion Google sera activée après la configuration OAuth.'))),
                   icon: const Icon(Icons.g_mobiledata, size: 28),
                   label: const Text('Continuer avec Google'),
+                ),
+                const SizedBox(height: 10),
+                OutlinedButton.icon(
+                  onPressed: () => ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('La connexion Apple sera activée après la configuration du fournisseur.'))),
+                  icon: const Icon(Icons.phone_iphone, size: 20),
+                  label: const Text('Continuer avec Apple'),
                 ),
                 const SizedBox(height: 32),
                 Row(
