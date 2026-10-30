@@ -1,0 +1,16 @@
+{
+  "name": "buildtrace",
+  "version": "0.1.0",
+  "private": true,
+  "description": "BUILDTRACE - Passeport numérique et réemploi des matériaux de construction",
+  "scripts": {
+    "dev:api": "pnpm --filter @buildtrace/api start:dev",
+    "build:api": "pnpm --filter @buildtrace/api build",
+    "db:generate": "pnpm --filter @buildtrace/api prisma generate",
+    "db:migrate": "pnpm --filter @buildtrace/api prisma migrate dev",
+    "db:studio": "pnpm --filter @buildtrace/api prisma studio"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
