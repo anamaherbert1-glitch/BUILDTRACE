@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#087f5b">
+<title>BUILDTRACE — Tableau de bord</title>
+<style>
+:root{--green:#087f5b;--green2:#056747;--mint:#e8f5ef;--bg:#f5f7f6;--ink:#17231e;--muted:#718078;--line:#e5ebe7;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+.layout{min-height:100vh;display:grid;grid-template-columns:248px 1fr}.sidebar{background:#fff;border-right:1px solid var(--line);padding:26px 16px;display:flex;flex-direction:column;gap:34px}.brand{display:flex;align-items:center;gap:10px;padding:0 10px;color:var(--green);font-weight:800;letter-spacing:.4px;font-size:18px}.brand-mark{width:34px;height:34px;border-radius:11px;background:var(--green);color:white;display:grid;place-items:center;font-size:20px}.nav{display:grid;gap:7px}.nav button{border:0;background:transparent;text-align:left;padding:13px 14px;border-radius:11px;color:#65736c;font:600 14px inherit;cursor:pointer;display:flex;align-items:center;gap:12px}.nav button.active,.nav button:hover{background:var(--mint);color:var(--green)}.nav .ico{width:20px;text-align:center;font-size:17px}.side-note{margin-top:auto;border:1px solid var(--line);border-radius:14px;padding:15px;color:var(--muted);font-size:12px;line-height:1.5}.main{min-width:0}.topbar{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px}.crumb{color:var(--muted);font-size:13px}.avatar{width:38px;height:38px;border-radius:50%;background:var(--mint);color:var(--green);display:grid;place-items:center;font-weight:800}.content{max-width:1180px;margin:auto;padding:34px}.welcome{display:flex;justify-content:space-between;align-items:flex-start;gap:18px}.eyebrow{color:var(--green);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px}.welcome h1{margin:8px 0 7px;font-size:29px;letter-spacing:-.7px}.sub{color:var(--muted);margin:0}.primary{border:0;border-radius:11px;background:var(--green);color:white;padding:12px 17px;font-weight:700;cursor:pointer;box-shadow:0 5px 12px #087f5b22}.primary:hover{background:var(--green2)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0 18px}.stat,.panel{background:#fff;border:1px solid var(--line);border-radius:16px}.stat{padding:19px}.stat-head{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}.stat-icon{width:34px;height:34px;border-radius:10px;background:var(--mint);display:grid;place-items:center;color:var(--green);font-size:17px}.stat strong{display:block;font-size:28px;margin:12px 0 2px}.stat small{color:var(--muted)}.impact{background:linear-gradient(115deg,#087f5b,#075b45);color:white;border-radius:16px;padding:22px 24px;display:flex;gap:16px;align-items:center;margin:18px 0 28px}.impact-icon{font-size:29px}.impact b{display:block;margin-bottom:5px}.impact span{color:#d4eee2;font-size:13px}.section-head{display:flex;justify-content:space-between;align-items:center;margin:0 0 14px}.section-head h2{font-size:18px;margin:0}.link{border:0;background:transparent;color:var(--green);font-weight:700;cursor:pointer}.empty{padding:42px 20px;text-align:center}.empty-icon{width:58px;height:58px;border-radius:16px;background:var(--mint);color:var(--green);display:grid;place-items:center;font-size:25px;margin:0 auto 14px}.empty h3{margin:0 0 7px}.empty p{max-width:420px;margin:0 auto 18px;color:var(--muted);line-height:1.55}.view{display:none}.view.active{display:block}.mobile-nav{display:none}
+@media(max-width:760px){.layout{display:block}.sidebar{display:none}.topbar{height:60px;padding:0 18px}.content{padding:24px 17px 95px}.welcome{display:block}.welcome .primary{margin-top:18px;width:100%}.welcome h1{font-size:25px}.stats{gap:9px}.stat{padding:13px 10px}.stat strong{font-size:23px}.stat-head{font-size:11px}.stat-icon{width:29px;height:29px}.stat small{font-size:10px}.impact{padding:18px}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);justify-content:space-around;padding:9px 4px calc(9px + env(safe-area-inset-bottom));z-index:5}.mobile-nav button{border:0;background:none;color:var(--muted);font-size:10px;display:grid;gap:3px;justify-items:center;cursor:pointer}.mobile-nav button.active{color:var(--green);font-weight:800}.mobile-nav span{font-size:19px}.mobile-nav .add{width:42px;height:42px;margin-top:-18px;border-radius:50%;background:var(--green);color:#fff;font-size:24px;box-shadow:0 4px 12px #087f5b44}.topbar .crumb{font-size:12px}}
+@media(min-width:1100px){.content{padding-top:42px}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+<div class="brand"><div class="brand-mark">⌂</div> BUILDTRACE</div>
+<nav class="nav" aria-label="Navigation principale">
+<button class="active" data-view="home"><span class="ico">⌂</span> Tableau de bord</button>
+<button data-view="search"><span class="ico">⌕</span> Rechercher</button>
+<button data-view="add"><span class="ico">＋</span> Ajouter un matériau</button>
+<button data-view="messages"><span class="ico">▤</span> Messages</button>
+<button data-view="profile"><span class="ico">◉</span> Mon profil</button>
+</nav>
+<div class="side-note">BUILDTRACE<br>Le passeport numérique des matériaux de construction.<br><br><b>Version aperçu Web</b></div>
+</aside>
+<main class="main">
+<header class="topbar"><div class="crumb">Espace de travail&nbsp; / &nbsp;<b id="crumb">Tableau de bord</b></div><div class="avatar">B</div></header>
+<div class="content">
+<section class="view active" id="home">
+<div class="welcome"><div><div class="eyebrow">Votre espace BUILDTRACE</div><h1>Bonjour 👋</h1><p class="sub">Voici ce qui se passe sur vos projets.</p></div><button class="primary" data-go="add">＋ Ajouter un matériau</button></div>
+<div class="stats">
+<div class="stat"><div class="stat-head"><span>Bâtiments</span><span class="stat-icon">⌂</span></div><strong>0</strong><small>Vos bâtiments enregistrés</small></div>
+<div class="stat"><div class="stat-head"><span>Matériaux</span><span class="stat-icon">▦</span></div><strong>0</strong><small>Matériaux dans votre espace</small></div>
+<div class="stat"><div class="stat-head"><span>Contacts</span><span class="stat-icon">♧</span></div><strong>0</strong><small>Vos échanges</small></div>
+</div>
+<div class="impact"><div class="impact-icon">♧</div><div><b>Impact environnemental</b><span>Commencez à réemployer pour mesurer votre impact CO₂.</span></div></div>
+<div class="section-head"><h2>Matériaux récents</h2><button class="link" data-go="search">Voir tout →</button></div>
+<div class="panel empty"><div class="empty-icon">▦</div><h3>Aucun matériau pour le moment</h3><p>Ajoutez votre premier matériau pour créer son passeport numérique et commencer à suivre son cycle de vie.</p><button class="primary" data-go="add">＋ Ajouter mon premier matériau</button></div>
+</section>
+<section class="view" id="search"><div class="eyebrow">Catalogue</div><h1>Rechercher des matériaux</h1><p class="sub">Retrouvez les matériaux disponibles dans l'écosystème BUILDTRACE.</p><div class="panel empty"><div class="empty-icon">⌕</div><h3>Votre catalogue apparaîtra ici</h3><p>L'interface de recherche est prête à être reliée aux données de l'application.</p></div></section>
+<section class="view" id="add"><div class="eyebrow">Passeport numérique</div><h1>Ajouter un matériau</h1><p class="sub">Préparez la fiche d'identité d'un matériau de construction.</p><div class="panel empty"><div class="empty-icon">＋</div><h3>Création de matériau</h3><p>Cette page est un aperçu visuel. Le formulaire complet et son enregistrement seront reliés au backend dans une étape suivante.</p></div></section>
+<section class="view" id="messages"><div class="eyebrow">Communication</div><h1>Messages</h1><div class="panel empty"><div class="empty-icon">▤</div><h3>Aucune conversation</h3><p>Vos échanges avec les vendeurs et acheteurs apparaîtront ici.</p></div></section>
+<section class="view" id="profile"><div class="eyebrow">Compte</div><h1>Mon profil</h1><div class="panel empty"><div class="empty-icon">◉</div><h3>Votre espace personnel</h3><p>Les informations de votre compte seront affichées ici après connexion au backend.</p></div></section>
+</div>
+</main>
+</div>
+<nav class="mobile-nav" aria-label="Navigation mobile">
+<button class="active" data-view="home"><span>⌂</span>Accueil</button><button data-view="search"><span>⌕</span>Recherche</button><button data-view="add"><span class="add">＋</span>Ajouter</button><button data-view="messages"><span>▤</span>Messages</button><button data-view="profile"><span>◉</span>Profil</button>
+</nav>
+<script>
+const labels={home:"Tableau de bord",search:"Rechercher",add:"Ajouter un matériau",messages:"Messages",profile:"Mon profil"};
+function show(id){document.querySelectorAll(".view").forEach(x=>x.classList.toggle("active",x.id===id));document.querySelectorAll("[data-view]").forEach(x=>x.classList.toggle("active",x.dataset.view===id));document.getElementById("crumb").textContent=labels[id]||labels.home;history.replaceState(null,"","#"+id);window.scrollTo({top:0,behavior:"smooth"});}
+document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.view)));
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>show(b.dataset.go)));
+const initial=location.hash.slice(1);if(labels[initial])show(initial);
+</script>
+</body>
+</html>
