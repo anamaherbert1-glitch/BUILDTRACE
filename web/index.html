@@ -1289,7 +1289,7 @@ async function loadConversationList(){
   for(const convo of conversations){
     const peerId=convo.buyer_id===user.id?convo.seller_id:convo.buyer_id;
     const [profileRes,listingRes,messageRes]=await Promise.all([
-      sb.from('profiles').select('full_name,company_name').eq('id',peerId).maybeSingle(),
+      sb.from('conversation_contacts').select('full_name,company_name').eq('id',peerId).maybeSingle(),
       convo.listing_id?sb.from('listings').select('title').eq('id',convo.listing_id).maybeSingle():Promise.resolve({data:null}),
       sb.from('messages').select('content,created_at').eq('conversation_id',convo.id).order('created_at',{ascending:false}).limit(1).maybeSingle()
     ]);
@@ -1312,7 +1312,7 @@ window.BUILDTRACE_OPEN_CONVERSATION=async id=>{
   const {data:convo,error}=await sb.from('conversations').select('*').eq('id',id).maybeSingle();
   if(error||!convo){chatText('conversationStatus',error?.message||'Conversation introuvable.','error');return;}
   activeChatId=convo.id;activeChatPeer=convo.buyer_id===user.id?convo.seller_id:convo.buyer_id;
-  const {data:profile}=await sb.from('profiles').select('full_name,company_name').eq('id',activeChatPeer).maybeSingle();
+  const {data:profile}=await sb.from('conversation_contacts').select('full_name,company_name').eq('id',activeChatPeer).maybeSingle();
   const name=profile?.company_name||profile?.full_name||'Utilisateur BUILDTRACE';
   el('chatContactName').textContent=name;el('chatContactInitials').textContent=initialsFor(name);
   el('chatContactStatus').textContent='Conversation BUILDTRACE';
