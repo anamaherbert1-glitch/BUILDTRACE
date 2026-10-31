@@ -27,82 +27,58 @@ body{
 .screen.active{display:flex}
 
 /* ===== PAGE DE BIENVENUE (CDC 3.1) ===== */
-#s-welcome{
-  position:relative;color:#fff;overflow:hidden;
-}
-#s-welcome::before{
-  content:"";position:absolute;inset:0;z-index:0;
-  background:
-    linear-gradient(180deg,rgba(8,20,32,.38) 0%,rgba(8,20,32,.62) 38%,rgba(8,20,32,.92) 100%),
-    url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=90") center 22%/cover no-repeat;
-}
-.welcome-inner{
-  position:relative;z-index:1;flex:1;display:flex;flex-direction:column;
-  justify-content:space-between;
-  padding:48px 24px 32px;max-width:420px;margin:0 auto;width:100%;
-}
-.w-logo{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
-.w-logo-box{
-  width:64px;height:64px;background:#fff;border-radius:18px;
-  display:grid;place-items:center;box-shadow:0 8px 28px rgba(0,0,0,.3);
-}
-.w-logo-t{font-size:26px;font-weight:800;letter-spacing:.3px}
-.w-logo-t b{color:var(--green)}
-.w-tag{font-size:12.5px;color:rgba(255,255,255,.8)}
-.w-hero{text-align:center;margin:28px 0}
-.w-hero h1{font-size:27px;font-weight:800;line-height:1.22;margin-bottom:14px;letter-spacing:-.3px}
-.w-hero p{font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.82);max-width:310px;margin:0 auto}
-.w-btns{display:flex;flex-direction:column;gap:12px}
-.btn{
-  height:54px;border-radius:14px;font-size:16px;font-weight:700;
-  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
-}
-.btn-primary{background:var(--green);color:#003B18;box-shadow:0 6px 22px rgba(0,200,83,.4)}
-.btn-outline{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.45)}
+#s-welcome{position:relative;color:#fff;overflow:hidden;background:#061a38;min-height:100svh}
+#s-welcome::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(4,20,48,.08) 0%,rgba(4,20,48,.18) 30%,rgba(4,20,48,.92) 72%,#061a38 100%),url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=90") center 38%/cover no-repeat}
+.welcome-inner{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:42px 24px max(30px,env(safe-area-inset-bottom));max-width:430px;margin:0 auto;width:100%;min-height:100svh}
+.w-logo{display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;padding-top:5px}
+.w-logo-box{width:74px;height:74px;background:transparent;border-radius:0;display:grid;place-items:center;filter:drop-shadow(0 4px 8px rgba(0,0,0,.25))}
+.w-logo-t{font-size:29px;font-weight:850;letter-spacing:.2px;text-shadow:0 2px 8px rgba(0,0,0,.25)}
+.w-logo-t b{color:#00e85b}
+.w-tag{font-size:12px;color:rgba(255,255,255,.9);letter-spacing:.2px}
+.w-hero{text-align:center;margin:auto 0 24px;padding-top:24px}
+.w-hero h1{font-size:26px;font-weight:850;line-height:1.17;margin-bottom:12px;letter-spacing:-.45px}
+.w-hero p{font-size:14px;line-height:1.48;color:rgba(255,255,255,.92);max-width:315px;margin:0 auto}
+.w-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 24px;text-align:center}
+.w-benefit{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:11px;font-weight:650;line-height:1.25;color:#fff}
+.w-benefit-icon{width:48px;height:48px;border-radius:50%;background:rgba(0,205,100,.88);display:grid;place-items:center;box-shadow:0 4px 15px rgba(0,0,0,.22)}
+.w-benefit-icon svg{width:23px;height:23px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.w-btns{display:flex;flex-direction:column;gap:10px}
+.btn{height:51px;border-radius:28px;font-size:15px;font-weight:750;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.btn-primary{background:#00df50;color:#003a19;box-shadow:0 6px 22px rgba(0,220,80,.34)}
+.btn-outline{background:rgba(2,22,55,.5);color:#fff;border:1.5px solid rgba(255,255,255,.88)}
 
 /* ===== AUTH compact (CDC 3.2 — visible sans scroll) ===== */
-#s-auth{background:#fff}
-.auth-box{
-  flex:1;display:flex;flex-direction:column;justify-content:center;
-  max-width:420px;margin:0 auto;width:100%;padding:16px 22px 20px;
-}
-.auth-logo{width:48px;height:48px;background:var(--gl);border-radius:14px;display:grid;place-items:center;margin:0 auto 8px}
-.auth-title{text-align:center;font-size:20px;font-weight:800;color:var(--navy);margin-bottom:14px}
-.tabs{display:flex;background:var(--bg);border-radius:12px;padding:3px;margin-bottom:14px}
-.tab{flex:1;height:38px;border:none;background:0;border-radius:10px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
-.tab.on{background:#fff;color:var(--green);box-shadow:0 1px 6px rgba(0,0,0,.06)}
-.fg{margin-bottom:10px}
-.fl{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:4px}
-.fi{
-  width:100%;height:46px;border:1.5px solid var(--line);border-radius:11px;
-  padding:0 12px 0 42px;font-size:14px;outline:none;background:#fff;
-}
-.fi:focus{border-color:var(--green)}
-.fi::placeholder{color:#A5B2AB}
+#s-auth{background:#071a39;position:relative;overflow:hidden}
+#s-auth::after{content:"";position:absolute;left:-8%;right:-8%;bottom:-5px;height:115px;pointer-events:none;opacity:.95;background:linear-gradient(180deg,transparent,#071a39 25%),url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1000&q=75") center 60%/cover no-repeat}
+.auth-box{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;justify-content:center;max-width:430px;margin:0 auto;width:100%;padding:16px 22px max(22px,env(safe-area-inset-bottom))}
+.auth-logo{width:54px;height:54px;background:transparent;border-radius:0;display:grid;place-items:center;margin:0 auto 2px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.25))}
+.auth-title{text-align:center;font-size:23px;font-weight:850;color:#fff;letter-spacing:.2px;margin-bottom:15px}
+.tabs{display:none}
+.auth-panel{background:#fff;border-radius:24px;padding:18px 16px 15px;box-shadow:0 14px 36px rgba(0,0,0,.22)}
+.fg{margin-bottom:9px}
+.fl{display:block;font-size:11px;font-weight:700;color:#42536b;margin-bottom:4px}
+.fi{width:100%;height:44px;border:1.5px solid #d8e0ec;border-radius:12px;padding:0 12px 0 42px;font-size:13.5px;outline:none;background:#fff;color:#102344}
+.fi:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,200,83,.09)}
+.fi::placeholder{color:#9aa8ba}
 .iwi{position:relative}
-.ii{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#7A8B83;pointer-events:none}
+.ii{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#43536c;pointer-events:none}
 .ii svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
 .pt{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:0;border:none;padding:4px;cursor:pointer;color:#7A8B83}
 .pt svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75}
-.ba{width:100%;height:48px;background:var(--green);color:#003B18;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;box-shadow:0 4px 14px rgba(0,200,83,.28)}
-.div{display:flex;align-items:center;gap:10px;margin:12px 0;color:var(--muted);font-size:12px}
-.div::before,.div::after{content:"";flex:1;height:1px;background:var(--line)}
-.sb{display:flex;flex-direction:column;gap:8px}
-.bs{
-  display:flex;align-items:center;justify-content:center;gap:8px;height:44px;
-  border:1.5px solid var(--line);border-radius:11px;background:#fff;font-size:14px;font-weight:600;cursor:pointer;
-}
-.af{text-align:center;margin-top:12px;font-size:13px;color:var(--muted)}
-.af a{color:var(--green);font-weight:700;text-decoration:none}
+.ba{width:100%;height:46px;background:#00c747;color:#003b18;border:none;border-radius:13px;font-size:14px;font-weight:750;cursor:pointer;margin-top:3px;box-shadow:0 4px 14px rgba(0,200,83,.25)}
+.div{display:flex;align-items:center;gap:10px;margin:11px 0;color:#637187;font-size:12px}
+.div::before,.div::after{content:"";flex:1;height:1px;background:#e1e7ef}
+.sb{display:flex;flex-direction:column;gap:7px}
+.bs{display:flex;align-items:center;justify-content:center;gap:9px;height:43px;border:1.5px solid #d9e1ec;border-radius:13px;background:#fff;font-size:13.5px;font-weight:650;color:#182b48;cursor:pointer}
+.af{text-align:center;margin-top:12px;font-size:12px;color:#637187}
+.af a{color:#00a943;font-weight:800;text-decoration:none}
 .ro{display:none}.mode-r .ro{display:block}
+@media(max-height:740px){.auth-box{padding-top:8px;padding-bottom:12px}.auth-logo{width:43px;height:43px}.auth-title{margin-bottom:9px}.auth-panel{padding:13px 14px 11px}.fg{margin-bottom:7px}.fi{height:41px}.ba{height:43px}.div{margin:8px 0}.bs{height:40px}.af{margin-top:8px}}
+
 
 /* ===== ACCUEIL PERSONNALISÉ (CDC 3.3) ===== */
 #s-home{background:var(--bg)}
-.home-header{
-  background:var(--navy);color:#fff;
-  padding:12px 16px 14px;
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-}
+.home-header{background:var(--navy);color:#fff;padding:12px 16px 13px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 3px 12px rgba(4,17,39,.15)}
 .home-user{display:flex;align-items:center;gap:10px;min-width:0}
 .avatar{
   width:42px;height:42px;border-radius:50%;background:#2a4a6b;
@@ -121,10 +97,23 @@ body{
   position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;
   background:var(--green);border:1.5px solid var(--navy);
 }
-.home-body{
-  flex:1;overflow-y:auto;padding:16px 16px 96px;
-  max-width:420px;margin:0 auto;width:100%;
-}
+.home-body{flex:1;overflow-y:auto;padding:13px 14px 96px;max-width:430px;margin:0 auto;width:100%}
+.home-search{height:46px;background:#fff;border:1px solid #e4eaf1;border-radius:24px;display:flex;align-items:center;gap:10px;padding:0 15px;margin-bottom:14px;box-shadow:0 2px 8px rgba(10,22,40,.05)}
+.home-search svg{width:19px;height:19px;stroke:#233a5b;fill:none;stroke-width:2}
+.home-search input{border:0;outline:0;background:transparent;flex:1;min-width:0;font-size:13px;color:#20334f}
+.premium-banner{position:relative;overflow:hidden;display:flex;align-items:center;min-height:128px;padding:16px 14px;border-radius:18px;margin-bottom:19px;color:#fff;background:radial-gradient(circle at 82% 45%,#1769a0 0,#0b315d 35%,#071b3c 75%);border:2px solid #00d85a;box-shadow:0 5px 14px rgba(0,200,83,.15)}
+.premium-banner:after{content:"";position:absolute;right:-10px;top:-20px;width:150px;height:160px;background:radial-gradient(circle,rgba(0,207,91,.22),transparent 65%);pointer-events:none}
+.premium-copy{position:relative;z-index:1;max-width:68%}
+.premium-copy h2{font-size:16px;font-weight:850;margin-bottom:5px}
+.premium-copy p{font-size:12px;line-height:1.35;color:rgba(255,255,255,.88);margin-bottom:10px}
+.premium-copy button{height:34px;padding:0 16px;border:0;border-radius:18px;background:#00df50;color:#003a19;font-size:12px;font-weight:800}
+.premium-crown{position:absolute;right:12px;top:17px;font-size:58px;line-height:1;filter:drop-shadow(0 5px 7px rgba(0,0,0,.35))}
+.home-header .avatar{background:#496a88}
+.section{margin-bottom:18px}
+.section-head{margin-bottom:10px}
+.prod-card{flex:0 0 154px;border-radius:13px;box-shadow:0 2px 8px rgba(12,30,50,.04)}
+.prod-card .img{height:102px}
+
 .section{margin-bottom:22px}
 .section-head{
   display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;
@@ -238,24 +227,28 @@ body{
   <div class="welcome-inner">
     <div class="w-logo">
       <div class="w-logo-box">
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-          <path d="M5 14.5L16 5l11 9.5V26a1.5 1.5 0 01-1.5 1.5h-19A1.5 1.5 0 015 26V14.5z" fill="#0A1628"/>
-          <path d="M12 27.5V18h8v9.5" stroke="#00C853" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M16 5L5 14.5h22L16 5z" fill="#00C853"/>
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-label="Logo BUILDTRACE">
+          <path d="M8 58V25L25 12V58H8Z" fill="#F8FBFF" stroke="#fff" stroke-width="2"/>
+          <path d="M25 58V8L45 20V58H25Z" fill="#fff" stroke="#fff" stroke-width="2"/>
+          <path d="M45 58V31L63 20V58H45Z" fill="#00D85A" stroke="#00D85A" stroke-width="2"/>
+          <path d="M17 58V39M35 58V29M54 58V42" stroke="#08244A" stroke-width="4"/>
         </svg>
       </div>
-      <div class="w-logo-t">BUILD<b>TRACE</b></div>
-      <div class="w-tag">Découverte · Analyse · Mise en relation</div>
+      <div class="w-logo-t">BUILD<span style="color:#00e85b">TRACE</span></div>
+      <div class="w-tag">Découvrez · Publiez · Louez · Vendez</div>
     </div>
 
     <div class="w-hero">
-      <h1>Des matériaux<br>plus durables pour<br>un avenir meilleur</h1>
-      <p>Consultez, publiez et échangez des matériaux de construction. Analyse visuelle assistée par IA. Mettez-vous en relation avec les vendeurs.</p>
+      <h1>La plateforme intelligente<br>de <span style="color:#00e85b">vente</span>, de <span style="color:#00e85b">location</span> et<br>de découverte de matériaux<br>de construction.</h1>
     </div>
-
+    <div class="w-benefits">
+      <div class="w-benefit"><span class="w-benefit-icon"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg></span><span>Trouvez<br>facilement</span></div>
+      <div class="w-benefit"><span class="w-benefit-icon"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span><span>Analysez<br>avec l'IA</span></div>
+      <div class="w-benefit"><span class="w-benefit-icon"><svg viewBox="0 0 24 24"><path d="M16 11 8 7l-4 4 5 5 3-2 3 2 5-5-4-4Z"/><path d="m8 7 3-3 5 2 3-2 3 3-4 4"/></svg></span><span>Connectez-vous</span></div>
+    </div>
     <div class="w-btns">
+      <button class="btn btn-outline" onclick="go('auth');setMode('l')">Continuer <span style="margin-left:9px">→</span></button>
       <button class="btn btn-primary" onclick="go('auth');setMode('r')">Commencer gratuitement</button>
-      <button class="btn btn-outline" onclick="go('auth');setMode('l')">Continuer</button>
     </div>
   </div>
 </div>
@@ -264,19 +257,21 @@ body{
 <div class="screen" id="s-auth">
   <div class="auth-box mode-r" id="abox">
     <div class="auth-logo">
-      <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
-        <path d="M5 14.5L16 5l11 9.5V26a1.5 1.5 0 01-1.5 1.5h-19A1.5 1.5 0 015 26V14.5z" fill="#0A1628"/>
-        <path d="M12 27.5V18h8v9.5" stroke="#00C853" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M16 5L5 14.5h22L16 5z" fill="#00C853"/>
+      <svg width="48" height="48" viewBox="0 0 72 72" fill="none" aria-label="Logo BUILDTRACE">
+        <path d="M8 58V25L25 12V58H8Z" fill="#fff" stroke="#fff" stroke-width="2"/>
+        <path d="M25 58V8L45 20V58H25Z" fill="#fff" stroke="#fff" stroke-width="2"/>
+        <path d="M45 58V31L63 20V58H45Z" fill="#00D85A" stroke="#00D85A" stroke-width="2"/>
+        <path d="M17 58V39M35 58V29M54 58V42" stroke="#08244A" stroke-width="4"/>
       </svg>
     </div>
-    <div class="auth-title">BUILDTRACE</div>
+    <div class="auth-title">Créer un compte<br><span style="font-size:13px;font-weight:500;color:#c6d5e9">Rejoignez notre communauté</span></div>
 
     <div class="tabs">
       <button class="tab" id="tl" onclick="setMode('l')">Connexion</button>
       <button class="tab on" id="tr" onclick="setMode('r')">Inscription</button>
     </div>
 
+    <div class="auth-panel">
     <form onsubmit="return doAuth(event)">
       <div class="fg ro">
         <label class="fl">Nom et prénom</label>
@@ -305,16 +300,17 @@ body{
 
     <div class="div">ou</div>
     <div class="sb">
-      <button class="bs" type="button" onclick="go('home')">
+      <button class="bs" type="button" onclick="alert('La connexion Google sera activée lors du raccordement de l’authentification.')">
         <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
         Continuer avec Google
       </button>
-      <button class="bs" type="button" onclick="go('home')">
+      <button class="bs" type="button" onclick="alert('La connexion Apple sera activée lors du raccordement de l’authentification.')">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
         Continuer avec Apple
       </button>
     </div>
     <div class="af" id="afoot">Vous avez déjà un compte ? <a href="#" onclick="setMode('l');return false">Se connecter</a></div>
+    </div>
   </div>
 </div>
 
@@ -322,10 +318,10 @@ body{
 <div class="screen" id="s-home">
   <header class="home-header">
     <div class="home-user">
-      <div class="avatar">A</div>
+      <div class="avatar">H</div>
       <div>
-        <h1>Bonjour, Amadou</h1>
-        <p>Bienvenue sur BUILDTRACE</p>
+        <h1>Bonjour, Herbert 👋</h1>
+        <p>Bâtissons ensemble un avenir durable</p>
       </div>
     </div>
     <div class="home-actions">
@@ -341,16 +337,18 @@ body{
   </header>
 
   <div class="home-body">
+    <label class="home-search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7.5"/><path d="m16.5 16.5 5 5"/></svg>
+      <input type="search" placeholder="Rechercher un matériau...">
+    </label>
     <!-- Bannière abonnement vendeur -->
-    <div class="sub-banner">
-      <div class="ico">
-        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    <div class="premium-banner">
+      <div class="premium-copy">
+        <h2>Abonnement Premium</h2>
+        <p>Boostez votre visibilité<br>et publiez plus !</p>
+        <button type="button" onclick="alert('Page abonnements')">Découvrir&nbsp; →</button>
       </div>
-      <div>
-        <h3>Devenir vendeur</h3>
-        <p>Publiez vos matériaux avec un abonnement</p>
-      </div>
-      <button type="button" onclick="alert('Page abonnements')">Voir</button>
+      <div class="premium-crown" aria-hidden="true">👑</div>
     </div>
 
     <!-- Nouveaux matériaux -->
@@ -361,27 +359,27 @@ body{
       </div>
       <div class="scroll-x">
         <article class="prod-card">
-          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=300&q=80')"></div>
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?auto=format&fit=crop&w=400&q=85')"></div>
           <div class="body">
-            <h3>Poutres acier</h3>
-            <p class="meta">6 m · Bon état</p>
-            <p class="price">950 €</p>
+            <h3>Bois de coffrage</h3>
+            <p class="meta">À vendre · Lomé</p>
+            <p class="price">45 000 FCFA</p>
           </div>
         </article>
         <article class="prod-card">
-          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=300&q=80')"></div>
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=400&q=85')"></div>
           <div class="body">
-            <h3>Tuiles métalliques</h3>
-            <p class="meta">2,10 m · Bon état</p>
-            <p class="price">120 €</p>
+            <h3>Poutres métalliques</h3>
+            <p class="meta">À louer · Lomé</p>
+            <p class="price">5 000 FCFA/jour</p>
           </div>
         </article>
         <article class="prod-card">
           <div class="img" style="background-image:url('https://images.unsplash.com/photo-1581852017103-68ac65514cf7?auto=format&fit=crop&w=300&q=80')"></div>
           <div class="body">
-            <h3>Fenêtres alu</h3>
-            <p class="meta">1,5 m · Très bon état</p>
-            <p class="price">200 €</p>
+            <h3>Échafaudage</h3>
+            <p class="meta">À louer · Lomé</p>
+            <p class="price">80 000 FCFA/mois</p>
           </div>
         </article>
       </div>
@@ -390,24 +388,24 @@ body{
     <!-- Produits récemment ajoutés -->
     <section class="section">
       <div class="section-head">
-        <h2>Récemment ajoutés</h2>
+        <h2>Publications récentes</h2>
         <a href="#">Voir tout</a>
       </div>
       <div class="scroll-x">
         <article class="prod-card">
           <div class="img" style="background-image:url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=300&q=80')"></div>
           <div class="body">
-            <h3>Carrelage 30×30</h3>
-            <p class="meta">100 m² · Bon état</p>
-            <p class="price">8 €/m²</p>
+            <h3>Béton de qualité disponible !</h3>
+            <p class="meta">BuildPro Togo · Il y a 2 h</p>
+            <p class="price">Voir la publication →</p>
           </div>
         </article>
         <article class="prod-card">
           <div class="img" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=300&q=80')"></div>
           <div class="body">
-            <h3>Ciment</h3>
-            <p class="meta">12 sacs · Lomé</p>
-            <p class="price">Sur devis</p>
+            <h3>Matériaux de récupération</h3>
+            <p class="meta">Nouvelle publication · Lomé</p>
+            <p class="price">Découvrir →</p>
           </div>
         </article>
       </div>
