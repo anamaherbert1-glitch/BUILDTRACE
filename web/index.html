@@ -6,297 +6,522 @@
 <meta name="theme-color" content="#0A1628">
 <title>BUILDTRACE</title>
 <style>
-:root{--navy:#0A1628;--green:#00C853;--green-d:#00A843;--gl:#E8F8EF;--w:#fff;--bg:#F5F7F6;--ink:#1A2B22;--muted:#6B7C72;--line:#E2E8E4}
+:root{
+  --navy:#0A1628;
+  --green:#00C853;
+  --green-d:#00A843;
+  --gl:#E8F8EF;
+  --w:#fff;
+  --bg:#F5F7F6;
+  --ink:#1A2B22;
+  --muted:#6B7C72;
+  --line:#E2E8E4;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-.screen{display:none;min-height:100dvh;flex-direction:column}.screen.active{display:flex}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  background:var(--bg);color:var(--ink);
+  min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+.screen{display:none;min-height:100dvh;flex-direction:column}
+.screen.active{display:flex}
 
-/* HOME */
-#s-home{position:relative;color:#fff;overflow:hidden}
-#s-home::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(8,20,32,.4) 0%,rgba(8,20,32,.65) 40%,rgba(8,20,32,.9) 100%),url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=90") center 20%/cover no-repeat}
-.hc{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:44px 24px 28px;max-width:420px;margin:0 auto;width:100%}
-.logo{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
-.logo-box{width:62px;height:62px;background:#fff;border-radius:16px;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.3)}
-.logo-t{font-size:24px;font-weight:800;letter-spacing:.3px}.logo-t b{color:var(--green)}
-.tag{font-size:12px;color:rgba(255,255,255,.78)}
-.hero{text-align:center;margin:24px 0}.hero h1{font-size:26px;font-weight:800;line-height:1.22;margin-bottom:12px}.hero p{font-size:14px;line-height:1.55;color:rgba(255,255,255,.8);max-width:300px;margin:0 auto}
-.btns{display:flex;flex-direction:column;gap:10px}
-.b{height:52px;border-radius:14px;font-size:15px;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.b-g{background:var(--green);color:#003B18;box-shadow:0 6px 20px rgba(0,200,83,.35)}.b-o{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4)}
-.qa{display:flex;justify-content:center;gap:28px;margin-top:28px}
-.qi{display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:none;color:rgba(255,255,255,.85);font-size:11px;cursor:pointer}
-.qic{width:46px;height:46px;border-radius:13px;background:rgba(255,255,255,.14);display:grid;place-items:center}
-.qic svg{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+/* ===== PAGE DE BIENVENUE (CDC 3.1) ===== */
+#s-welcome{
+  position:relative;color:#fff;overflow:hidden;
+}
+#s-welcome::before{
+  content:"";position:absolute;inset:0;z-index:0;
+  background:
+    linear-gradient(180deg,rgba(8,20,32,.38) 0%,rgba(8,20,32,.62) 38%,rgba(8,20,32,.92) 100%),
+    url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=90") center 22%/cover no-repeat;
+}
+.welcome-inner{
+  position:relative;z-index:1;flex:1;display:flex;flex-direction:column;
+  justify-content:space-between;
+  padding:48px 24px 32px;max-width:420px;margin:0 auto;width:100%;
+}
+.w-logo{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.w-logo-box{
+  width:64px;height:64px;background:#fff;border-radius:18px;
+  display:grid;place-items:center;box-shadow:0 8px 28px rgba(0,0,0,.3);
+}
+.w-logo-t{font-size:26px;font-weight:800;letter-spacing:.3px}
+.w-logo-t b{color:var(--green)}
+.w-tag{font-size:12.5px;color:rgba(255,255,255,.8)}
+.w-hero{text-align:center;margin:28px 0}
+.w-hero h1{font-size:27px;font-weight:800;line-height:1.22;margin-bottom:14px;letter-spacing:-.3px}
+.w-hero p{font-size:14.5px;line-height:1.55;color:rgba(255,255,255,.82);max-width:310px;margin:0 auto}
+.w-btns{display:flex;flex-direction:column;gap:12px}
+.btn{
+  height:54px;border-radius:14px;font-size:16px;font-weight:700;
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+.btn-primary{background:var(--green);color:#003B18;box-shadow:0 6px 22px rgba(0,200,83,.4)}
+.btn-outline{background:rgba(255,255,255,.08);color:#fff;border:1.5px solid rgba(255,255,255,.45)}
 
-/* AUTH */
+/* ===== AUTH compact (CDC 3.2 — visible sans scroll) ===== */
 #s-auth{background:#fff}
-.ac{flex:1;display:flex;flex-direction:column;max-width:420px;margin:0 auto;width:100%;padding:20px 22px 22px}
-.ah{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:16px}
-.al{width:52px;height:52px;background:var(--gl);border-radius:14px;display:grid;place-items:center}
-.at{font-size:20px;font-weight:800;color:var(--navy)}
-.tabs{display:flex;background:var(--bg);border-radius:12px;padding:4px;margin-bottom:18px}
-.tab{flex:1;height:40px;border:none;background:0;border-radius:10px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
-.tab.on{background:#fff;color:var(--green);box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.fg{margin-bottom:12px}.fl{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
-.fi{width:100%;height:48px;border:1.5px solid var(--line);border-radius:12px;padding:0 14px 0 44px;font-size:14px;outline:none}.fi:focus{border-color:var(--green)}.fi::placeholder{color:#A5B2AB}
-.iwi{position:relative}.ii{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#7A8B83;pointer-events:none}.ii svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
-.pt{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:0;border:none;padding:4px;cursor:pointer;color:#7A8B83}.pt svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75}
-.cb{display:flex;gap:8px;align-items:flex-start;margin:6px 0 14px;font-size:12px;color:var(--muted);line-height:1.4}.cb input{width:16px;height:16px;margin-top:1px;accent-color:var(--green);flex-shrink:0}
-.ba{width:100%;height:50px;background:var(--green);color:#003B18;border:none;border-radius:13px;font-size:15px;font-weight:700;cursor:pointer;box-shadow:0 5px 16px rgba(0,200,83,.3)}
-.div{display:flex;align-items:center;gap:12px;margin:16px 0;color:var(--muted);font-size:12px}.div::before,.div::after{content:"";flex:1;height:1px;background:var(--line)}
-.sb{display:flex;flex-direction:column;gap:9px}
-.bs{display:flex;align-items:center;justify-content:center;gap:8px;height:46px;border:1.5px solid var(--line);border-radius:12px;background:#fff;font-size:14px;font-weight:600;cursor:pointer}
-.af{text-align:center;margin-top:16px;font-size:13px;color:var(--muted)}.af a{color:var(--green);font-weight:700;text-decoration:none}
+.auth-box{
+  flex:1;display:flex;flex-direction:column;justify-content:center;
+  max-width:420px;margin:0 auto;width:100%;padding:16px 22px 20px;
+}
+.auth-logo{width:48px;height:48px;background:var(--gl);border-radius:14px;display:grid;place-items:center;margin:0 auto 8px}
+.auth-title{text-align:center;font-size:20px;font-weight:800;color:var(--navy);margin-bottom:14px}
+.tabs{display:flex;background:var(--bg);border-radius:12px;padding:3px;margin-bottom:14px}
+.tab{flex:1;height:38px;border:none;background:0;border-radius:10px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
+.tab.on{background:#fff;color:var(--green);box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.fg{margin-bottom:10px}
+.fl{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:4px}
+.fi{
+  width:100%;height:46px;border:1.5px solid var(--line);border-radius:11px;
+  padding:0 12px 0 42px;font-size:14px;outline:none;background:#fff;
+}
+.fi:focus{border-color:var(--green)}
+.fi::placeholder{color:#A5B2AB}
+.iwi{position:relative}
+.ii{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#7A8B83;pointer-events:none}
+.ii svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.pt{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:0;border:none;padding:4px;cursor:pointer;color:#7A8B83}
+.pt svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75}
+.ba{width:100%;height:48px;background:var(--green);color:#003B18;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;margin-top:4px;box-shadow:0 4px 14px rgba(0,200,83,.28)}
+.div{display:flex;align-items:center;gap:10px;margin:12px 0;color:var(--muted);font-size:12px}
+.div::before,.div::after{content:"";flex:1;height:1px;background:var(--line)}
+.sb{display:flex;flex-direction:column;gap:8px}
+.bs{
+  display:flex;align-items:center;justify-content:center;gap:8px;height:44px;
+  border:1.5px solid var(--line);border-radius:11px;background:#fff;font-size:14px;font-weight:600;cursor:pointer;
+}
+.af{text-align:center;margin-top:12px;font-size:13px;color:var(--muted)}
+.af a{color:var(--green);font-weight:700;text-decoration:none}
 .ro{display:none}.mode-r .ro{display:block}
 
-/* DASH */
-#s-dash{background:var(--bg)}
-.dh{background:var(--navy);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;color:#fff}
-.db{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px}.db b{color:var(--green)}
-.dib{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.12);border:none;display:grid;place-items:center;cursor:pointer;color:#fff}.dib svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.dbody{flex:1;overflow-y:auto;padding:18px 16px 90px;max-width:420px;margin:0 auto;width:100%}
-.ur{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.ua{width:48px;height:48px;border-radius:50%;background:#2a4a6b;display:grid;place-items:center;color:#fff;font-weight:700;font-size:16px;overflow:hidden}.ua img{width:100%;height:100%;object-fit:cover}
-.ui h2{font-size:16px;font-weight:700;color:var(--navy)}.ui p{font-size:12px;color:var(--muted);margin-top:2px}
-.sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
-.sc{background:#fff;border-radius:14px;padding:14px;border:1px solid var(--line)}
-.sci{width:34px;height:34px;border-radius:10px;background:var(--gl);display:grid;place-items:center;margin-bottom:10px}.sci svg{width:17px;height:17px;stroke:var(--green);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
-.sc strong{display:block;font-size:22px;font-weight:800;color:var(--navy)}.sc span{font-size:11px;color:var(--muted);font-weight:500}
-.sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.sh h3{font-size:14px;font-weight:700}.sh a{font-size:12px;color:var(--green);font-weight:600;text-decoration:none}
-.pc{background:#fff;border-radius:14px;overflow:hidden;border:1px solid var(--line);display:flex}
-.pi{width:100px;min-height:100px;background:#d0d8d4 center/cover;flex-shrink:0}
-.pinfo{padding:12px 14px;flex:1;display:flex;flex-direction:column;justify-content:center}
-.badge{display:inline-block;font-size:10px;font-weight:700;color:var(--green);background:var(--gl);padding:2px 8px;border-radius:20px;margin-bottom:4px;width:fit-content}
-.pinfo h4{font-size:14px;font-weight:700}.pinfo p{font-size:11px;color:var(--muted);margin-top:2px}
+/* ===== ACCUEIL PERSONNALISÉ (CDC 3.3) ===== */
+#s-home{background:var(--bg)}
+.home-header{
+  background:var(--navy);color:#fff;
+  padding:12px 16px 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.home-user{display:flex;align-items:center;gap:10px;min-width:0}
+.avatar{
+  width:42px;height:42px;border-radius:50%;background:#2a4a6b;
+  display:grid;place-items:center;font-weight:700;font-size:15px;flex-shrink:0;
+  overflow:hidden;border:2px solid rgba(255,255,255,.2);
+}
+.home-user h1{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.home-user p{font-size:11px;color:rgba(255,255,255,.7);margin-top:1px}
+.home-actions{display:flex;gap:8px;flex-shrink:0}
+.icon-btn{
+  width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.12);
+  border:none;display:grid;place-items:center;cursor:pointer;color:#fff;position:relative;
+}
+.icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.icon-btn .dot{
+  position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;
+  background:var(--green);border:1.5px solid var(--navy);
+}
+.home-body{
+  flex:1;overflow-y:auto;padding:16px 16px 96px;
+  max-width:420px;margin:0 auto;width:100%;
+}
+.section{margin-bottom:22px}
+.section-head{
+  display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;
+}
+.section-head h2{font-size:15px;font-weight:700;color:var(--navy)}
+.section-head a{font-size:12px;color:var(--green);font-weight:600;text-decoration:none}
 
-/* BOTTOM NAV */
-.bn{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:center;padding:8px 6px calc(8px + env(safe-area-inset-bottom));z-index:30;max-width:420px;margin:0 auto}
-.ni{display:flex;flex-direction:column;align-items:center;gap:2px;background:0;border:none;color:var(--muted);font-size:10px;font-weight:500;cursor:pointer;min-width:52px}.ni.on{color:var(--green);font-weight:700}
-.ni svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.na{width:50px;height:50px;border-radius:50%;background:var(--green);display:grid;place-items:center;margin-top:-24px;box-shadow:0 4px 14px rgba(0,200,83,.4);border:none;cursor:pointer}.na svg{width:24px;height:24px;stroke:#003B18;fill:none;stroke-width:2.2;stroke-linecap:round}
+/* Cards produits horizontales */
+.scroll-x{
+  display:flex;gap:12px;overflow-x:auto;padding-bottom:4px;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.scroll-x::-webkit-scrollbar{display:none}
+.prod-card{
+  flex:0 0 148px;background:#fff;border-radius:14px;border:1px solid var(--line);overflow:hidden;
+}
+.prod-card .img{
+  height:100px;background:#d8e0dc center/cover no-repeat;
+}
+.prod-card .body{padding:10px}
+.prod-card h3{font-size:13px;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prod-card .meta{font-size:11px;color:var(--muted);margin-top:3px}
+.prod-card .price{font-size:13px;font-weight:800;color:var(--green);margin-top:6px}
 
-/* ADD MATERIAL */
-#s-add{background:#fff}
-.th{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line);background:#fff}
-.th button{background:0;border:none;cursor:pointer;padding:4px}.th button svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.th h1{font-size:17px;font-weight:700;flex:1}
-.abody{flex:1;overflow-y:auto;padding:16px 18px 100px;max-width:420px;margin:0 auto;width:100%}
-.photo-zone{border:2px dashed var(--line);border-radius:14px;padding:28px 16px;text-align:center;margin-bottom:18px;background:var(--bg);cursor:pointer}
-.photo-zone svg{width:36px;height:36px;stroke:var(--muted);fill:none;stroke-width:1.6;margin-bottom:8px}
-.photo-zone p{font-size:14px;font-weight:600;color:var(--ink)}.photo-zone small{font-size:11px;color:var(--muted)}
-.sel{width:100%;height:48px;border:1.5px solid var(--line);border-radius:12px;padding:0 14px;font-size:14px;background:#fff;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7C72' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
-.dims{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.dims .fi{padding-left:14px;text-align:center}
-.foot-btn{position:fixed;bottom:0;left:0;right:0;padding:12px 18px calc(12px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line);max-width:420px;margin:0 auto}
+/* Liste verticale recommandations */
+.rec-list{display:flex;flex-direction:column;gap:10px}
+.rec-item{
+  display:flex;gap:12px;background:#fff;border-radius:14px;border:1px solid var(--line);overflow:hidden;
+}
+.rec-item .img{width:88px;min-height:88px;background:#d8e0dc center/cover;flex-shrink:0}
+.rec-item .body{padding:10px 12px 10px 0;flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.rec-item h3{font-size:14px;font-weight:700;color:var(--navy)}
+.rec-item .meta{font-size:11px;color:var(--muted);margin-top:2px}
+.rec-item .price{font-size:14px;font-weight:800;color:var(--green);margin-top:4px}
 
-/* AI / PASSPORT */
-.card{background:#fff;border-radius:14px;border:1px solid var(--line);overflow:hidden;margin-bottom:14px}
-.card img{width:100%;height:160px;object-fit:cover}
-.card-body{padding:14px}
-.ok{display:flex;align-items:center;gap:8px;color:var(--green);font-weight:700;font-size:14px;margin-bottom:10px}
-.ok svg{width:20px;height:20px;stroke:var(--green);fill:none;stroke-width:2}
-.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}.row:last-child{border:0}.row .k{color:var(--muted)}.row .v{font-weight:600}
-.badge-g{background:var(--gl);color:var(--green);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
-.hist{display:flex;flex-direction:column;gap:0;padding-left:8px}
-.hist-item{display:flex;gap:12px;padding:8px 0;position:relative}
-.hist-item::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--green);margin-top:4px;flex-shrink:0}
-.hist-item::after{content:"";position:absolute;left:4px;top:18px;bottom:-4px;width:2px;background:var(--gl)}
-.hist-item:last-child::after{display:none}
-.hist-item span{font-size:13px;font-weight:500}
+/* Bannière abonnement */
+.sub-banner{
+  background:linear-gradient(135deg,var(--navy),#16324a);
+  border-radius:14px;padding:16px;color:#fff;display:flex;align-items:center;gap:14px;
+  margin-bottom:20px;
+}
+.sub-banner .ico{
+  width:44px;height:44px;border-radius:12px;background:rgba(0,200,83,.2);
+  display:grid;place-items:center;flex-shrink:0;
+}
+.sub-banner .ico svg{width:22px;height:22px;stroke:var(--green);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sub-banner h3{font-size:14px;font-weight:700}
+.sub-banner p{font-size:12px;color:rgba(255,255,255,.75);margin-top:2px}
+.sub-banner button{
+  margin-left:auto;background:var(--green);color:#003B18;border:none;
+  height:36px;padding:0 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;
+}
 
-/* SUBSCRIPTION (remplace portefeuille) */
-.plan{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
-.plan.on{border-color:var(--green);background:var(--gl)}
-.plan h4{font-size:15px;font-weight:700;margin-bottom:4px}.plan .price{font-size:22px;font-weight:800;color:var(--navy)}.plan .price small{font-size:13px;font-weight:500;color:var(--muted)}
-.plan ul{margin:10px 0 0;padding-left:18px;font-size:12px;color:var(--muted);line-height:1.6}
+/* ===== NAV 6 ENTRÉES (CDC 3.4) ===== */
+.bn{
+  position:fixed;bottom:0;left:0;right:0;background:#fff;
+  border-top:1px solid var(--line);
+  display:flex;justify-content:space-around;align-items:center;
+  padding:6px 4px calc(6px + env(safe-area-inset-bottom));
+  z-index:40;max-width:420px;margin:0 auto;
+}
+.ni{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  background:0;border:none;color:var(--muted);font-size:9.5px;font-weight:500;
+  cursor:pointer;min-width:48px;padding:4px 2px;
+}
+.ni.on{color:var(--green);font-weight:700}
+.ni svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.na{
+  width:48px;height:48px;border-radius:50%;background:var(--green);
+  display:grid;place-items:center;margin-top:-20px;
+  box-shadow:0 4px 14px rgba(0,200,83,.4);border:none;cursor:pointer;
+}
+.na svg{width:22px;height:22px;stroke:#003B18;fill:none;stroke-width:2.2;stroke-linecap:round}
+
+/* Sheet Scanner / Ajouter */
+.sheet-bg{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;
+  align-items:flex-end;justify-content:center;
+}
+.sheet-bg.open{display:flex}
+.sheet{
+  background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:420px;
+  padding:20px 20px calc(24px + env(safe-area-inset-bottom));
+}
+.sheet h3{font-size:16px;font-weight:700;margin-bottom:14px;text-align:center}
+.sheet-opt{
+  display:flex;align-items:center;gap:14px;padding:14px;border-radius:14px;
+  border:1.5px solid var(--line);margin-bottom:10px;cursor:pointer;background:#fff;
+}
+.sheet-opt:active{background:var(--bg)}
+.sheet-opt .ico{
+  width:44px;height:44px;border-radius:12px;background:var(--gl);
+  display:grid;place-items:center;
+}
+.sheet-opt .ico svg{width:22px;height:22px;stroke:var(--green);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sheet-opt strong{display:block;font-size:14px;font-weight:700}
+.sheet-opt span{font-size:12px;color:var(--muted)}
 
 @supports(padding:max(0px)){
-.hc,.ac{padding-top:max(20px,env(safe-area-inset-top));padding-bottom:max(20px,env(safe-area-inset-bottom))}
-.dh,.th{padding-top:max(12px,env(safe-area-inset-top))}
+  .welcome-inner{padding-top:max(48px,env(safe-area-inset-top))}
+  .home-header{padding-top:max(12px,env(safe-area-inset-top))}
+  .auth-box{padding-top:max(16px,env(safe-area-inset-top))}
 }
 </style>
 </head>
 <body>
 
-<!-- 1 HOME -->
-<div class="screen active" id="s-home">
-<div class="hc">
-<div class="logo">
-<div class="logo-box"><svg width="30" height="30" viewBox="0 0 32 32" fill="none"><path d="M5 14.5L16 5l11 9.5V26a1.5 1.5 0 01-1.5 1.5h-19A1.5 1.5 0 015 26V14.5z" fill="#0A1628"/><path d="M12 27.5V18h8v9.5" stroke="#00C853" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 5L5 14.5h22L16 5z" fill="#00C853"/></svg></div>
-<div class="logo-t">BUILD<b>TRACE</b></div>
-<div class="tag">Traçabilité • Réemploi • Construction durable</div>
-</div>
-<div class="hero">
-<h1>Des matériaux<br>plus durables pour<br>un avenir meilleur</h1>
-<p>Identifiez, suivez et réutilisez les matériaux de construction grâce à la blockchain et à l’intelligence artificielle.</p>
-</div>
-<div>
-<div class="btns">
-<button class="b b-g" onclick="go('auth');setMode('r')">Commencer gratuitement →</button>
-<button class="b b-o" onclick="go('auth');setMode('l')">Se connecter</button>
-</div>
-<div class="qa">
-<button class="qi"><div class="qic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3.5v3.5H14zM18.5 14H22v3.5h-3.5zM14 18.5h3.5V22H14zM18.5 18.5H22V22h-3.5z"/></svg></div>Scanner un QR</button>
-<button class="qi"><div class="qic"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>Carte</button>
-<button class="qi"><div class="qic"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg></div>Marketplace</button>
-</div>
-</div>
-</div>
+<!-- ========== 3.1 PAGE DE BIENVENUE ========== -->
+<div class="screen active" id="s-welcome">
+  <div class="welcome-inner">
+    <div class="w-logo">
+      <div class="w-logo-box">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M5 14.5L16 5l11 9.5V26a1.5 1.5 0 01-1.5 1.5h-19A1.5 1.5 0 015 26V14.5z" fill="#0A1628"/>
+          <path d="M12 27.5V18h8v9.5" stroke="#00C853" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16 5L5 14.5h22L16 5z" fill="#00C853"/>
+        </svg>
+      </div>
+      <div class="w-logo-t">BUILD<b>TRACE</b></div>
+      <div class="w-tag">Découverte · Analyse · Mise en relation</div>
+    </div>
+
+    <div class="w-hero">
+      <h1>Des matériaux<br>plus durables pour<br>un avenir meilleur</h1>
+      <p>Consultez, publiez et échangez des matériaux de construction. Analyse visuelle assistée par IA. Mettez-vous en relation avec les vendeurs.</p>
+    </div>
+
+    <div class="w-btns">
+      <button class="btn btn-primary" onclick="go('auth');setMode('r')">Commencer gratuitement</button>
+      <button class="btn btn-outline" onclick="go('auth');setMode('l')">Continuer</button>
+    </div>
+  </div>
 </div>
 
-<!-- 2 AUTH -->
+<!-- ========== 3.2 INSCRIPTION / CONNEXION ========== -->
 <div class="screen" id="s-auth">
-<div class="ac mode-r" id="abox">
-<div class="ah">
-<div class="al"><svg width="26" height="26" viewBox="0 0 32 32" fill="none"><path d="M5 14.5L16 5l11 9.5V26a1.5 1.5 0 01-1.5 1.5h-19A1.5 1.5 0 015 26V14.5z" fill="#0A1628"/><path d="M12 27.5V18h8v9.5" stroke="#00C853" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 5L5 14.5h22L16 5z" fill="#00C853"/></svg></div>
-<div class="at">BUILDTRACE</div>
-</div>
-<div class="tabs">
-<button class="tab" id="tl" onclick="setMode('l')">Connexion</button>
-<button class="tab on" id="tr" onclick="setMode('r')">Inscription</button>
-</div>
-<form onsubmit="return doAuth(event)">
-<div class="fg ro"><label class="fl">Nom complet</label><div class="iwi"><span class="ii"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><input class="fi" placeholder="Votre nom complet"></div></div>
-<div class="fg"><label class="fl">Email</label><div class="iwi"><span class="ii"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span><input class="fi" type="email" placeholder="email@exemple.com" required></div></div>
-<div class="fg ro"><label class="fl">Téléphone</label><div class="iwi"><span class="ii"><svg viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span><input class="fi" type="tel" placeholder="+228 XX XX XX XX"></div></div>
-<div class="fg"><label class="fl">Mot de passe</label><div class="iwi"><span class="ii"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span><input class="fi" type="password" id="pwd" placeholder="••••••••" required style="padding-right:42px"><button type="button" class="pt" onclick="togPwd()"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
-<div class="cb ro"><input type="checkbox" id="terms" checked><label for="terms">J’accepte les conditions d’utilisation et la politique de confidentialité</label></div>
-<button type="submit" class="ba" id="asub">Créer mon compte</button>
-</form>
-<div class="div">ou</div>
-<div class="sb">
-<button class="bs" type="button" onclick="go('dash')"><svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg> Continuer avec Google</button>
-<button class="bs" type="button" onclick="go('dash')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg> Continuer avec Apple</button>
-</div>
-<div class="af" id="afoot">Vous avez déjà un compte ? <a href="#" onclick="setMode('l');return false">Se connecter</a></div>
-</div>
+  <div class="auth-box mode-r" id="abox">
+    <div class="auth-logo">
+      <svg width="26" height="26" viewBox="0 0 32 32" fill="none">
+        <path d="M5 14.5L16 5l11 9.5V26a1.5 1.5 0 01-1.5 1.5h-19A1.5 1.5 0 015 26V14.5z" fill="#0A1628"/>
+        <path d="M12 27.5V18h8v9.5" stroke="#00C853" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M16 5L5 14.5h22L16 5z" fill="#00C853"/>
+      </svg>
+    </div>
+    <div class="auth-title">BUILDTRACE</div>
+
+    <div class="tabs">
+      <button class="tab" id="tl" onclick="setMode('l')">Connexion</button>
+      <button class="tab on" id="tr" onclick="setMode('r')">Inscription</button>
+    </div>
+
+    <form onsubmit="return doAuth(event)">
+      <div class="fg ro">
+        <label class="fl">Nom et prénom</label>
+        <div class="iwi">
+          <span class="ii"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+          <input class="fi" placeholder="Nom et prénom" autocomplete="name">
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Adresse e-mail</label>
+        <div class="iwi">
+          <span class="ii"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+          <input class="fi" type="email" placeholder="email@exemple.com" required autocomplete="email">
+        </div>
+      </div>
+      <div class="fg">
+        <label class="fl">Mot de passe</label>
+        <div class="iwi">
+          <span class="ii"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
+          <input class="fi" type="password" id="pwd" placeholder="••••••••" required style="padding-right:40px" autocomplete="current-password">
+          <button type="button" class="pt" onclick="togPwd()" aria-label="Afficher"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+        </div>
+      </div>
+      <button type="submit" class="ba" id="asub">Créer mon compte</button>
+    </form>
+
+    <div class="div">ou</div>
+    <div class="sb">
+      <button class="bs" type="button" onclick="go('home')">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Continuer avec Google
+      </button>
+      <button class="bs" type="button" onclick="go('home')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+        Continuer avec Apple
+      </button>
+    </div>
+    <div class="af" id="afoot">Vous avez déjà un compte ? <a href="#" onclick="setMode('l');return false">Se connecter</a></div>
+  </div>
 </div>
 
-<!-- 3 DASHBOARD -->
-<div class="screen" id="s-dash">
-<header class="dh">
-<div class="db"><svg width="22" height="22" viewBox="0 0 32 32" fill="none"><path d="M5 14.5L16 5l11 9.5V26a1.5 1.5 0 01-1.5 1.5h-19A1.5 1.5 0 015 26V14.5z" fill="#fff"/><path d="M12 27.5V18h8v9.5" stroke="#00C853" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 5L5 14.5h22L16 5z" fill="#00C853"/></svg> BUILD<b>TRACE</b></div>
-<button class="dib" aria-label="Notifications"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg></button>
-</header>
-<div class="dbody">
-<div class="ur"><div class="ua">A</div><div class="ui"><h2>Bonjour, Amadou</h2><p>Voici un aperçu de votre activité</p></div></div>
-<div class="sg">
-<div class="sc"><div class="sci"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div><strong>12</strong><span>Matériaux publiés</span></div>
-<div class="sc"><div class="sci"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></div><strong>5</strong><span>Bâtiments actifs</span></div>
-<div class="sc"><div class="sci"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg></div><strong>8</strong><span>Transactions en cours</span></div>
-<div class="sc"><div class="sci"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 019.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></div><strong>2.4 kg</strong><span>CO₂ évités</span></div>
-</div>
-<div class="sh"><h3>Mes projets récents</h3><a href="#">Voir tout →</a></div>
-<div class="pc"><div class="pi" style="background-image:url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=300&q=80')"></div><div class="pinfo"><span class="badge">Actif</span><h4>Immeuble ABC</h4><p>Lomé, Togo · 124 matériaux enregistrés</p></div></div>
-</div>
-<nav class="bn">
-<button class="ni on" onclick="go('dash')">⌂<small>Accueil</small></button>
-<button class="ni" onclick="go('map')">⌖<small>Carte</small></button>
-<button class="na" onclick="go('add')" aria-label="Ajouter">＋</button>
-<button class="ni" onclick="go('market')">▣<small>Marketplace</small></button>
-<button class="ni" onclick="go('wallet')">▤<small>Portefeuille</small></button>
-<button class="ni" onclick="go('company')">◉<small>Profil</small></button>
-</nav>
+<!-- ========== 3.3 ACCUEIL PERSONNALISÉ ========== -->
+<div class="screen" id="s-home">
+  <header class="home-header">
+    <div class="home-user">
+      <div class="avatar">A</div>
+      <div>
+        <h1>Bonjour, Amadou</h1>
+        <p>Bienvenue sur BUILDTRACE</p>
+      </div>
+    </div>
+    <div class="home-actions">
+      <!-- Raccourci abonnements / offres (icône cadeau) — CDC 3.3 -->
+      <button class="icon-btn" onclick="alert('Abonnements vendeur')" aria-label="Abonnements et offres">
+        <svg viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Notifications">
+        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <span class="dot"></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="home-body">
+    <!-- Bannière abonnement vendeur -->
+    <div class="sub-banner">
+      <div class="ico">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <div>
+        <h3>Devenir vendeur</h3>
+        <p>Publiez vos matériaux avec un abonnement</p>
+      </div>
+      <button type="button" onclick="alert('Page abonnements')">Voir</button>
+    </div>
+
+    <!-- Nouveaux matériaux -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Nouveaux matériaux</h2>
+        <a href="#">Voir tout</a>
+      </div>
+      <div class="scroll-x">
+        <article class="prod-card">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=300&q=80')"></div>
+          <div class="body">
+            <h3>Poutres acier</h3>
+            <p class="meta">6 m · Bon état</p>
+            <p class="price">950 €</p>
+          </div>
+        </article>
+        <article class="prod-card">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=300&q=80')"></div>
+          <div class="body">
+            <h3>Tuiles métalliques</h3>
+            <p class="meta">2,10 m · Bon état</p>
+            <p class="price">120 €</p>
+          </div>
+        </article>
+        <article class="prod-card">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1581852017103-68ac65514cf7?auto=format&fit=crop&w=300&q=80')"></div>
+          <div class="body">
+            <h3>Fenêtres alu</h3>
+            <p class="meta">1,5 m · Très bon état</p>
+            <p class="price">200 €</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Produits récemment ajoutés -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Récemment ajoutés</h2>
+        <a href="#">Voir tout</a>
+      </div>
+      <div class="scroll-x">
+        <article class="prod-card">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=300&q=80')"></div>
+          <div class="body">
+            <h3>Carrelage 30×30</h3>
+            <p class="meta">100 m² · Bon état</p>
+            <p class="price">8 €/m²</p>
+          </div>
+        </article>
+        <article class="prod-card">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=300&q=80')"></div>
+          <div class="body">
+            <h3>Ciment</h3>
+            <p class="meta">12 sacs · Lomé</p>
+            <p class="price">Sur devis</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Recommandations personnalisées -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Recommandés pour vous</h2>
+        <a href="#">Voir tout</a>
+      </div>
+      <div class="rec-list">
+        <article class="rec-item">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=200&q=80')"></div>
+          <div class="body">
+            <h3>Poutres en acier</h3>
+            <p class="meta">Lomé · 4 km · 6 m · Bon état</p>
+            <p class="price">950 €</p>
+          </div>
+        </article>
+        <article class="rec-item">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=200&q=80')"></div>
+          <div class="body">
+            <h3>Tuiles métalliques</h3>
+            <p class="meta">Lomé · 2 km · Bon état</p>
+            <p class="price">120 €</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+
+  <!-- Navigation principale 6 entrées (CDC 3.4) -->
+  <nav class="bn">
+    <button class="ni on" onclick="go('home')">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Accueil
+    </button>
+    <button class="ni" onclick="alert('Recherche — à venir')">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Recherche
+    </button>
+    <button class="na" onclick="openSheet()" aria-label="Scanner ou ajouter">
+      <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
+    <button class="ni" onclick="alert('Marketplace — à venir')">
+      <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      Marketplace
+    </button>
+    <button class="ni" onclick="alert('Messages — à venir')">
+      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      Messages
+    </button>
+    <button class="ni" onclick="alert('Profil — à venir')">
+      <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Profil
+    </button>
+  </nav>
 </div>
 
-<!-- 4 ADD MATERIAL -->
-<div class="screen" id="s-add">
-<div class="th"><button onclick="go('dash')"><svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><h1>Ajouter un matériau</h1></div>
-<div class="abody">
-<div class="photo-zone" onclick="alert('Upload photo (à brancher)')">
-<svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-<p>Ajouter des photos</p><small>Formats : JPG, PNG (max 5 Mo)</small>
-</div>
-<div class="fg"><label class="fl">Catégorie</label><select class="sel"><option>Béton</option><option>Métal</option><option>Bois</option><option>Verre</option></select></div>
-<div class="fg"><label class="fl">Type de matériau</label><select class="sel"><option>Ciment</option><option>Poutre acier</option><option>Tuile</option><option>Carrelage</option></select></div>
-<div class="fg"><label class="fl">Quantité</label><div class="iwi"><input class="fi" type="number" value="100" style="padding-left:14px"><span style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--muted)">kg</span></div></div>
-<div class="fg"><label class="fl">État</label><select class="sel"><option>Bon état</option><option>Très bon état</option><option>À rénover</option></select></div>
-<div class="fg"><label class="fl">Dimensions (optionnel)</label><div class="dims"><input class="fi" placeholder="Long. m"><input class="fi" placeholder="Larg. m"><input class="fi" placeholder="Haut. m"></div></div>
-<div class="fg"><label class="fl">Localisation</label><div class="iwi"><span class="ii"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span><input class="fi" value="Lomé, Togo"></div></div>
-</div>
-<div class="foot-btn"><button class="ba" onclick="go('ai')">Suivant →</button></div>
-</div>
-
-<!-- 5 ANALYSE IA -->
-<div class="screen" id="s-ai">
-<div class="th"><button onclick="go('add')"><svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><h1>Analyse IA</h1></div>
-<div class="abody">
-<div class="card"><img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=600&q=80" alt="Poutres"><div class="card-body">
-<div class="ok"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Analyse terminée !</div>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h3 style="font-size:16px;font-weight:700">Poutre en acier</h3><span class="badge-g">98% Confiance</span></div>
-<div class="row"><span class="k">Matériau</span><span class="v">Acier</span></div>
-<div class="row"><span class="k">État</span><span class="v">Bon</span></div>
-<div class="row"><span class="k">Dimensions</span><span class="v">6 m</span></div>
-<div class="row"><span class="k">Date d’analyse</span><span class="v">28/10/2026</span></div>
-</div></div>
-<div class="card"><div class="card-body">
-<p style="font-size:13px;font-weight:600;margin-bottom:8px">Recommandation</p>
-<p style="font-size:13px;color:var(--muted);background:var(--gl);padding:12px;border-radius:10px">✓ Matériau réutilisable dans de bonnes conditions.</p>
-</div></div>
-<button class="ba" onclick="go('pass')">Voir le rapport complet</button>
-</div>
-</div>
-
-<!-- 6 PASSEPORT -->
-<div class="screen" id="s-pass">
-<div class="th"><button onclick="go('ai')"><svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><h1>Passeport numérique</h1></div>
-<div class="abody">
-<div class="card"><img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=600&q=80" alt=""><div class="card-body">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><span class="badge-g">✓ Passeport numérique Validé</span></div>
-<div style="display:flex;gap:14px;align-items:flex-start">
-<div style="flex:1"><h3 style="font-size:16px;font-weight:700;margin-bottom:4px">Poutre en acier</h3><p style="font-size:12px;color:var(--muted)">Code : BT-000145</p></div>
-<div style="width:72px;height:72px;background:#f0f0f0;border-radius:8px;display:grid;place-items:center;font-size:10px;color:var(--muted)">QR</div>
-</div>
-<div class="row" style="margin-top:10px"><span class="k">Origine</span><span class="v">Immeuble ABC</span></div>
-<div class="row"><span class="k">Dimensions</span><span class="v">6 m</span></div>
-<div class="row"><span class="k">État</span><span class="v">Bon</span></div>
-<div class="row"><span class="k">Date</span><span class="v">28/10/2026</span></div>
-</div></div>
-<div class="card"><div class="card-body">
-<p style="font-size:13px;font-weight:700;margin-bottom:10px">Historique</p>
-<div class="hist">
-<div class="hist-item"><span>Fabriqué</span></div>
-<div class="hist-item"><span>Installé</span></div>
-<div class="hist-item"><span>Démonté</span></div>
-<div class="hist-item"><span>Disponible pour réemploi</span></div>
-</div>
-</div></div>
-<button class="ba" style="margin-top:8px">Scanner le QR code</button>
-<p style="text-align:center;font-size:11px;color:var(--muted);margin-top:10px">✓ Vérifié par BUILDTRACE</p>
-</div>
-</div>
-
-<!-- 7 CARTE -->
-<div class="screen" id="s-map"><div class="th"><button onclick="go('dash')">←</button><h1>Carte interactive</h1></div><div class="abody"><input class="fi" placeholder="Rechercher un matériau, un lieu..." style="padding-left:14px"><div class="card" style="height:260px;margin-top:14px;background:repeating-linear-gradient(35deg,#dcebdd,#dcebdd 35px,#c8ddcb 36px,#c8ddcb 65px);display:grid;place-items:center;color:#00A843;font-size:40px">⌖</div><div class="sh"><h3>Matériaux à proximité</h3><a onclick="go('market')">Voir tout →</a></div><div class="pc"><div class="pi" style="background-image:url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=300&q=80')"></div><div class="pinfo"><h4>Poutres acier</h4><p>4 km · 12 disponibles</p></div></div></div></div>
-<!-- 8 MARKETPLACE -->
-<div class="screen" id="s-market"><div class="th"><button onclick="go('dash')">←</button><h1>Marketplace</h1></div><div class="abody"><div style="display:flex;gap:8px;margin-bottom:14px"><span class="badge-g">Tout</span><span class="badge-g">À vendre</span><span class="badge-g">À donner</span><span class="badge-g">À réutiliser</span></div><div class="sg"><div class="card"><img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=400&q=80"><div class="card-body"><b>Poutres acier</b><p class="k">6 m · Bon état</p><b style="color:var(--green)">950 €</b></div></div><div class="card"><img src="https://images.unsplash.com/photo-1601058268499-e52658b8bb88?auto=format&fit=crop&w=400&q=80"><div class="card-body"><b>Tuiles métalliques</b><p class="k">2,10 m · Bon état</p><b style="color:var(--green)">120 €</b></div></div><div class="card"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=400&q=80"><div class="card-body"><b>Fenêtres aluminium</b><p class="k">1,5 m · Très bon état</p><b style="color:var(--green)">200 €</b></div></div><div class="card"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=400&q=80"><div class="card-body"><b>Carrelage 30×30</b><p class="k">100 m² · Bon état</p><b style="color:var(--green)">8 €/m²</b></div></div></div><button class="ba" onclick="go('payment')">Continuer vers le paiement</button></div></div>
-<!-- 9 PAIEMENT -->
-<div class="screen" id="s-payment"><div class="th"><button onclick="go('market')">←</button><h1>Paiement sécurisé</h1></div><div class="abody"><div class="card"><div class="card-body"><h3>Choisissez votre moyen de paiement :</h3><label class="row"><span><input type="radio" name="pay" checked> Mobile Money (TMoney / Flooz)</span></label><label class="row"><span><input type="radio" name="pay"> Carte bancaire (Visa, Mastercard)</span></label><label class="row"><span><input type="radio" name="pay"> PayPal</span></label><label class="row"><span><input type="radio" name="pay"> Virement bancaire</span></label><p style="background:var(--gl);padding:13px;border-radius:10px;margin-top:14px;color:var(--green)">Paiement sécurisé — protection SSL.</p></div></div><button class="ba" onclick="alert('Paiement non connecté : aucun débit effectué.')">Payer maintenant →</button><p class="k" style="text-align:center;margin-top:12px">Écran de démonstration uniquement.</p></div></div>
-<!-- 10 PORTEFEUILLE -->
-<div class="screen" id="s-wallet"><div class="th"><button onclick="go('dash')">←</button><h1>Mon portefeuille</h1></div><div class="abody"><div style="background:linear-gradient(135deg,#0A1628,#173c61);border-radius:16px;padding:22px;color:white;margin-bottom:18px"><small>Solde BUILDTRACE</small><h2 style="font-size:29px;margin:8px 0">2 430 € <small style="color:#00C853">+12%</small></h2><div style="display:flex;gap:9px"><button class="b b-g" style="flex:1;height:42px">Déposer</button><button class="b b-o" style="flex:1;height:42px">Retirer</button></div></div><div class="sh"><h3>Transactions récentes</h3><a>Voir tout →</a></div><div class="card card-body"><div class="row"><span>↑ Vente de matériaux<br><small class="k">28/10/2026</small></span><b style="color:var(--green)">+750 €</b></div><div class="row"><span>↓ Achat de poutres<br><small class="k">27/10/2026</small></span><b style="color:#d9534f">-680 €</b></div><div class="row"><span>↑ Dépôt Mobile Money<br><small class="k">25/10/2026</small></span><b style="color:var(--green)">+500 €</b></div><div class="row"><span>↓ Frais de service<br><small class="k">24/10/2026</small></span><b style="color:#d9534f">-50 €</b></div></div><p class="k" style="text-align:center">Données fictives de maquette.</p></div></div>
-<!-- 11 RAPPORT ENVIRONNEMENTAL -->
-<div class="screen" id="s-report"><div class="th"><button onclick="go('dash')">←</button><h1>Rapport environnemental</h1></div><div class="abody"><div class="card"><div style="padding:28px 15px;text-align:center;background:linear-gradient(#eaf8ef,#fff)"><div style="font-size:40px;color:var(--green)">♧</div><h2 style="color:var(--green);margin:8px 0">856 kg de CO₂ évités !</h2><p class="k">Grâce à la réutilisation de vos matériaux</p><div style="font-size:42px;margin:18px">🌳 🏙️ 🌳</div><b style="color:var(--green)">≈ 43 arbres sauvés</b></div></div><div class="sh"><h3>Impact global</h3></div><div class="sg"><div class="sc"><strong>856 kg</strong><span>CO₂ évités</span></div><div class="sc"><strong>43</strong><span>Arbres sauvés</span></div><div class="sc"><strong>2 140 kWh</strong><span>Énergie économisée</span></div></div><button class="ba">Voir le détail du rapport →</button></div></div>
-<!-- 12 PROFIL ENTREPRISE -->
-<div class="screen" id="s-company"><div class="th"><button onclick="go('dash')">←</button><h1>Profil entreprise</h1></div><div class="abody"><div class="card"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=700&q=80" alt="Bâtiment"><div class="card-body"><h2>BuildEco Togo <span style="color:#2d8cff">✓</span></h2><p class="k" style="margin:7px 0 12px">Entreprise spécialisée dans la construction durable et le réemploi des matériaux.</p><div class="sg"><div class="sc"><strong>247</strong><span>Matériaux</span></div><div class="sc"><strong>89</strong><span>Transactions</span></div><div class="sc"><strong>98%</strong><span>Satisfaction</span></div></div><div style="display:flex;gap:8px"><button class="ba">Contacter</button><button class="bs" style="flex:1">Suivre</button></div></div></div><div class="card card-body"><h3>Informations</h3><div class="row"><span class="k">Catégorie</span><b>Construction / BTP</b></div><div class="row"><span class="k">Lieu</span><b>Lomé, Togo</b></div><div class="row"><span class="k">Site web</span><b>www.buildeco.tg</b></div><div class="row"><span class="k">Email</span><b>contact@buildeco.tg</b></div></div></div></div>
-<!-- SUBSCRIPTIONS (remplace portefeuille / paiement matériaux) -->
-<div class="screen" id="s-sub">
-<div class="th"><button onclick="go('dash')"><svg viewBox="0 0 24 24"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><h1>Abonnements pro</h1></div>
-<div class="abody">
-<p style="font-size:13px;color:var(--muted);margin-bottom:16px">Monétisation uniquement par abonnements professionnels. Le paiement des matériaux reste hors plateforme.</p>
-<div class="plan on"><h4>Starter</h4><div class="price">9 900 <small>FCFA / mois</small></div><ul><li>Jusqu’à 50 matériaux</li><li>Passeports numériques</li><li>Support email</li></ul></div>
-<div class="plan"><h4>Pro</h4><div class="price">24 900 <small>FCFA / mois</small></div><ul><li>Matériaux illimités</li><li>Analyse IA</li><li>Marketplace prioritaire</li><li>Support prioritaire</li></ul></div>
-<div class="plan"><h4>Entreprise</h4><div class="price">Sur devis</div><ul><li>Multi-utilisateurs</li><li>API & intégrations</li><li>Account manager</li></ul></div>
-<button class="ba" style="margin-top:8px">Choisir un abonnement</button>
-</div>
+<!-- Sheet Scanner / Ajouter (CDC 3.4) -->
+<div class="sheet-bg" id="sheet" onclick="if(event.target===this)closeSheet()">
+  <div class="sheet">
+    <h3>Que souhaitez-vous faire ?</h3>
+    <div class="sheet-opt" onclick="closeSheet();alert('Scanner / analyser un matériau')">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div>
+        <strong>Scanner / analyser</strong>
+        <span>Identifier un matériau avec l’IA</span>
+      </div>
+    </div>
+    <div class="sheet-opt" onclick="closeSheet();alert('Ajouter un produit (abonnement vendeur requis)')">
+      <div class="ico"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+      <div>
+        <strong>Ajouter un produit</strong>
+        <span>Publier sur la marketplace</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('s-'+id).classList.add('active');window.scrollTo(0,0)}
-function setMode(m){const b=document.getElementById('abox'),tl=document.getElementById('tl'),tr=document.getElementById('tr'),s=document.getElementById('asub'),f=document.getElementById('afoot');
-if(m==='r'){b.classList.add('mode-r');tr.classList.add('on');tl.classList.remove('on');s.textContent='Créer mon compte';f.innerHTML='Vous avez déjà un compte ? <a href="#" onclick="setMode(\'l\');return false">Se connecter</a>'}
-else{b.classList.remove('mode-r');tl.classList.add('on');tr.classList.remove('on');s.textContent='Se connecter';f.innerHTML='Pas encore de compte ? <a href="#" onclick="setMode(\'r\');return false">Créer un compte</a>'}}
-function togPwd(){const i=document.getElementById('pwd');i.type=i.type==='password'?'text':'password'}
-function doAuth(e){e.preventDefault();go('dash');return false}
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s-'+id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function setMode(m){
+  const b=document.getElementById('abox');
+  const tl=document.getElementById('tl');
+  const tr=document.getElementById('tr');
+  const s=document.getElementById('asub');
+  const f=document.getElementById('afoot');
+  if(m==='r'){
+    b.classList.add('mode-r');tr.classList.add('on');tl.classList.remove('on');
+    s.textContent='Créer mon compte';
+    f.innerHTML='Vous avez déjà un compte ? <a href="#" onclick="setMode(\'l\');return false">Se connecter</a>';
+  }else{
+    b.classList.remove('mode-r');tl.classList.add('on');tr.classList.remove('on');
+    s.textContent='Se connecter';
+    f.innerHTML='Pas encore de compte ? <a href="#" onclick="setMode(\'r\');return false">Créer un compte</a>';
+  }
+}
+function togPwd(){
+  const i=document.getElementById('pwd');
+  i.type=i.type==='password'?'text':'password';
+}
+function doAuth(e){
+  e.preventDefault();
+  go('home');
+  return false;
+}
+function openSheet(){document.getElementById('sheet').classList.add('open')}
+function closeSheet(){document.getElementById('sheet').classList.remove('open')}
 </script>
 </body>
 </html>
