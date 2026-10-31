@@ -50,27 +50,27 @@ body{
 /* ===== AUTH compact (CDC 3.2 — visible sans scroll) ===== */
 #s-auth{background:#071a39;position:relative;overflow:hidden}
 #s-auth::after{content:"";position:absolute;left:-8%;right:-8%;bottom:-5px;height:115px;pointer-events:none;opacity:.95;background:linear-gradient(180deg,transparent,#071a39 25%),url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1000&q=75") center 60%/cover no-repeat}
-.auth-box{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;justify-content:center;max-width:430px;margin:0 auto;width:100%;padding:16px 22px max(22px,env(safe-area-inset-bottom))}
+.auth-box{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;justify-content:center;max-width:460px;margin:0 auto;width:100%;padding:14px 12px max(20px,env(safe-area-inset-bottom))}
 .auth-logo{width:54px;height:54px;background:transparent;border-radius:0;display:grid;place-items:center;margin:0 auto 2px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.25))}
 .auth-title{text-align:center;font-size:23px;font-weight:850;color:#fff;letter-spacing:.2px;margin-bottom:15px}
 .tabs{display:none}
-.auth-panel{background:#fff;border-radius:24px;padding:18px 16px 15px;box-shadow:0 14px 36px rgba(0,0,0,.22)}
-.fg{margin-bottom:9px}
-.fl{display:block;font-size:11px;font-weight:700;color:#42536b;margin-bottom:4px}
-.fi{width:100%;height:44px;border:1.5px solid #d8e0ec;border-radius:12px;padding:0 12px 0 42px;font-size:13.5px;outline:none;background:#fff;color:#102344}
+.auth-panel{width:100%;background:#fff;border-radius:24px;padding:22px 20px 18px;box-shadow:0 14px 36px rgba(0,0,0,.22)}
+.fg{margin-bottom:11px}
+.fl{display:block;font-size:12px;font-weight:750;color:#263b59;margin-bottom:5px}
+.fi{width:100%;height:49px;border:1.5px solid #cbd6e5;border-radius:13px;padding:0 13px 0 44px;font-size:15px;font-weight:500;outline:none;background:#fff;color:#102344}
 .fi:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,200,83,.09)}
-.fi::placeholder{color:#9aa8ba}
+.fi::placeholder{color:#687991;opacity:1}
 .iwi{position:relative}
 .ii{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:#43536c;pointer-events:none}
 .ii svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
 .pt{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:0;border:none;padding:4px;cursor:pointer;color:#7A8B83}
 .pt svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.75}
-.ba{width:100%;height:46px;background:#00c747;color:#003b18;border:none;border-radius:13px;font-size:14px;font-weight:750;cursor:pointer;margin-top:3px;box-shadow:0 4px 14px rgba(0,200,83,.25)}
+.ba{width:100%;height:50px;background:#00c747;color:#003b18;border:none;border-radius:13px;font-size:15px;font-weight:800;cursor:pointer;margin-top:4px;box-shadow:0 4px 14px rgba(0,200,83,.25)}
 .div{display:flex;align-items:center;gap:10px;margin:11px 0;color:#637187;font-size:12px}
 .div::before,.div::after{content:"";flex:1;height:1px;background:#e1e7ef}
 .sb{display:flex;flex-direction:column;gap:7px}
-.bs{display:flex;align-items:center;justify-content:center;gap:9px;height:43px;border:1.5px solid #d9e1ec;border-radius:13px;background:#fff;font-size:13.5px;font-weight:650;color:#182b48;cursor:pointer}
-.af{text-align:center;margin-top:12px;font-size:12px;color:#637187}
+.bs{display:flex;align-items:center;justify-content:center;gap:9px;height:47px;border:1.5px solid #cbd6e5;border-radius:13px;background:#fff;font-size:14.5px;font-weight:700;color:#182b48;cursor:pointer}
+.af{text-align:center;margin-top:13px;font-size:13px;color:#43536b}
 .af a{color:#00a943;font-weight:800;text-decoration:none}
 .ro{display:none}.mode-r .ro{display:block}
 @media(max-height:740px){.auth-box{padding-top:8px;padding-bottom:12px}.auth-logo{width:43px;height:43px}.auth-title{margin-bottom:9px}.auth-panel{padding:13px 14px 11px}.fg{margin-bottom:7px}.fi{height:41px}.ba{height:43px}.div{margin:8px 0}.bs{height:40px}.af{margin-top:8px}}
@@ -108,6 +108,7 @@ body{
 .premium-copy p{font-size:12px;line-height:1.35;color:rgba(255,255,255,.88);margin-bottom:10px}
 .premium-copy button{height:34px;padding:0 16px;border:0;border-radius:18px;background:#00df50;color:#003a19;font-size:12px;font-weight:800}
 .premium-crown{position:absolute;right:12px;top:17px;font-size:58px;line-height:1;filter:drop-shadow(0 5px 7px rgba(0,0,0,.35))}
+.home-ad-slot{position:relative;display:flex;align-items:flex-end;min-height:132px;margin:0 0 20px;padding:15px;border-radius:17px;overflow:hidden;text-decoration:none;color:#fff;background:linear-gradient(90deg,rgba(4,20,45,.88),rgba(4,20,45,.18)),url("https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=85") center/cover no-repeat;box-shadow:0 4px 14px rgba(10,25,45,.14)}.ad-label{position:absolute;right:10px;top:10px;padding:4px 8px;border-radius:5px;background:rgba(3,18,38,.72);font-size:9px;font-weight:800;letter-spacing:.7px}.ad-copy{display:flex;flex-direction:column;gap:5px;max-width:75%;text-shadow:0 1px 4px rgba(0,0,0,.4)}.ad-copy strong{font-size:18px;font-weight:850}.ad-copy small{font-size:12px;line-height:1.35;color:#f3f7fc}
 .home-header .avatar{background:#496a88}
 .section{margin-bottom:18px}
 .section-head{margin-bottom:10px}
@@ -118,8 +119,8 @@ body{
 .section-head{
   display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;
 }
-.section-head h2{font-size:15px;font-weight:700;color:var(--navy)}
-.section-head a{font-size:12px;color:var(--green);font-weight:600;text-decoration:none}
+.section-head h2{font-size:16px;font-weight:800;color:#071a36}
+.section-head a{font-size:13px;color:#087a3c;font-weight:750;text-decoration:none}
 
 /* Cards produits horizontales */
 .scroll-x{
@@ -134,9 +135,9 @@ body{
   height:100px;background:#d8e0dc center/cover no-repeat;
 }
 .prod-card .body{padding:10px}
-.prod-card h3{font-size:13px;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.prod-card .meta{font-size:11px;color:var(--muted);margin-top:3px}
-.prod-card .price{font-size:13px;font-weight:800;color:var(--green);margin-top:6px}
+.prod-card h3{font-size:14px;font-weight:800;color:#071a36;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prod-card .meta{font-size:12px;font-weight:600;color:#526174;margin-top:4px}
+.prod-card .price{font-size:14px;font-weight:850;color:#087a3c;margin-top:6px}
 
 /* Liste verticale recommandations */
 .rec-list{display:flex;flex-direction:column;gap:10px}
@@ -145,9 +146,9 @@ body{
 }
 .rec-item .img{width:88px;min-height:88px;background:#d8e0dc center/cover;flex-shrink:0}
 .rec-item .body{padding:10px 12px 10px 0;flex:1;display:flex;flex-direction:column;justify-content:center;min-width:0}
-.rec-item h3{font-size:14px;font-weight:700;color:var(--navy)}
-.rec-item .meta{font-size:11px;color:var(--muted);margin-top:2px}
-.rec-item .price{font-size:14px;font-weight:800;color:var(--green);margin-top:4px}
+.rec-item h3{font-size:15px;font-weight:800;color:#071a36}
+.rec-item .meta{font-size:12px;font-weight:600;color:#526174;margin-top:3px}
+.rec-item .price{font-size:14px;font-weight:850;color:#087a3c;margin-top:5px}
 
 /* Bannière abonnement */
 .sub-banner{
@@ -341,15 +342,14 @@ body{
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7.5"/><path d="m16.5 16.5 5 5"/></svg>
       <input type="search" placeholder="Rechercher un matériau...">
     </label>
-    <!-- Bannière abonnement vendeur -->
-    <div class="premium-banner">
-      <div class="premium-copy">
-        <h2>Abonnement Premium</h2>
-        <p>Boostez votre visibilité<br>et publiez plus !</p>
-        <button type="button" onclick="alert('Page abonnements')">Découvrir&nbsp; →</button>
-      </div>
-      <div class="premium-crown" aria-hidden="true">👑</div>
-    </div>
+    <!-- Espace publicitaire : visuel à gérer depuis le dashboard administrateur -->
+    <a class="home-ad-slot" href="#" aria-label="Espace publicitaire BUILDTRACE">
+      <span class="ad-label">PUBLICITÉ</span>
+      <span class="ad-copy">
+        <strong>Votre publicité ici</strong>
+        <small>Découvrez les nouveautés de nos partenaires</small>
+      </span>
+    </a>
 
     <!-- Nouveaux matériaux -->
     <section class="section">
