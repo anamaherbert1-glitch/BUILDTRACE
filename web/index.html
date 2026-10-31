@@ -1110,6 +1110,7 @@ function go(id){
   document.getElementById('s-'+id).classList.add('active');
   if(id==='favorites')renderFavorites();
   if(id==='market'||id==='search')syncFavoriteButtons();
+  if(id==='messages'&&window.BUILDTRACE_LOAD_CONVERSATIONS)window.BUILDTRACE_LOAD_CONVERSATIONS();
   window.scrollTo(0,0);
 }
 function setMode(m){
@@ -1348,6 +1349,7 @@ window.sendChatMessage=async event=>{
   finally{if(button)button.disabled=false;}
 };
 window.filterConversations=filterConversations;
+window.BUILDTRACE_LOAD_CONVERSATIONS=loadConversationList;
 
 async function restore(){try{const {data:{session},error}=await sb.auth.getSession();if(error)throw error;if(session?.user){user=session.user;await loadProfile();await loadListings();window.go('home');return;}user=null;await loadListings();}catch(err){console.error('Restauration de session BUILDTRACE:',err);status('La connexion n’a pas pu être restaurée. Reconnectez-vous.','error');await loadListings();}}
 sb.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN'&&session?.user){user=session.user;setTimeout(async()=>{await loadProfile();await loadListings();window.go('home');status('Connexion réussie. Bienvenue sur BUILDTRACE.','success');},0);}if(event==='SIGNED_OUT'){user=null;window.go('welcome');}});
