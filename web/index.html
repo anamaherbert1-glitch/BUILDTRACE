@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#071420">
-  <title>BUILDTRACE — Traçabilité • Réemploi • Construction durable</title>
+  <meta name="theme-color" content="#0A1628">
+  <title>BUILDTRACE</title>
   <style>
     :root {
       --navy: #0A1628;
@@ -26,372 +26,189 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
-    .screen { display: none; min-height: 100dvh; }
-    .screen.active { display: flex; flex-direction: column; }
+    .screen { display: none; min-height: 100dvh; flex-direction: column; }
+    .screen.active { display: flex; }
 
-    /* ========== ÉCRAN 1 — PAGE D'ACCUEIL ========= */
-    #screen-home {
-      position: relative;
-      color: var(--white);
-      overflow: hidden;
-    }
+    /* ===== ÉCRAN 1 ===== */
+    #screen-home { position: relative; color: #fff; overflow: hidden; }
     #screen-home::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(180deg,
-          rgba(7,18,30,0.35) 0%,
-          rgba(7,18,30,0.55) 35%,
-          rgba(7,18,30,0.82) 70%,
-          rgba(7,18,30,0.94) 100%),
+      content: ""; position: absolute; inset: 0; z-index: 0;
+      background: linear-gradient(180deg,rgba(7,18,30,.35) 0%,rgba(7,18,30,.55) 35%,rgba(7,18,30,.82) 70%,rgba(7,18,30,.94) 100%),
         url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=90") center 25%/cover no-repeat;
-      z-index: 0;
     }
     .home-content {
-      position: relative;
-      z-index: 1;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 40px 24px 24px;
-      max-width: 420px;
-      margin: 0 auto;
-      width: 100%;
+      position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column;
+      justify-content: space-between; padding: 40px 24px 24px; max-width: 420px; margin: 0 auto; width: 100%;
     }
-
-    .logo {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      text-align: center;
-      padding-top: 8px;
-    }
+    .logo { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; padding-top: 8px; }
     .logo-icon {
-      width: 64px;
-      height: 64px;
-      background: var(--white);
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.32);
+      width: 64px; height: 64px; background: #fff; border-radius: 18px;
+      display: grid; place-items: center; box-shadow: 0 8px 28px rgba(0,0,0,.32);
     }
-    .logo-text {
-      font-size: 25px;
-      font-weight: 800;
-      letter-spacing: 0.4px;
-      color: #fff;
-    }
+    .logo-text { font-size: 25px; font-weight: 800; letter-spacing: .4px; }
     .logo-text span { color: var(--green); }
-    .tagline {
-      font-size: 12.5px;
-      color: rgba(255,255,255,0.78);
-      letter-spacing: 0.15px;
-    }
-
+    .tagline { font-size: 12.5px; color: rgba(255,255,255,.78); }
     .hero { text-align: center; margin: 28px 0 24px; }
-    .hero h1 {
-      font-size: 27px;
-      font-weight: 800;
-      line-height: 1.2;
-      letter-spacing: -0.4px;
-      margin-bottom: 12px;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.25);
-    }
-    .hero p {
-      font-size: 14.5px;
-      line-height: 1.55;
-      color: rgba(255,255,255,0.82);
-      max-width: 310px;
-      margin: 0 auto;
-    }
-
+    .hero h1 { font-size: 27px; font-weight: 800; line-height: 1.2; letter-spacing: -.4px; margin-bottom: 12px; text-shadow: 0 2px 12px rgba(0,0,0,.25); }
+    .hero p { font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,.82); max-width: 310px; margin: 0 auto; }
     .actions { display: flex; flex-direction: column; gap: 11px; }
     .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 52px;
-      border-radius: 14px;
-      font-size: 15.5px;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-      transition: transform .12s, background .12s, box-shadow .12s;
+      display: flex; align-items: center; justify-content: center; height: 52px;
+      border-radius: 14px; font-size: 15.5px; font-weight: 700; border: none; cursor: pointer;
     }
-    .btn:active { transform: scale(0.98); }
-    .btn-primary {
-      background: var(--green);
-      color: #003B18;
-      box-shadow: 0 6px 22px rgba(0,211,92,0.4);
-    }
-    .btn-primary:hover { background: var(--green-dark); }
-    .btn-outline {
-      background: rgba(255,255,255,0.08);
-      color: var(--white);
-      border: 1.5px solid rgba(255,255,255,0.45);
-      backdrop-filter: blur(4px);
-    }
-
-    .quick-actions {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      margin-top: 28px;
-      padding-bottom: 6px;
-    }
+    .btn:active { transform: scale(.98); }
+    .btn-primary { background: var(--green); color: #003B18; box-shadow: 0 6px 22px rgba(0,211,92,.4); }
+    .btn-outline { background: rgba(255,255,255,.08); color: #fff; border: 1.5px solid rgba(255,255,255,.45); }
+    .quick-actions { display: flex; justify-content: center; gap: 24px; margin-top: 28px; }
     .quick-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 7px;
-      color: rgba(255,255,255,0.85);
-      font-size: 11.5px;
-      font-weight: 500;
-      background: none;
-      border: none;
-      cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; gap: 7px;
+      color: rgba(255,255,255,.85); font-size: 11.5px; font-weight: 500; background: none; border: none; cursor: pointer;
     }
     .quick-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 13px;
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(6px);
-      display: grid;
-      place-items: center;
+      width: 46px; height: 46px; border-radius: 13px; background: rgba(255,255,255,.15);
+      display: grid; place-items: center;
     }
-    .quick-icon svg {
-      width: 21px;
-      height: 21px;
-      stroke: #fff;
-      fill: none;
-      stroke-width: 1.7;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
+    .quick-icon svg { width: 21px; height: 21px; stroke: #fff; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 
-    /* ========== ÉCRAN 2 — AUTH ========= */
-    #screen-auth { background: var(--white); color: var(--ink); }
-    .auth-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      max-width: 420px;
-      margin: 0 auto;
-      width: 100%;
-      padding: 18px 22px 20px;
-    }
-    .auth-header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 16px;
-      text-align: center;
-    }
-    .auth-logo {
-      width: 52px;
-      height: 52px;
-      background: var(--green-light);
-      border-radius: 15px;
-      display: grid;
-      place-items: center;
-    }
-    .auth-title {
-      font-size: 21px;
-      font-weight: 800;
-      color: var(--navy);
-      letter-spacing: -0.2px;
-    }
-
-    .auth-tabs {
-      display: flex;
-      background: var(--bg);
-      border-radius: 12px;
-      padding: 4px;
-      margin-bottom: 18px;
-    }
-    .auth-tab {
-      flex: 1;
-      height: 40px;
-      border: none;
-      background: transparent;
-      border-radius: 10px;
-      font-size: 14.5px;
-      font-weight: 600;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all .18s;
-    }
-    .auth-tab.active {
-      background: var(--white);
-      color: var(--green);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-    }
-
+    /* ===== ÉCRAN 2 ===== */
+    #screen-auth { background: #fff; }
+    .auth-content { flex: 1; display: flex; flex-direction: column; max-width: 420px; margin: 0 auto; width: 100%; padding: 18px 22px 20px; }
+    .auth-header { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 16px; text-align: center; }
+    .auth-logo { width: 52px; height: 52px; background: var(--green-light); border-radius: 15px; display: grid; place-items: center; }
+    .auth-title { font-size: 21px; font-weight: 800; color: var(--navy); }
+    .auth-tabs { display: flex; background: var(--bg); border-radius: 12px; padding: 4px; margin-bottom: 18px; }
+    .auth-tab { flex: 1; height: 40px; border: none; background: transparent; border-radius: 10px; font-size: 14.5px; font-weight: 600; color: var(--muted); cursor: pointer; }
+    .auth-tab.active { background: #fff; color: var(--green); box-shadow: 0 2px 8px rgba(0,0,0,.07); }
     .form-group { margin-bottom: 11px; }
-    .form-label {
-      display: block;
-      font-size: 12.5px;
-      font-weight: 600;
-      color: var(--muted);
-      margin-bottom: 5px;
-    }
+    .form-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--muted); margin-bottom: 5px; }
     .form-input {
-      width: 100%;
-      height: 48px;
-      border: 1.5px solid var(--line);
-      border-radius: 12px;
-      padding: 0 14px 0 44px;
-      font-size: 14.5px;
-      color: var(--ink);
-      background: var(--white);
-      outline: none;
-      transition: border-color .15s;
+      width: 100%; height: 48px; border: 1.5px solid var(--line); border-radius: 12px;
+      padding: 0 14px 0 44px; font-size: 14.5px; color: var(--ink); background: #fff; outline: none;
     }
     .form-input:focus { border-color: var(--green); }
     .form-input::placeholder { color: #A5B2AB; }
-
     .input-with-icon { position: relative; }
-    .input-icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 19px;
-      height: 19px;
-      color: #7A8B83;
-      pointer-events: none;
-    }
-    .input-icon svg {
-      width: 19px;
-      height: 19px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.75;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-    .password-toggle {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      padding: 5px;
-      cursor: pointer;
-      color: #7A8B83;
-      display: grid;
-      place-items: center;
-    }
-    .password-toggle svg {
-      width: 19px;
-      height: 19px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.75;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .checkbox-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 9px;
-      margin: 6px 0 14px;
-      font-size: 12.5px;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-    .checkbox-row input {
-      width: 17px;
-      height: 17px;
-      margin-top: 1px;
-      accent-color: var(--green);
-      flex-shrink: 0;
-    }
-
-    .btn-auth {
-      width: 100%;
-      height: 50px;
-      background: var(--green);
-      color: #003B18;
-      border: none;
-      border-radius: 13px;
-      font-size: 15.5px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 5px 18px rgba(0,211,92,0.32);
-    }
-    .btn-auth:hover { background: var(--green-dark); }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin: 16px 0;
-      color: var(--muted);
-      font-size: 12.5px;
-    }
-    .divider::before, .divider::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: var(--line);
-    }
-
+    .input-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 19px; height: 19px; color: #7A8B83; pointer-events: none; }
+    .input-icon svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    .password-toggle { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; padding: 5px; cursor: pointer; color: #7A8B83; display: grid; place-items: center; }
+    .password-toggle svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    .checkbox-row { display: flex; align-items: flex-start; gap: 9px; margin: 6px 0 14px; font-size: 12.5px; color: var(--muted); line-height: 1.4; }
+    .checkbox-row input { width: 17px; height: 17px; margin-top: 1px; accent-color: var(--green); flex-shrink: 0; }
+    .btn-auth { width: 100%; height: 50px; background: var(--green); color: #003B18; border: none; border-radius: 13px; font-size: 15.5px; font-weight: 700; cursor: pointer; box-shadow: 0 5px 18px rgba(0,211,92,.32); }
+    .divider { display: flex; align-items: center; gap: 12px; margin: 16px 0; color: var(--muted); font-size: 12.5px; }
+    .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--line); }
     .social-btns { display: flex; flex-direction: column; gap: 9px; }
-    .btn-social {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 9px;
-      height: 46px;
-      border: 1.5px solid var(--line);
-      border-radius: 12px;
-      background: var(--white);
-      font-size: 14.5px;
-      font-weight: 600;
-      color: var(--ink);
-      cursor: pointer;
-    }
-    .btn-social:hover { background: var(--bg); }
-
-    .auth-footer {
-      text-align: center;
-      margin-top: 16px;
-      font-size: 13.5px;
-      color: var(--muted);
-    }
-    .auth-footer a {
-      color: var(--green);
-      font-weight: 700;
-      text-decoration: none;
-    }
-
+    .btn-social { display: flex; align-items: center; justify-content: center; gap: 9px; height: 46px; border: 1.5px solid var(--line); border-radius: 12px; background: #fff; font-size: 14.5px; font-weight: 600; color: var(--ink); cursor: pointer; }
+    .auth-footer { text-align: center; margin-top: 16px; font-size: 13.5px; color: var(--muted); }
+    .auth-footer a { color: var(--green); font-weight: 700; text-decoration: none; }
     .register-only { display: none; }
     .auth-mode-register .register-only { display: block; }
 
+    /* ===== ÉCRAN 3 — TABLEAU DE BORD ===== */
+    #screen-dash { background: var(--bg); }
+    .dash-header {
+      background: var(--navy);
+      padding: 14px 20px 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      color: #fff;
+    }
+    .dash-brand { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 16px; }
+    .dash-brand span { color: var(--green); }
+    .dash-header-actions { display: flex; gap: 12px; }
+    .dash-icon-btn {
+      width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,.1);
+      border: none; display: grid; place-items: center; cursor: pointer; color: #fff;
+    }
+    .dash-icon-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    .dash-body {
+      flex: 1; overflow-y: auto; padding: 20px 18px 90px;
+      max-width: 420px; margin: 0 auto; width: 100%;
+    }
+
+    .user-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+    .user-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, #2a4a6b, #1a3048);
+      display: grid; place-items: center; color: #fff; font-weight: 700; font-size: 16px;
+      overflow: hidden;
+    }
+    .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .user-info h2 { font-size: 17px; font-weight: 700; color: var(--navy); }
+    .user-info p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+
+    .stats-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 22px;
+    }
+    .stat-card {
+      background: #fff; border-radius: 14px; padding: 14px 14px 12px;
+      border: 1px solid var(--line);
+    }
+    .stat-card .stat-icon {
+      width: 32px; height: 32px; border-radius: 9px; background: var(--green-light);
+      display: grid; place-items: center; margin-bottom: 10px;
+    }
+    .stat-card .stat-icon svg { width: 16px; height: 16px; stroke: var(--green); fill: none; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+    .stat-card strong { display: block; font-size: 22px; font-weight: 800; color: var(--navy); line-height: 1.1; }
+    .stat-card span { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+    .section-head {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+    }
+    .section-head h3 { font-size: 15px; font-weight: 700; color: var(--navy); }
+    .section-head a { font-size: 13px; color: var(--green); font-weight: 600; text-decoration: none; }
+
+    .project-card {
+      background: #fff; border-radius: 14px; overflow: hidden;
+      border: 1px solid var(--line); display: flex; gap: 0;
+    }
+    .project-img {
+      width: 96px; min-height: 96px; background: #d0d8d4 center/cover no-repeat;
+      flex-shrink: 0;
+    }
+    .project-info { padding: 12px 14px; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .project-info .badge {
+      display: inline-block; font-size: 10px; font-weight: 700; color: var(--green);
+      background: var(--green-light); padding: 2px 8px; border-radius: 20px; margin-bottom: 4px; width: fit-content;
+    }
+    .project-info h4 { font-size: 14px; font-weight: 700; color: var(--navy); }
+    .project-info p { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* Bottom nav */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; border-top: 1px solid var(--line);
+      display: flex; justify-content: space-around; align-items: center;
+      padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+      z-index: 20; max-width: 420px; margin: 0 auto;
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      background: none; border: none; color: var(--muted); font-size: 10px; font-weight: 500; cursor: pointer;
+      min-width: 56px;
+    }
+    .nav-item.active { color: var(--green); font-weight: 700; }
+    .nav-item svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .nav-add {
+      width: 48px; height: 48px; border-radius: 50%; background: var(--green);
+      display: grid; place-items: center; margin-top: -22px;
+      box-shadow: 0 4px 14px rgba(0,211,92,.4); border: none; cursor: pointer;
+    }
+    .nav-add svg { width: 24px; height: 24px; stroke: #003B18; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+
     @supports (padding: max(0px)) {
-      .home-content, .auth-content {
-        padding-top: max(18px, env(safe-area-inset-top));
-        padding-bottom: max(18px, env(safe-area-inset-bottom));
-      }
+      .home-content, .auth-content { padding-top: max(18px, env(safe-area-inset-top)); padding-bottom: max(18px, env(safe-area-inset-bottom)); }
+      .dash-header { padding-top: max(14px, env(safe-area-inset-top)); }
     }
   </style>
 </head>
 <body>
 
-  <!-- ========== ÉCRAN 1 ========== -->
+  <!-- ÉCRAN 1 -->
   <div class="screen active" id="screen-home">
     <div class="home-content">
       <div class="logo">
         <div class="logo-icon">
-          <!-- Logo maison fidèle au mockup -->
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
             <path d="M5 14.5L16 5l11 9.5V26a1.5 1.5 0 0 1-1.5 1.5h-19A1.5 1.5 0 0 1 5 26V14.5z" fill="#0A1628"/>
             <path d="M12 27.5V18h8v9.5" stroke="#00D35C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -401,42 +218,25 @@
         <div class="logo-text">BUILD<span>TRACE</span></div>
         <div class="tagline">Traçabilité • Réemploi • Construction durable</div>
       </div>
-
       <div class="hero">
         <h1>Des matériaux<br>plus durables pour<br>un avenir meilleur</h1>
         <p>Identifiez, suivez et réutilisez les matériaux de construction grâce à la blockchain et à l’intelligence artificielle.</p>
       </div>
-
       <div>
         <div class="actions">
           <button class="btn btn-primary" onclick="showScreen('auth'); setAuthMode('register')">Commencer gratuitement →</button>
           <button class="btn btn-outline" onclick="showScreen('auth'); setAuthMode('login')">Se connecter</button>
         </div>
         <div class="quick-actions">
-          <button class="quick-item">
-            <div class="quick-icon">
-              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3.5v3.5H14zM18.5 14H22v3.5h-3.5zM14 18.5h3.5V22H14zM18.5 18.5H22V22h-3.5z"/></svg>
-            </div>
-            Scanner un QR
-          </button>
-          <button class="quick-item">
-            <div class="quick-icon">
-              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            </div>
-            Carte
-          </button>
-          <button class="quick-item">
-            <div class="quick-icon">
-              <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-            </div>
-            Marketplace
-          </button>
+          <button class="quick-item"><div class="quick-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3.5v3.5H14zM18.5 14H22v3.5h-3.5zM14 18.5h3.5V22H14zM18.5 18.5H22V22h-3.5z"/></svg></div>Scanner un QR</button>
+          <button class="quick-item"><div class="quick-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>Carte</button>
+          <button class="quick-item"><div class="quick-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>Marketplace</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ========== ÉCRAN 2 ========== -->
+  <!-- ÉCRAN 2 -->
   <div class="screen" id="screen-auth">
     <div class="auth-content auth-mode-register" id="auth-box">
       <div class="auth-header">
@@ -449,12 +249,10 @@
         </div>
         <div class="auth-title">BUILDTRACE</div>
       </div>
-
       <div class="auth-tabs">
         <button class="auth-tab" id="tab-login" onclick="setAuthMode('login')">Connexion</button>
         <button class="auth-tab active" id="tab-register" onclick="setAuthMode('register')">Inscription</button>
       </div>
-
       <form onsubmit="return handleAuth(event)">
         <div class="form-group register-only">
           <label class="form-label">Nom complet</label>
@@ -463,7 +261,6 @@
             <input class="form-input" type="text" placeholder="Votre nom complet" id="fullName">
           </div>
         </div>
-
         <div class="form-group">
           <label class="form-label">Email</label>
           <div class="input-with-icon">
@@ -471,7 +268,6 @@
             <input class="form-input" type="email" placeholder="email@exemple.com" id="email" required>
           </div>
         </div>
-
         <div class="form-group register-only">
           <label class="form-label">Téléphone</label>
           <div class="input-with-icon">
@@ -479,43 +275,121 @@
             <input class="form-input" type="tel" placeholder="+228 XX XX XX XX" id="phone">
           </div>
         </div>
-
         <div class="form-group">
           <label class="form-label">Mot de passe</label>
           <div class="input-with-icon">
             <span class="input-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
             <input class="form-input" type="password" placeholder="••••••••" id="password" required style="padding-right:44px">
-            <button type="button" class="password-toggle" onclick="togglePassword()" aria-label="Afficher le mot de passe">
-              <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-            </button>
+            <button type="button" class="password-toggle" onclick="togglePassword()"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
           </div>
         </div>
-
         <div class="checkbox-row register-only">
           <input type="checkbox" id="terms" checked>
           <label for="terms">J’accepte les conditions d’utilisation et la politique de confidentialité</label>
         </div>
-
         <button type="submit" class="btn-auth" id="auth-submit">Créer mon compte</button>
       </form>
-
       <div class="divider">ou</div>
-
       <div class="social-btns">
-        <button class="btn-social" type="button">
+        <button class="btn-social" type="button" onclick="showScreen('dash')">
           <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
           Continuer avec Google
         </button>
-        <button class="btn-social" type="button">
+        <button class="btn-social" type="button" onclick="showScreen('dash')">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
           Continuer avec Apple
         </button>
       </div>
+      <div class="auth-footer" id="auth-footer">Vous avez déjà un compte ? <a href="#" onclick="setAuthMode('login'); return false;">Se connecter</a></div>
+    </div>
+  </div>
 
-      <div class="auth-footer" id="auth-footer">
-        Vous avez déjà un compte ? <a href="#" onclick="setAuthMode('login'); return false;">Se connecter</a>
+  <!-- ÉCRAN 3 — TABLEAU DE BORD -->
+  <div class="screen" id="screen-dash">
+    <header class="dash-header">
+      <div class="dash-brand">
+        <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+          <path d="M5 14.5L16 5l11 9.5V26a1.5 1.5 0 0 1-1.5 1.5h-19A1.5 1.5 0 0 1 5 26V14.5z" fill="#fff"/>
+          <path d="M12 27.5V18h8v9.5" stroke="#00D35C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M16 5L5 14.5h22L16 5z" fill="#00D35C"/>
+        </svg>
+        BUILD<span>TRACE</span>
+      </div>
+      <div class="dash-header-actions">
+        <button class="dash-icon-btn" aria-label="Notifications">
+          <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="dash-body">
+      <div class="user-row">
+        <div class="user-avatar">A</div>
+        <div class="user-info">
+          <h2>Bonjour, Amadou</h2>
+          <p>Voici un aperçu de votre activité</p>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+          <strong>12</strong>
+          <span>Matériaux publiés</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></div>
+          <strong>5</strong>
+          <span>Bâtiments actifs</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
+          <strong>8</strong>
+          <span>Transactions en cours</span>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></div>
+          <strong>2.4 kg</strong>
+          <span>CO₂ évités</span>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h3>Mes projets récents</h3>
+        <a href="#">Voir tout →</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-img" style="background-image:url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=300&q=80')"></div>
+        <div class="project-info">
+          <span class="badge">Actif</span>
+          <h4>Immeuble ABC</h4>
+          <p>Lomé, Togo · 124 matériaux enregistrés</p>
+        </div>
       </div>
     </div>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Accueil
+      </button>
+      <button class="nav-item">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Recherche
+      </button>
+      <button class="nav-add" aria-label="Ajouter">
+        <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <button class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Messages
+      </button>
+      <button class="nav-item">
+        <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Profil
+      </button>
+    </nav>
   </div>
 
   <script>
@@ -552,8 +426,7 @@
     }
     function handleAuth(e) {
       e.preventDefault();
-      const mode = document.getElementById('auth-box').classList.contains('auth-mode-register') ? 'register' : 'login';
-      alert(mode === 'register' ? 'Inscription (à brancher sur l’API)' : 'Connexion (à brancher sur l’API)');
+      showScreen('dash');
       return false;
     }
   </script>
