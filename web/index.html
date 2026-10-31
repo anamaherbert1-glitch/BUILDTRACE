@@ -410,6 +410,31 @@ input::placeholder,textarea::placeholder{color:#687386;opacity:1}
 .search-empty svg{width:38px;height:38px;stroke:#8b98a5;fill:none;stroke-width:1.5;margin-bottom:9px}
 .search-bottom{position:fixed;bottom:0;left:0;right:0;z-index:8}
 
+
+/* Favoris */
+.favorites-intro{font-size:13px;color:#536273;line-height:1.5;margin:2px 1px 14px}
+.favorites-toolbar{display:flex;align-items:center;justify-content:space-between;margin:8px 0 12px}
+.favorites-toolbar strong{font-size:13px;color:#17283d}
+.favorites-toolbar button{border:0;background:transparent;color:#b23b42;font-size:12px;padding:8px}
+.favorites-list{display:grid;gap:10px}
+.favorite-item{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid #e1e8e6;border-radius:14px;padding:10px;min-width:0}
+.favorite-item img{width:94px;height:88px;object-fit:cover;border-radius:10px;flex-shrink:0}
+.favorite-item-info{flex:1;min-width:0}
+.favorite-item-info strong{display:block;color:#17283d;font-size:13px}
+.favorite-item-info p{font-size:11px;color:#687789;margin:5px 0}
+.favorite-item-info b{font-size:12px;color:#078747}
+.favorite-item-actions{display:flex;gap:7px;margin-top:8px;flex-wrap:wrap}
+.favorite-item-actions button{border:1px solid #dce5e2;background:#f7faf8;color:#263c50;border-radius:8px;padding:7px 9px;font-size:10px}
+.favorite-item-actions .remove{color:#b23b42;background:#fff7f7;border-color:#f0dada}
+.favorites-empty{display:none;text-align:center;background:#fff;border:1px dashed #ccd8d3;border-radius:16px;padding:27px 18px;margin-top:8px}
+.favorites-empty.show{display:block}
+.favorites-empty-icon{font-size:42px;color:#91a39a;line-height:1.2;margin-bottom:8px}
+.favorites-empty strong{font-size:15px;color:#17283d}
+.favorites-empty p{font-size:12px;color:#687789;line-height:1.5;margin:8px 0 14px}
+.favorites-empty .account-primary{max-width:240px}
+.market-heart.liked{color:#e04454}
+.market-heart.liked svg{fill:#e04454;stroke:#e04454}
+
 </style>
 </head>
 <body>
@@ -709,9 +734,11 @@ input::placeholder,textarea::placeholder{color:#687386;opacity:1}
 <div class="screen account-screen" id="s-favorites">
   <header class="account-page-head"><button onclick="go('profile')">‹</button><h1>Mes favoris</h1></header>
   <div class="account-page-content">
-    <article class="listing-manage-card" onclick="openMarketProduct('Briques rouges','45 000 FCFA','À vendre · Lomé')"><img src="https://images.unsplash.com/photo-1590725140246-20acddi7e9a8?auto=format&fit=crop&w=300&q=80" alt="Briques"><div class="info"><strong>Briques rouges</strong><p>À vendre · Lomé</p><b>45 000 FCFA</b></div></article>
-    <article class="listing-manage-card" onclick="openMarketProduct('Échafaudage métallique','80 000 FCFA/mois','À louer · Lomé')"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=300&q=80" alt="Échafaudage"><div class="info"><strong>Échafaudage métallique</strong><p>À louer · Lomé</p><b>80 000 FCFA/mois</b></div></article>
-    <p class="account-note">Les favoris seront synchronisés avec votre compte lorsque le backend sera connecté.</p>
+    <p class="favorites-intro">Retrouvez ici les matériaux et équipements que vous avez enregistrés.</p>
+    <div class="favorites-toolbar"><strong id="favoritesCount">0 favori</strong><button type="button" onclick="clearFavorites()">Tout retirer</button></div>
+    <div id="favoritesList" class="favorites-list"></div>
+    <div id="favoritesEmpty" class="favorites-empty"><div class="favorites-empty-icon">♡</div><strong>Votre liste est encore vide</strong><p>Dans la Marketplace, touchez le cœur d'une annonce pour la retrouver ici.</p><button class="account-primary" onclick="go('market')">Découvrir les matériaux</button></div>
+    <p class="account-note">Vos favoris sont enregistrés sur cet appareil. La synchronisation entre appareils sera ajoutée avec le backend.</p>
   </div>
 </div>
 
@@ -832,7 +859,7 @@ input::placeholder,textarea::placeholder{color:#687386;opacity:1}
     <div class="market-grid" id="marketGrid">
       <article class="market-card" data-kind="sale" data-premium="true" data-name="Briques rouges" onclick="openMarketProduct('Briques rouges','45 000 FCFA','À vendre · Lomé')">
         <div class="market-card-photo" style="background-image:url('https://images.unsplash.com/photo-1590725140246-20acddi7e9a8?auto=format&fit=crop&w=600&q=85')"><span class="market-kind">À vendre</span><span class="market-premium">★ Premium</span></div>
-        <div class="market-card-body"><h3>Briques rouges</h3><p class="market-price">45 000 FCFA</p><p class="market-meta">⌖ Lomé · Bon état</p><div class="market-card-foot"><span>Vendeur vérifié</span><button class="market-heart" aria-label="Ajouter aux favoris" onclick="event.stopPropagation();this.classList.toggle('liked')"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 00-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 00-.1-7.8Z"/></svg></button></div></div>
+        <div class="market-card-body"><h3>Briques rouges</h3><p class="market-price">45 000 FCFA</p><p class="market-meta">⌖ Lomé · Bon état</p><div class="market-card-foot"><span>Vendeur vérifié</span><button class="market-heart" aria-label="Ajouter aux favoris" onclick="event.stopPropagation();toggleFavorite(this)"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 00-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 00-.1-7.8Z"/></svg></button></div></div>
       </article>
       <article class="market-card" data-kind="rent" data-premium="false" data-name="Échafaudage métallique" onclick="openMarketProduct('Échafaudage métallique','80 000 FCFA/mois','À louer · Lomé')">
         <div class="market-card-photo" style="background-image:url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=85')"><span class="market-kind rent">À louer</span></div>
@@ -1050,6 +1077,8 @@ function submitFeedback(event){
 function go(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s-'+id).classList.add('active');
+  if(id==='favorites')renderFavorites();
+  if(id==='market'||id==='search')syncFavoriteButtons();
   window.scrollTo(0,0);
 }
 function setMode(m){
@@ -1105,6 +1134,67 @@ function renderSearchResults(){
   });
   document.getElementById('searchResultCount').textContent=count+' annonce'+(count>1?'s':'');
   document.getElementById('searchEmpty').style.display=count?'none':'block';
+}
+
+function getFavoriteNames(){
+  try{return JSON.parse(localStorage.getItem('buildtrace_favorites')||'[]')}catch(e){return []}
+}
+function saveFavoriteNames(names){
+  try{localStorage.setItem('buildtrace_favorites',JSON.stringify([...new Set(names)]))}catch(e){}
+}
+function toggleFavorite(button){
+  const card=button.closest('.market-card');
+  const name=card?.dataset.name;
+  if(!name)return;
+  let names=getFavoriteNames();
+  names=names.includes(name)?names.filter(n=>n!==name):[...names,name];
+  saveFavoriteNames(names);
+  syncFavoriteButtons();
+  if(document.getElementById('s-favorites')?.classList.contains('active'))renderFavorites();
+}
+function syncFavoriteButtons(){
+  const names=getFavoriteNames();
+  document.querySelectorAll('.market-heart').forEach(button=>{
+    const name=button.closest('.market-card')?.dataset.name;
+    const active=names.includes(name);
+    button.classList.toggle('liked',active);
+    button.setAttribute('aria-label',active?'Retirer des favoris':'Ajouter aux favoris');
+  });
+}
+function renderFavorites(){
+  const list=document.getElementById('favoritesList');
+  if(!list)return;
+  const names=getFavoriteNames();
+  list.innerHTML='';
+  const source=[...document.querySelectorAll('#marketGrid .market-card')];
+  let count=0;
+  names.forEach(name=>{
+    const card=source.find(c=>c.dataset.name===name);
+    if(!card)return;
+    const photo=card.querySelector('.market-card-photo');
+    const body=card.querySelector('.market-card-body');
+    const image=photo?.style.backgroundImage.match(/url\\(["']?(.*?)["']?\\)/)?.[1]||'';
+    const title=body?.querySelector('h3')?.textContent||name;
+    const price=body?.querySelector('.market-price')?.textContent||'';
+    const kind=photo?.querySelector('.market-kind')?.textContent||'';
+    const meta=body?.querySelector('.market-meta')?.textContent||'';
+    const item=document.createElement('article');
+    item.className='favorite-item';
+    item.innerHTML='<img src="'+image+'" alt=""><div class="favorite-item-info"><strong></strong><p></p><b></b><div class="favorite-item-actions"><button type="button" class="open">Voir l’annonce</button><button type="button" class="remove">Retirer</button></div></div>';
+    item.querySelector('strong').textContent=title;
+    item.querySelector('p').textContent=kind+' · '+meta.replace(/^⌖\\s*/, '');
+    item.querySelector('b').textContent=price;
+    item.querySelector('.open').onclick=()=>openMarketProduct(title,price,kind+' · '+meta.replace(/^⌖\\s*/,''));
+    item.querySelector('.remove').onclick=()=>{saveFavoriteNames(getFavoriteNames().filter(n=>n!==name));renderFavorites();syncFavoriteButtons()};
+    list.appendChild(item);count++;
+  });
+  document.getElementById('favoritesCount').textContent=count+' favori'+(count>1?'s':'');
+  document.getElementById('favoritesEmpty').classList.toggle('show',count===0);
+  list.style.display=count?'grid':'none';
+}
+function clearFavorites(){
+  if(!getFavoriteNames().length)return;
+  saveFavoriteNames([]);renderFavorites();syncFavoriteButtons();
 }
 </script>
 </body>
