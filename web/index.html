@@ -459,6 +459,9 @@ input::placeholder,textarea::placeholder{color:#687386;opacity:1}
 .chat-compose input{height:43px;font-size:13px}
 .chat-bubble{font-size:13px;box-shadow:0 1px 3px #102a3a08}
 
+
+.inline-status{display:block;min-height:18px;font-size:12px;line-height:1.45;margin:8px 0;color:#526579}.inline-status.error{color:#b42318}.inline-status.success{color:#087a43}.inline-status.warning{color:#986515}
+.live-listing-badge{display:inline-flex;margin-top:5px;padding:3px 7px;border-radius:20px;background:#e7f8ee;color:#087a43;font-size:10px;font-weight:700}
 </style>
 </head>
 <body>
@@ -513,35 +516,36 @@ input::placeholder,textarea::placeholder{color:#687386;opacity:1}
     </div>
 
     <div class="auth-panel">
-    <form onsubmit="return doAuth(event)">
+    <form id="authForm" onsubmit="return doAuth(event)">
       <div class="fg ro">
         <label class="fl">Nom et prénom</label>
         <div class="iwi">
           <span class="ii"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
-          <input class="fi" placeholder="Nom et prénom" autocomplete="name">
+          <input class="fi" id="authFullName" placeholder="Nom et prénom" autocomplete="name" required>
         </div>
       </div>
       <div class="fg">
         <label class="fl">Adresse e-mail</label>
         <div class="iwi">
           <span class="ii"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
-          <input class="fi" type="email" placeholder="email@exemple.com" required autocomplete="email">
+          <input class="fi" id="authEmail" type="email" placeholder="email@exemple.com" required autocomplete="email">
         </div>
       </div>
       <div class="fg">
         <label class="fl">Mot de passe</label>
         <div class="iwi">
           <span class="ii"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></span>
-          <input class="fi" type="password" id="pwd" placeholder="••••••••" required style="padding-right:40px" autocomplete="current-password">
+          <input class="fi" type="password" id="pwd" placeholder="••••••••" minlength="8" required style="padding-right:40px" autocomplete="current-password">
           <button type="button" class="pt" onclick="togPwd()" aria-label="Afficher"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
         </div>
       </div>
       <button type="submit" class="ba" id="asub">Créer mon compte</button>
+      <p id="authStatus" class="inline-status" role="status" aria-live="polite"></p>
     </form>
 
     <div class="div">ou</div>
     <div class="sb">
-      <button class="bs" type="button" onclick="alert('La connexion Google sera activée lors du raccordement de l’authentification.')">
+      <button class="bs" type="button" onclick="signInWithGoogle()">
         <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
         Continuer avec Google
       </button>
@@ -724,7 +728,7 @@ input::placeholder,textarea::placeholder{color:#687386;opacity:1}
 <div class="screen account-screen" id="s-profile">
   <header class="account-cover">
     <div class="account-top"><h1>Mon profil</h1><button onclick="go('settings')" aria-label="Paramètres">⚙</button></div>
-    <div class="account-identity"><div class="account-avatar">AH</div><div><h2>Anama Herbert</h2><p>herbert.anama@gmail.com</p><span class="account-role">Utilisateur</span></div></div>
+    <div class="account-identity"><div class="account-avatar" id="profileInitials">BT</div><div><h2 id="profileName">Mon compte</h2><p id="profileEmail">Connectez-vous pour voir votre profil</p><span class="account-role" id="profileRole">Utilisateur</span></div></div>
   </header>
   <div class="account-stats"><div><strong>12</strong><span>Publications</span></div><div><strong>8</strong><span>Favoris</span></div><div><strong>3</strong><span>Abonnements</span></div></div>
   <p class="account-section-label">Mon activité</p>
@@ -819,20 +823,20 @@ input::placeholder,textarea::placeholder{color:#687386;opacity:1}
       <small id="photoCount">Touchez pour sélectionner vos photos</small>
     </label>
     <div id="photoPreview" class="photo-preview" aria-live="polite"></div>
-    <form class="product-form" onsubmit="return submitProduct(event)">
+    <form class="product-form" id="productForm" onsubmit="return submitProduct(event)">
       <h3>Informations du produit</h3>
       <label>Catégorie
-        <select required><option value="">Sélectionner une catégorie</option><option>Bois et coffrage</option><option>Métaux et ferraillage</option><option>Ciment et agrégats</option><option>Briques et blocs</option><option>Équipements et machines</option><option>Échafaudage et matériel</option><option>Autres matériaux</option></select>
+        <select id="productCategory" required><option value="">Sélectionner une catégorie</option><option>Bois et coffrage</option><option>Métaux et ferraillage</option><option>Ciment et agrégats</option><option>Briques et blocs</option><option>Équipements et machines</option><option>Échafaudage et matériel</option><option>Autres matériaux</option></select>
       </label>
-      <label>Nom du matériau<input required placeholder="Ex. : Briques rouges"></label>
-      <label>Description<textarea required rows="3" placeholder="Décrivez le produit, son utilisation et ses caractéristiques..."></textarea></label>
+      <label>Nom du matériau<input id="productTitle" required placeholder="Ex. : Briques rouges"></label>
+      <label>Description<textarea id="productDescription" required rows="3" placeholder="Décrivez le produit, son utilisation et ses caractéristiques..."></textarea></label>
       <div class="form-two">
-        <label>Quantité<input required type="number" min="1" placeholder="Ex. : 500"></label>
-        <label>Unité<select required><option value="">Unité</option><option>Pièces</option><option>Kg</option><option>Tonnes</option><option>m</option><option>m²</option><option>m³</option><option>Lots</option></select></label>
+        <label>Quantité<input id="productQuantity" required type="number" min="0.01" step="0.01" placeholder="Ex. : 500"></label>
+        <label>Unité<select id="productUnit" required><option value="">Unité</option><option>Pièces</option><option>Kg</option><option>Tonnes</option><option>m</option><option>m²</option><option>m³</option><option>Lots</option></select></label>
       </div>
       <div class="form-two">
-        <label>Dimensions<input placeholder="Ex. : 20 × 10 × 6 cm"></label>
-        <label>État<select required><option value="">Choisir l'état</option><option>Neuf</option><option>Très bon état</option><option>Bon état</option><option>État satisfaisant</option><option>À réparer</option></select></label>
+        <label>Dimensions<input id="productDimensions" placeholder="Ex. : 20 × 10 × 6 cm"></label>
+        <label>État<select id="productCondition" required><option value="">Choisir l'état</option><option>Neuf</option><option>Très bon état</option><option>Bon état</option><option>État satisfaisant</option><option>À réparer</option></select></label>
       </div>
       <div id="sale-price-group">
         <label>Prix de vente (FCFA)<input id="salePrice" type="number" min="1" placeholder="Ex. : 45 000"></label>
@@ -844,7 +848,7 @@ input::placeholder,textarea::placeholder{color:#687386;opacity:1}
         </label>
       </div>
       <label>Dimensions / mesures<input placeholder="Ex. : 20 × 10 × 6 cm ou longueur 3 m"></label>
-      <label>Localisation<input required placeholder="Ville, quartier"></label>
+      <label>Localisation<input id="productLocation" required placeholder="Ville, quartier"></label>
       <div class="ai-hint"><svg viewBox="0 0 24 24"><path d="M12 3a7 7 0 00-4 12.7V19h8v-3.3A7 7 0 0012 3Z"/><path d="M9 22h6M9 16h6M19 4l1-2M5 4 4 2M21 11h2"/></svg><span><strong>Analyse IA du matériau</strong><small>Après l'ajout des photos, l'IA pourra aider à évaluer son état et repérer d'éventuels défauts.</small></span></div>
       <button class="analyze-btn" type="button" onclick="previewAiAnalysis()">Analyser les photos avec l'IA ✨</button>
       <p id="aiStatus" class="inline-status" aria-live="polite">L'analyse IA réelle sera connectée lors de l'intégration du service.</p>
@@ -1243,6 +1247,21 @@ function openConversation(name,initials,status){
   document.getElementById('chatContactStatus').textContent=status;
   go('chat');
 }
+</script>
+<script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+const sb=createClient('https://jeingfrujkqebbmdwpzg.supabase.co','sb_publishable_lKVAHVSLrx2yZlvx9ehKUA_usHr5h3t');
+let user=null, mode='signup'; const el=id=>document.getElementById(id);
+function status(msg,kind=''){const n=el('authStatus');if(n){n.textContent=msg;n.className='inline-status '+kind;}}
+window.setMode=m=>{mode=m==='l'?'login':'signup';const row=el('authFullName').closest('.fg');row.style.display=mode==='signup'?'':'none';el('authFullName').required=mode==='signup';el('asub').textContent=mode==='signup'?'Créer mon compte':'Se connecter';el('abox').classList.toggle('mode-r',mode==='signup');el('tl').classList.toggle('on',mode==='login');el('tr').classList.toggle('on',mode==='signup');el('afoot').innerHTML=mode==='signup'?'Vous avez déjà un compte ? <a href="#" onclick="setMode(\'l\');return false">Se connecter</a>':'Pas encore de compte ? <a href="#" onclick="setMode(\'r\');return false">Créer un compte</a>';status('');};
+window.doAuth=async e=>{e.preventDefault();const btn=el('asub');btn.disabled=true;status('Connexion à Supabase…');try{const email=el('authEmail').value.trim().toLowerCase(),password=el('pwd').value;if(mode==='signup'){const full_name=el('authFullName').value.trim();if(!full_name)throw Error('Saisissez votre nom et prénom.');const {data,error}=await sb.auth.signUp({email,password,options:{data:{full_name},emailRedirectTo:location.origin+location.pathname}});if(error)throw error;if(data.session){user=data.user;await loadProfile();await loadListings();window.go('home');}else status('Compte créé. Vérifiez votre e-mail pour confirmer votre adresse.','success');}else{const {data,error}=await sb.auth.signInWithPassword({email,password});if(error)throw error;user=data.user;await loadProfile();await loadListings();window.go('home');}}catch(err){status(err.message||'Erreur de connexion.','error');}finally{btn.disabled=false;}return false;};
+window.signInWithGoogle=async()=>{const {error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:location.origin+location.pathname}});if(error){status(error.message,'error');window.go('auth');}};
+async function loadProfile(){if(!user)return;const {data,error}=await sb.from('profiles').select('*').eq('id',user.id).maybeSingle();if(error)console.error(error);const name=data?.full_name||user.user_metadata?.full_name||'Utilisateur BUILDTRACE';el('profileName').textContent=name;el('profileEmail').textContent=user.email||'';el('profileInitials').textContent=name.split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase();el('profileRole').textContent=data?.account_type==='company'?'Entreprise':'Utilisateur';}
+async function loadListings(){const {data,error}=await sb.from('listings').select('*').eq('status','published').order('created_at',{ascending:false}).limit(60);if(error){console.error('Listings:',error);return;}if(!data?.length)return;const grid=el('marketGrid');grid.querySelectorAll('[data-live-listing="true"]').forEach(n=>n.remove());data.forEach(item=>{const card=document.createElement('article');card.className='market-card';card.dataset.liveListing='true';card.dataset.kind=item.listing_type==='rent'?'rent':'sale';card.dataset.premium='false';card.dataset.name=item.title;const photo=document.createElement('div');photo.className='market-card-photo';if(item.photo_urls?.[0])photo.style.backgroundImage='url("'+item.photo_urls[0].replace(/["\\]/g,'')+'")';const tag=document.createElement('span');tag.className='market-kind';tag.textContent=item.listing_type==='rent'?'À louer':item.listing_type==='both'?'Vente & location':'À vendre';photo.append(tag);const body=document.createElement('div');body.className='market-card-body';const title=document.createElement('h3');title.textContent=item.title;const price=document.createElement('p');price.className='market-price';const amount=item.listing_type==='rent'?item.rental_price_xof:item.sale_price_xof;price.textContent=Number(amount||0).toLocaleString('fr-FR')+' FCFA'+(item.listing_type==='rent'?' / '+(item.rental_period||'jour'):'');const meta=document.createElement('p');meta.className='market-meta';meta.textContent='⌖ '+item.location+' · '+item.condition;const badge=document.createElement('span');badge.className='live-listing-badge';badge.textContent='Annonce BUILDTRACE';body.append(title,price,meta,badge);card.append(photo,body);card.addEventListener('click',()=>window.openMarketProduct(item.title,price.textContent,tag.textContent+' · '+item.location));grid.prepend(card);});if(window.filterMarketplace)window.filterMarketplace();}
+window.BUILDTRACE_LOAD_LISTINGS=loadListings;window.BUILDTRACE_CURRENT_USER=()=>user;
+window.submitProduct=async event=>{event.preventDefault();const statusEl=el('publishStatus'),files=Array.from(el('productPhotos').files||[]);const say=(m,k='')=>{statusEl.textContent=m;statusEl.className='inline-status '+k;};try{if(!user){say('Connectez-vous avant de publier votre annonce.','warning');window.go('auth');return false;}if(!files.length)throw Error('Ajoutez au moins une photo.');if(files.some(f=>f.size>5*1024*1024))throw Error('Chaque photo doit peser 5 Mo maximum.');const mode=document.querySelector('.mode-choice.selected')?.dataset.mode||'sale';say('Envoi des photos et enregistrement de votre annonce…');const urls=[];for(const file of files.slice(0,6)){const ext=(file.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,'');const path=user.id+'/'+crypto.randomUUID()+'.'+ext;const {error}=await sb.storage.from('buildtrace-listings').upload(path,file,{contentType:file.type,upsert:false});if(error)throw error;urls.push(sb.storage.from('buildtrace-listings').getPublicUrl(path).data.publicUrl);}const payload={category:el('productCategory').value,title:el('productTitle').value.trim(),description:el('productDescription').value.trim(),quantity:Number(el('productQuantity').value),unit:el('productUnit').value,dimensions:el('productDimensions').value.trim()||null,condition:el('productCondition').value,listing_type:mode,sale_price_xof:mode==='rent'?null:Number(el('salePrice').value),rental_price_xof:mode==='sale'?null:Number(el('rentalPrice').value),rental_period:mode==='sale'?null:el('rentalPeriod').value,location:el('productLocation').value.trim(),photo_urls:urls,status:'published',published_at:new Date().toISOString()};const {error}=await sb.from('listings').insert({...payload,owner_id:user.id});if(error)throw error;say('Annonce publiée avec succès !','success');el('productForm').reset();el('productPhotos').value='';el('photoPreview').innerHTML='';el('photoCount').textContent='Touchez pour sélectionner vos photos';await loadListings();setTimeout(()=>window.go('market'),900);}catch(err){say(err.message||'Impossible de publier cette annonce.','error');}return false;};
+async function restore(){const {data:{session}}=await sb.auth.getSession();if(session){user=session.user;await loadProfile();await loadListings();}}
+sb.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN'&&session){user=session.user;setTimeout(()=>{loadProfile();loadListings();},0);}if(event==='SIGNED_OUT')user=null;});restore();
 </script>
 </body>
 </html>
