@@ -1037,20 +1037,6 @@ function startProductChat(){
   document.getElementById('chatProductPrice').textContent=selectedMarketProduct.price;
   go('chat');
 }
-function sendChatMessage(event){
-  event.preventDefault();
-  const input=document.getElementById('chatInput');
-  const value=input.value.trim();
-  if(!value)return;
-  const bubble=document.createElement('div');
-  bubble.className='chat-bubble mine';
-  bubble.textContent=value;
-  const time=document.createElement('span');
-  time.className='chat-time';time.textContent='À l’instant';
-  bubble.appendChild(time);
-  document.getElementById('chatNewMessages').appendChild(bubble);
-  input.value='';
-}
 function setListingMode(mode){
   currentListingMode=mode;
   document.querySelectorAll('.mode-choice').forEach(b=>b.classList.toggle('selected',b.dataset.mode===mode));
