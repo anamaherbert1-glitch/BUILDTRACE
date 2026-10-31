@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0B1C2C">
+  <meta name="theme-color" content="#071420">
   <title>BUILDTRACE — Traçabilité • Réemploi • Construction durable</title>
   <style>
     :root {
-      --navy: #0B1C2C;
-      --green: #00C853;
-      --green-dark: #00A844;
-      --green-light: #E6F7ED;
+      --navy: #0A1628;
+      --green: #00D35C;
+      --green-dark: #00B84F;
+      --green-light: #E8F9EF;
       --white: #FFFFFF;
-      --bg: #F5F7F6;
-      --ink: #1A2B22;
-      --muted: #6B7C72;
-      --line: #E0E7E3;
+      --bg: #F4F7F5;
+      --ink: #15231C;
+      --muted: #6A7A72;
+      --line: #DEE6E1;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -24,89 +24,156 @@
       color: var(--ink);
       min-height: 100dvh;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
     .screen { display: none; min-height: 100dvh; }
     .screen.active { display: flex; flex-direction: column; }
 
-    /* ========== ÉCRAN 1 ========= */
+    /* ========== ÉCRAN 1 — PAGE D'ACCUEIL ========= */
     #screen-home {
-      background:
-        linear-gradient(180deg, rgba(8,20,32,0.45) 0%, rgba(8,20,32,0.75) 50%, rgba(8,20,32,0.92) 100%),
-        url("https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1400&q=85") center 30%/cover no-repeat;
+      position: relative;
       color: var(--white);
+      overflow: hidden;
+    }
+    #screen-home::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg,
+          rgba(7,18,30,0.35) 0%,
+          rgba(7,18,30,0.55) 35%,
+          rgba(7,18,30,0.82) 70%,
+          rgba(7,18,30,0.94) 100%),
+        url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=90") center 25%/cover no-repeat;
+      z-index: 0;
     }
     .home-content {
+      position: relative;
+      z-index: 1;
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 36px 22px 22px;
+      padding: 40px 24px 24px;
       max-width: 420px;
       margin: 0 auto;
       width: 100%;
     }
+
     .logo {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       text-align: center;
-      padding-top: 12px;
+      padding-top: 8px;
     }
     .logo-icon {
-      width: 58px; height: 58px;
+      width: 64px;
+      height: 64px;
       background: var(--white);
-      border-radius: 16px;
-      display: grid; place-items: center;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.28);
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.32);
     }
-    .logo-text { font-size: 24px; font-weight: 800; letter-spacing: 0.3px; }
+    .logo-text {
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      color: #fff;
+    }
     .logo-text span { color: var(--green); }
-    .tagline { font-size: 12px; color: rgba(255,255,255,0.75); letter-spacing: 0.2px; }
+    .tagline {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.78);
+      letter-spacing: 0.15px;
+    }
 
-    .hero { text-align: center; margin: 20px 0 18px; }
+    .hero { text-align: center; margin: 28px 0 24px; }
     .hero h1 {
-      font-size: 26px; font-weight: 800; line-height: 1.22;
-      letter-spacing: -0.3px; margin-bottom: 10px;
+      font-size: 27px;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.4px;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.25);
     }
     .hero p {
-      font-size: 14px; line-height: 1.5;
-      color: rgba(255,255,255,0.78); max-width: 320px; margin: 0 auto;
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.82);
+      max-width: 310px;
+      margin: 0 auto;
     }
 
-    .actions { display: flex; flex-direction: column; gap: 10px; }
+    .actions { display: flex; flex-direction: column; gap: 11px; }
     .btn {
-      display: flex; align-items: center; justify-content: center;
-      height: 50px; border-radius: 12px; font-size: 15px; font-weight: 700;
-      border: none; cursor: pointer; transition: transform .12s, background .12s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 52px;
+      border-radius: 14px;
+      font-size: 15.5px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform .12s, background .12s, box-shadow .12s;
     }
     .btn:active { transform: scale(0.98); }
     .btn-primary {
-      background: var(--green); color: #003D1A;
-      box-shadow: 0 5px 16px rgba(0,200,83,0.35);
+      background: var(--green);
+      color: #003B18;
+      box-shadow: 0 6px 22px rgba(0,211,92,0.4);
     }
+    .btn-primary:hover { background: var(--green-dark); }
     .btn-outline {
-      background: transparent; color: var(--white);
-      border: 1.5px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.45);
+      backdrop-filter: blur(4px);
     }
 
     .quick-actions {
-      display: flex; justify-content: center; gap: 22px;
-      margin-top: 26px; padding-bottom: 4px;
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 28px;
+      padding-bottom: 6px;
     }
     .quick-item {
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
-      color: rgba(255,255,255,0.8); font-size: 11px; font-weight: 500;
-      background: none; border: none; cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      color: rgba(255,255,255,0.85);
+      font-size: 11.5px;
+      font-weight: 500;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
     .quick-icon {
-      width: 44px; height: 44px; border-radius: 12px;
-      background: rgba(255,255,255,0.14);
-      display: grid; place-items: center;
+      width: 46px;
+      height: 46px;
+      border-radius: 13px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(6px);
+      display: grid;
+      place-items: center;
     }
-    .quick-icon svg { width: 20px; height: 20px; stroke: #fff; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .quick-icon svg {
+      width: 21px;
+      height: 21px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
 
-    /* ========== ÉCRAN 2 ========= */
+    /* ========== ÉCRAN 2 — AUTH ========= */
     #screen-auth { background: var(--white); color: var(--ink); }
     .auth-content {
       flex: 1;
@@ -115,113 +182,204 @@
       max-width: 420px;
       margin: 0 auto;
       width: 100%;
-      padding: 16px 22px 18px;
+      padding: 18px 22px 20px;
     }
     .auth-header {
-      display: flex; flex-direction: column; align-items: center;
-      gap: 6px; margin-bottom: 14px; text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      text-align: center;
     }
     .auth-logo {
-      width: 48px; height: 48px;
+      width: 52px;
+      height: 52px;
       background: var(--green-light);
-      border-radius: 14px;
-      display: grid; place-items: center;
+      border-radius: 15px;
+      display: grid;
+      place-items: center;
     }
-    .auth-title { font-size: 20px; font-weight: 800; color: var(--navy); }
+    .auth-title {
+      font-size: 21px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.2px;
+    }
 
     .auth-tabs {
-      display: flex; background: var(--bg);
-      border-radius: 11px; padding: 3px; margin-bottom: 16px;
+      display: flex;
+      background: var(--bg);
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 18px;
     }
     .auth-tab {
-      flex: 1; height: 38px; border: none; background: transparent;
-      border-radius: 9px; font-size: 14px; font-weight: 600;
-      color: var(--muted); cursor: pointer;
+      flex: 1;
+      height: 40px;
+      border: none;
+      background: transparent;
+      border-radius: 10px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .18s;
     }
     .auth-tab.active {
-      background: var(--white); color: var(--green);
-      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+      background: var(--white);
+      color: var(--green);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     }
 
-    .form-group { margin-bottom: 10px; }
+    .form-group { margin-bottom: 11px; }
     .form-label {
-      display: block; font-size: 12px; font-weight: 600;
-      color: var(--muted); margin-bottom: 4px;
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 5px;
     }
     .form-input {
-      width: 100%; height: 46px;
-      border: 1.5px solid var(--line); border-radius: 11px;
-      padding: 0 14px 0 42px; font-size: 14px; color: var(--ink);
-      background: var(--white); outline: none;
+      width: 100%;
+      height: 48px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      padding: 0 14px 0 44px;
+      font-size: 14.5px;
+      color: var(--ink);
+      background: var(--white);
+      outline: none;
+      transition: border-color .15s;
     }
     .form-input:focus { border-color: var(--green); }
-    .form-input::placeholder { color: #A3B0A9; }
+    .form-input::placeholder { color: #A5B2AB; }
 
     .input-with-icon { position: relative; }
     .input-icon {
-      position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
-      width: 18px; height: 18px; color: var(--muted);
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 19px;
+      height: 19px;
+      color: #7A8B83;
       pointer-events: none;
     }
     .input-icon svg {
-      width: 18px; height: 18px; stroke: currentColor; fill: none;
-      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
     .password-toggle {
-      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-      background: none; border: none; padding: 4px; cursor: pointer;
-      color: var(--muted); display: grid; place-items: center;
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      padding: 5px;
+      cursor: pointer;
+      color: #7A8B83;
+      display: grid;
+      place-items: center;
     }
     .password-toggle svg {
-      width: 18px; height: 18px; stroke: currentColor; fill: none;
-      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+      width: 19px;
+      height: 19px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.75;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .checkbox-row {
-      display: flex; align-items: flex-start; gap: 8px;
-      margin: 4px 0 12px; font-size: 12px; color: var(--muted); line-height: 1.35;
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin: 6px 0 14px;
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.4;
     }
     .checkbox-row input {
-      width: 16px; height: 16px; margin-top: 1px; accent-color: var(--green); flex-shrink: 0;
+      width: 17px;
+      height: 17px;
+      margin-top: 1px;
+      accent-color: var(--green);
+      flex-shrink: 0;
     }
 
     .btn-auth {
-      width: 100%; height: 48px;
-      background: var(--green); color: #003D1A;
-      border: none; border-radius: 12px;
-      font-size: 15px; font-weight: 700; cursor: pointer;
-      box-shadow: 0 4px 14px rgba(0,200,83,0.28);
+      width: 100%;
+      height: 50px;
+      background: var(--green);
+      color: #003B18;
+      border: none;
+      border-radius: 13px;
+      font-size: 15.5px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 5px 18px rgba(0,211,92,0.32);
     }
+    .btn-auth:hover { background: var(--green-dark); }
 
     .divider {
-      display: flex; align-items: center; gap: 12px;
-      margin: 14px 0; color: var(--muted); font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 16px 0;
+      color: var(--muted);
+      font-size: 12.5px;
     }
     .divider::before, .divider::after {
-      content: ""; flex: 1; height: 1px; background: var(--line);
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
     }
 
-    .social-btns { display: flex; flex-direction: column; gap: 8px; }
+    .social-btns { display: flex; flex-direction: column; gap: 9px; }
     .btn-social {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      height: 44px; border: 1.5px solid var(--line); border-radius: 11px;
-      background: var(--white); font-size: 14px; font-weight: 600;
-      color: var(--ink); cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      height: 46px;
+      border: 1.5px solid var(--line);
+      border-radius: 12px;
+      background: var(--white);
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--ink);
+      cursor: pointer;
     }
+    .btn-social:hover { background: var(--bg); }
 
     .auth-footer {
-      text-align: center; margin-top: 14px;
-      font-size: 13px; color: var(--muted);
+      text-align: center;
+      margin-top: 16px;
+      font-size: 13.5px;
+      color: var(--muted);
     }
-    .auth-footer a { color: var(--green); font-weight: 700; text-decoration: none; }
+    .auth-footer a {
+      color: var(--green);
+      font-weight: 700;
+      text-decoration: none;
+    }
 
     .register-only { display: none; }
     .auth-mode-register .register-only { display: block; }
 
     @supports (padding: max(0px)) {
       .home-content, .auth-content {
-        padding-top: max(16px, env(safe-area-inset-top));
-        padding-bottom: max(16px, env(safe-area-inset-bottom));
+        padding-top: max(18px, env(safe-area-inset-top));
+        padding-bottom: max(18px, env(safe-area-inset-bottom));
       }
     }
   </style>
@@ -233,10 +391,11 @@
     <div class="home-content">
       <div class="logo">
         <div class="logo-icon">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
-            <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10.5z" fill="#0B1C2C"/>
-            <path d="M9 21V13h6v8" stroke="#00C853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 3L3 10.5h18L12 3z" fill="#00C853"/>
+          <!-- Logo maison fidèle au mockup -->
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M5 14.5L16 5l11 9.5V26a1.5 1.5 0 0 1-1.5 1.5h-19A1.5 1.5 0 0 1 5 26V14.5z" fill="#0A1628"/>
+            <path d="M12 27.5V18h8v9.5" stroke="#00D35C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 5L5 14.5h22L16 5z" fill="#00D35C"/>
           </svg>
         </div>
         <div class="logo-text">BUILD<span>TRACE</span></div>
@@ -256,7 +415,7 @@
         <div class="quick-actions">
           <button class="quick-item">
             <div class="quick-icon">
-              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM18 14h3v3h-3zM14 18h3v3h-3zM18 18h3v3h-3z"/></svg>
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3.5v3.5H14zM18.5 14H22v3.5h-3.5zM14 18.5h3.5V22H14zM18.5 18.5H22V22h-3.5z"/></svg>
             </div>
             Scanner un QR
           </button>
@@ -282,10 +441,10 @@
     <div class="auth-content auth-mode-register" id="auth-box">
       <div class="auth-header">
         <div class="auth-logo">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V10.5z" fill="#0B1C2C"/>
-            <path d="M9 21V13h6v8" stroke="#00C853" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 3L3 10.5h18L12 3z" fill="#00C853"/>
+          <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+            <path d="M5 14.5L16 5l11 9.5V26a1.5 1.5 0 0 1-1.5 1.5h-19A1.5 1.5 0 0 1 5 26V14.5z" fill="#0A1628"/>
+            <path d="M12 27.5V18h8v9.5" stroke="#00D35C" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 5L5 14.5h22L16 5z" fill="#00D35C"/>
           </svg>
         </div>
         <div class="auth-title">BUILDTRACE</div>
@@ -325,7 +484,7 @@
           <label class="form-label">Mot de passe</label>
           <div class="input-with-icon">
             <span class="input-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
-            <input class="form-input" type="password" placeholder="••••••••" id="password" required style="padding-right:42px">
+            <input class="form-input" type="password" placeholder="••••••••" id="password" required style="padding-right:44px">
             <button type="button" class="password-toggle" onclick="togglePassword()" aria-label="Afficher le mot de passe">
               <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
