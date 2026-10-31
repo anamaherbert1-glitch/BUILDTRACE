@@ -435,6 +435,30 @@ input::placeholder,textarea::placeholder{color:#687386;opacity:1}
 .market-heart.liked{color:#e04454}
 .market-heart.liked svg{fill:#e04454;stroke:#e04454}
 
+
+/* Messagerie retravaillée */
+.messages-screen{min-height:100dvh;background:#f3f6f5;padding-bottom:24px}
+.messages-title{padding:18px 16px 15px}
+.messages-title-row{display:flex;align-items:center;gap:12px}
+.messages-back{width:38px;height:38px;border:1px solid #ffffff35;border-radius:11px;background:#ffffff12;color:#fff;font-size:25px;line-height:1}
+.messages-title-row h1{font-size:21px}.messages-title-row p{font-size:11px;color:#c8d5e5;margin-top:3px}
+.messages-search-field{height:44px;background:#fff;border-radius:12px;margin-top:15px;padding:0 12px;display:flex;align-items:center;gap:9px;color:#637386}
+.messages-search-field span{font-size:23px}.messages-search-field input{width:100%;border:0;outline:0;background:transparent;color:#15283d;font-size:12px}
+.messages-content{padding:15px 14px 35px}
+.messages-section-title{display:flex;justify-content:space-between;align-items:center;margin:2px 2px 9px}
+.messages-section-title strong{font-size:13px;color:#172b40}.messages-section-title span{font-size:10px;color:#738192}
+.conversation{background:#fff;border:1px solid #e3e9e7;border-radius:13px;padding:12px;margin:9px 0;box-shadow:0 2px 7px #102a3a08}
+.conversation-product{display:block;font-size:10px;color:#078747;margin-top:5px;font-weight:600}
+.conversation-meta{min-width:38px}
+.conversation-empty{text-align:center;padding:35px 15px;color:#667587;font-size:12px;background:#fff;border:1px dashed #d5dfdb;border-radius:13px;margin-top:12px}
+.chat-screen{min-height:100dvh;background:#edf2f0;padding-bottom:75px}
+.chat-head{position:sticky;top:0;z-index:4;padding:11px 14px;min-height:64px}
+.chat-head button{width:38px;height:38px;border:1px solid #ffffff35;border-radius:11px;background:#ffffff12;line-height:1}
+.chat-content{padding-bottom:110px}
+.chat-compose{padding-bottom:calc(10px + env(safe-area-inset-bottom));box-shadow:0 -3px 12px #102a3a0b}
+.chat-compose input{height:43px;font-size:13px}
+.chat-bubble{font-size:13px;box-shadow:0 1px 3px #102a3a08}
+
 </style>
 </head>
 <body>
@@ -920,18 +944,22 @@ input::placeholder,textarea::placeholder{color:#687386;opacity:1}
 
 <!-- Écran 7 : Liste des conversations -->
 <div class="screen messages-screen" id="s-messages">
-  <header class="messages-title"><h1>Messages</h1><p>Échangez avec les vendeurs et les acheteurs</p></header>
+  <header class="messages-title">
+    <div class="messages-title-row"><button class="messages-back" onclick="go('home')" aria-label="Retour à l’accueil">‹</button><div><h1>Messages</h1><p>Vos échanges avec vendeurs et acheteurs</p></div></div>
+    <label class="messages-search-field"><span>⌕</span><input id="conversationSearch" type="search" placeholder="Rechercher un nom ou un message..." oninput="filterConversations()"></label>
+  </header>
   <div class="messages-content">
-    <div class="message-search">⌕  Rechercher une conversation...</div>
-    <div class="conversation" onclick="go('chat')"><div class="conversation-avatar">BP</div><div class="conversation-main"><strong>BTP Pro</strong><p>Oui, les briques sont toujours disponibles.</p></div><div class="conversation-meta">09:45<br><span class="unread-dot">2</span></div></div>
-    <div class="conversation" onclick="go('chat')"><div class="conversation-avatar">AT</div><div class="conversation-main"><strong>Atelier Togo</strong><p>Vous pouvez passer voir la bétonnière demain.</p></div><div class="conversation-meta">Hier</div></div>
-    <div class="conversation" onclick="go('chat')"><div class="conversation-avatar">CM</div><div class="conversation-main"><strong>Construction Moderne</strong><p>Merci pour les informations.</p></div><div class="conversation-meta">Lun.</div></div>
+    <div class="messages-section-title"><strong>Conversations récentes</strong><span id="conversationCount">3 discussions</span></div>
+    <div class="conversation" data-conversation-search="btp pro briques disponibles" onclick="openConversation('BTP Pro','BP','Vendeur · En ligne')"><div class="conversation-avatar">BP</div><div class="conversation-main"><strong>BTP Pro</strong><p>Oui, les briques sont toujours disponibles.</p><small class="conversation-product">Briques rouges · 45 000 FCFA</small></div><div class="conversation-meta">09:45<br><span class="unread-dot">2</span></div></div>
+    <div class="conversation" data-conversation-search="atelier togo bétonnière demain" onclick="openConversation('Atelier Togo','AT','Vendeur · Vu récemment')"><div class="conversation-avatar">AT</div><div class="conversation-main"><strong>Atelier Togo</strong><p>Vous pouvez passer voir la bétonnière demain.</p><small class="conversation-product">Bétonnière · Location</small></div><div class="conversation-meta">Hier</div></div>
+    <div class="conversation" data-conversation-search="construction moderne informations merci" onclick="openConversation('Construction Moderne','CM','Acheteur · Vu récemment')"><div class="conversation-avatar">CM</div><div class="conversation-main"><strong>Construction Moderne</strong><p>Merci pour les informations.</p><small class="conversation-product">Échange général</small></div><div class="conversation-meta">Lun.</div></div>
+    <div id="conversationEmpty" class="conversation-empty" style="display:none">Aucune conversation ne correspond à votre recherche.</div>
   </div>
 </div>
 
 <!-- Écran 8 : Discussion liée à une annonce -->
 <div class="screen chat-screen" id="s-chat">
-  <header class="chat-head"><button onclick="go('messages')" aria-label="Retour">‹</button><div class="conversation-avatar">BP</div><div><strong>BTP Pro</strong><small>Vendeur · En ligne</small></div></header>
+  <header class="chat-head"><button onclick="go('messages')" aria-label="Retour aux messages">‹</button><div class="conversation-avatar" id="chatContactInitials">BP</div><div><strong id="chatContactName">BTP Pro</strong><small id="chatContactStatus">Vendeur · En ligne</small></div></header>
   <div class="chat-content">
     <div class="chat-product"><img id="chatProductImage" src="https://images.unsplash.com/photo-1590725140246-20acddi7e9a8?auto=format&fit=crop&w=300&q=80" alt="Matériau sélectionné"><div><strong id="chatProductName">Briques rouges</strong><span id="chatProductPrice">45 000 FCFA</span><p style="font-size:10px;color:#748394;margin-top:3px">Annonce partagée dans cette conversation</p></div></div>
     <div class="chat-bubble">Bonjour, je suis intéressé par ce matériau. Est-il toujours disponible ?<span class="chat-time">09:42</span></div>
@@ -1195,6 +1223,25 @@ function renderFavorites(){
 function clearFavorites(){
   if(!getFavoriteNames().length)return;
   saveFavoriteNames([]);renderFavorites();syncFavoriteButtons();
+}
+
+let activeConversation={name:'BTP Pro',initials:'BP',status:'Vendeur · En ligne'};
+function filterConversations(){
+  const q=(document.getElementById('conversationSearch')?.value||'').trim().toLocaleLowerCase('fr');
+  let count=0;
+  document.querySelectorAll('.conversation[data-conversation-search]').forEach(row=>{
+    const show=!q||row.dataset.conversationSearch.includes(q);
+    row.style.display=show?'flex':'none';if(show)count++;
+  });
+  document.getElementById('conversationCount').textContent=count+' discussion'+(count>1?'s':'');
+  document.getElementById('conversationEmpty').style.display=count?'none':'block';
+}
+function openConversation(name,initials,status){
+  activeConversation={name,initials,status};
+  document.getElementById('chatContactName').textContent=name;
+  document.getElementById('chatContactInitials').textContent=initials;
+  document.getElementById('chatContactStatus').textContent=status;
+  go('chat');
 }
 </script>
 </body>
