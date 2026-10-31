@@ -994,7 +994,8 @@ function submitFeedback(event){
   event.preventDefault();
   document.getElementById('feedbackStatus').textContent='Merci ! Votre retour est prêt. Son envoi au dashboard administrateur sera activé avec le backend.';
 }
-\nfunction adminTab(tab,button){document.querySelectorAll('[data-admin-panel]').forEach(p=>p.hidden=p.dataset.adminPanel!==tab);document.querySelectorAll('[data-admin-tab]').forEach(b=>b.classList.toggle('active',b===button));document.getElementById('adminTopTitle').textContent=button.textContent.trim()+' · Administration';}
+
+function adminTab(tab,button){document.querySelectorAll('[data-admin-panel]').forEach(p=>p.hidden=p.dataset.adminPanel!==tab);document.querySelectorAll('[data-admin-tab]').forEach(b=>b.classList.toggle('active',b===button));document.getElementById('adminTopTitle').textContent=button.textContent.trim()+' · Administration';}
 function adminSearch(input,id){const q=input.value.toLocaleLowerCase('fr');document.querySelectorAll('#'+id+' tr').forEach((r,i)=>{if(i)r.hidden=!r.textContent.toLocaleLowerCase('fr').includes(q);});}
 function adminInfo(){alert('Cette action sera connectée au backend administrateur. Les données affichées sont des exemples.');}
 function previewAdminAd(input){const f=input.files&&input.files[0];if(!f)return;const url=URL.createObjectURL(f);document.getElementById('adminAdPreview').innerHTML='<img alt="Aperçu" style="width:105px;height:65px;object-fit:cover;border-radius:8px" src="'+url+'"><div><strong>'+f.name.replace(/[<>]/g,'')+'</strong><p>Aperçu local · non publié</p></div>';}
