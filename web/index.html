@@ -234,6 +234,10 @@ body{
   .home-header{padding-top:max(12px,env(safe-area-inset-top))}
   .auth-box{padding-top:max(16px,env(safe-area-inset-top))}
 }
+
+/* Écran ajout produit */
+.subpage-header{height:58px;display:flex;align-items:center;gap:12px;padding:0 16px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}.subpage-header h2{font-size:17px;font-weight:800;color:var(--ink);margin:0;flex:1;text-align:center}.back-btn{width:36px;height:36px;border:0;background:transparent;color:var(--ink);display:grid;place-items:center}.back-btn svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.header-spacer{width:36px}.add-content{padding:15px 16px 100px;max-width:520px;margin:0 auto}.mode-switch{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:16px}.mode-choice{min-height:40px;border:1px solid #dce3ec;border-radius:12px;background:#f7f9fc;color:#33445b;font-size:12px;font-weight:700;padding:7px 4px}.mode-choice.selected{background:#079b4c;border-color:#079b4c;color:white;box-shadow:0 3px 8px #079b4c2b}.photo-upload{min-height:145px;border:1.5px dashed #aebed0;border-radius:15px;background:#f5f8fc;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;padding:15px;margin-bottom:20px;color:#132b4a;cursor:pointer}.photo-upload svg{width:34px;height:34px;fill:none;stroke:#078bdb;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.photo-upload strong{font-size:15px}.photo-upload span,.photo-upload small{font-size:11px;color:#68778a}.photo-upload input{max-width:220px;font-size:11px}.product-form{display:flex;flex-direction:column;gap:13px}.product-form h3{font-size:16px;color:var(--ink);margin:0 0 1px;font-weight:800}.product-form>label,.form-two label{display:flex;flex-direction:column;gap:6px;color:#172b46;font-size:13px;font-weight:700}.product-form input,.product-form select,.product-form textarea{width:100%;min-height:43px;border:1px solid #d5deea;border-radius:11px;background:#fff;padding:10px 12px;color:#20334d;font:500 13px inherit;outline:none}.product-form textarea{resize:vertical;min-height:82px}.product-form input:focus,.product-form select:focus,.product-form textarea:focus{border-color:#079b4c;box-shadow:0 0 0 3px #079b4c18}.form-two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hidden{display:none!important}.ai-hint{display:flex;align-items:flex-start;gap:11px;padding:13px;border-radius:12px;background:#eaf6ef;color:#0a6f3b}.ai-hint svg{width:24px;height:24px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.ai-hint strong,.ai-hint small{display:block}.ai-hint strong{font-size:13px}.ai-hint small{font-size:11px;line-height:1.45;margin-top:3px;color:#35684e}.analyze-btn,.publish-btn{width:100%;min-height:46px;border:0;border-radius:12px;font-size:14px;font-weight:800}.analyze-btn{background:#e9f3ff;color:#1263a3}.publish-btn{background:#079b4c;color:#fff;box-shadow:0 4px 12px #079b4c30}.form-note{text-align:center;font-size:10px;color:#788597;margin:-3px 0 0}
+
 </style>
 </head>
 <body>
@@ -467,6 +471,52 @@ body{
   </nav>
 </div>
 
+<!-- Écran 4 : Ajouter un matériau (vente / location) -->
+<div class="screen" id="s-add">
+  <div class="subpage-header">
+    <button class="back-btn" onclick="go('home')" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg></button>
+    <h2>Ajouter un produit</h2><span class="header-spacer"></span>
+  </div>
+  <div class="add-content">
+    <div class="mode-switch" role="group" aria-label="Type de publication">
+      <button type="button" class="mode-choice selected" data-mode="sale" onclick="setListingMode('sale')">Vente</button>
+      <button type="button" class="mode-choice" data-mode="rent" onclick="setListingMode('rent')">Location</button>
+      <button type="button" class="mode-choice" data-mode="both" onclick="setListingMode('both')">Vente &amp; location</button>
+    </div>
+    <label class="photo-upload" for="productPhotos">
+      <svg viewBox="0 0 24 24"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 011 1v11a1 1 0 01-1 1H4a1 1 0 01-1-1V8a1 1 0 011-1Z"/><circle cx="12" cy="13" r="4"/></svg>
+      <strong>Ajouter des photos</strong><span>Plusieurs photos · JPG ou PNG · 5 Mo max par photo</span>
+      <input id="productPhotos" type="file" accept="image/*" multiple onchange="showPhotoCount(this)">
+      <small id="photoCount">Touchez pour sélectionner vos photos</small>
+    </label>
+    <form class="product-form" onsubmit="return submitProduct(event)">
+      <h3>Informations du produit</h3>
+      <label>Catégorie
+        <select required><option value="">Sélectionner une catégorie</option><option>Bois et coffrage</option><option>Métaux et ferraillage</option><option>Ciment et agrégats</option><option>Briques et blocs</option><option>Équipements et machines</option><option>Échafaudage et matériel</option><option>Autres matériaux</option></select>
+      </label>
+      <label>Nom du matériau<input required placeholder="Ex. : Briques rouges"></label>
+      <label>Description<textarea required rows="3" placeholder="Décrivez le produit, son utilisation et ses caractéristiques..."></textarea></label>
+      <div class="form-two">
+        <label>Quantité<input required type="number" min="1" placeholder="Ex. : 500"></label>
+        <label>Unité<select required><option value="">Unité</option><option>Pièces</option><option>Kg</option><option>Tonnes</option><option>m</option><option>m²</option><option>m³</option><option>Lots</option></select></label>
+      </div>
+      <div class="form-two">
+        <label>Dimensions<input placeholder="Ex. : 20 × 10 × 6 cm"></label>
+        <label>État<select required><option value="">Choisir l'état</option><option>Neuf</option><option>Très bon état</option><option>Bon état</option><option>État satisfaisant</option><option>À réparer</option></select></label>
+      </div>
+      <label>Prix (FCFA)<input required type="number" min="1" placeholder="Indiquez votre prix"></label>
+      <label id="rental-period" class="hidden">Durée de location
+        <select><option>Par jour</option><option>Par semaine</option><option>Par mois</option></select>
+      </label>
+      <label>Localisation<input required placeholder="Ville, quartier"></label>
+      <div class="ai-hint"><svg viewBox="0 0 24 24"><path d="M12 3a7 7 0 00-4 12.7V19h8v-3.3A7 7 0 0012 3Z"/><path d="M9 22h6M9 16h6M19 4l1-2M5 4 4 2M21 11h2"/></svg><span><strong>Analyse IA du matériau</strong><small>Après l'ajout des photos, l'IA pourra aider à évaluer son état et repérer d'éventuels défauts.</small></span></div>
+      <button class="analyze-btn" type="button" onclick="alert('Analyse IA : intégration à réaliser dans une prochaine étape.')">Analyser avec l'IA ✨</button>
+      <button class="publish-btn" type="submit">Publier sur la marketplace</button>
+      <p class="form-note">La publication sera soumise aux conditions de votre abonnement vendeur.</p>
+    </form>
+  </div>
+</div>
+
 <!-- Sheet Scanner / Ajouter (CDC 3.4) -->
 <div class="sheet-bg" id="sheet" onclick="if(event.target===this)closeSheet()">
   <div class="sheet">
@@ -478,7 +528,7 @@ body{
         <span>Identifier un matériau avec l’IA</span>
       </div>
     </div>
-    <div class="sheet-opt" onclick="closeSheet();alert('Ajouter un produit (abonnement vendeur requis)')">
+    <div class="sheet-opt" onclick="closeSheet();go('add')">
       <div class="ico"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
       <div>
         <strong>Ajouter un produit</strong>
@@ -489,6 +539,22 @@ body{
 </div>
 
 <script>
+
+function setListingMode(mode){
+  document.querySelectorAll('.mode-choice').forEach(b=>b.classList.toggle('selected',b.dataset.mode===mode));
+  const rent=document.getElementById('rental-period');
+  rent.classList.toggle('hidden',mode==='sale');
+}
+function showPhotoCount(input){
+  const count=input.files?input.files.length:0;
+  document.getElementById('photoCount').textContent=count?count+' photo(s) sélectionnée(s)':'Touchez pour sélectionner vos photos';
+}
+function submitProduct(event){
+  event.preventDefault();
+  alert('Votre formulaire est prêt. La publication réelle et la vérification de l’abonnement seront connectées au backend dans une prochaine étape.');
+  return false;
+}
+
 function go(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s-'+id).classList.add('active');
