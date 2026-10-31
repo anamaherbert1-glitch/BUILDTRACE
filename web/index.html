@@ -329,6 +329,43 @@ body{
 .chat-compose{position:fixed;bottom:0;left:0;right:0;max-width:540px;margin:auto;background:#fff;border-top:1px solid #e0e7e9;padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;z-index:36}
 .chat-compose input{flex:1;min-width:0;border:1px solid #dce4e8;border-radius:22px;padding:0 14px;font-size:12px;outline:none}
 .chat-compose button{width:43px;height:43px;border:0;border-radius:50%;background:#079b4c;color:#fff;font-size:18px}
+/* Profil, gestion vendeur et préférences */
+.account-screen{min-height:100dvh;background:#f3f6f5;padding-bottom:30px}
+.account-cover{background:#091a30;color:#fff;padding:22px 18px 20px}
+.account-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.account-top h1{font-size:20px}.account-top button{border:0;background:#1c3048;color:#fff;border-radius:11px;width:40px;height:40px;font-size:19px}
+.account-identity{display:flex;align-items:center;gap:13px}
+.account-avatar{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#d7e9f1,#8fb4c5);color:#12334f;display:grid;place-items:center;font-size:23px;font-weight:900;border:2px solid #fff}
+.account-identity h2{font-size:17px}.account-identity p{font-size:11px;color:#c5d2df;margin-top:4px}.account-role{display:inline-block;background:#078b4a;color:#fff;padding:4px 9px;border-radius:20px;font-size:9px;font-weight:800;margin-top:7px}
+.account-stats{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;margin:14px;border-radius:14px;padding:15px 5px;border:1px solid #e3e9e9}
+.account-stats div{text-align:center;border-right:1px solid #e5e9ea}.account-stats div:last-child{border:0}.account-stats strong{display:block;color:#142d47;font-size:18px}.account-stats span{font-size:10px;color:#718091}
+.account-menu{background:#fff;border:1px solid #e4e9e9;border-radius:14px;margin:12px 14px;overflow:hidden}
+.account-menu button,.account-menu a{width:100%;border:0;border-bottom:1px solid #edf0f1;background:#fff;padding:15px 14px;display:flex;align-items:center;gap:12px;text-align:left;color:#20364e;font-size:13px;text-decoration:none}
+.account-menu button:last-child,.account-menu a:last-child{border-bottom:0}
+.account-menu svg{width:19px;height:19px;stroke:#168a53;fill:none;stroke-width:1.8;flex-shrink:0}
+.account-menu .arrow{margin-left:auto;color:#93a0aa;font-size:19px}
+.account-section-label{font-size:11px;font-weight:850;color:#788696;margin:18px 17px 8px;text-transform:uppercase;letter-spacing:.6px}
+.account-page-head{display:flex;align-items:center;gap:12px;background:#091a30;color:#fff;padding:16px}
+.account-page-head button{border:0;background:transparent;color:#fff;font-size:25px}.account-page-head h1{font-size:18px}
+.account-page-content{padding:15px;max-width:600px;margin:auto}
+.listing-manage-card{background:#fff;border:1px solid #e2e8e8;border-radius:14px;padding:10px;display:flex;gap:11px;margin-bottom:11px}
+.listing-manage-card img{width:92px;height:88px;object-fit:cover;border-radius:10px}
+.listing-manage-card .info{flex:1;min-width:0}.listing-manage-card strong{font-size:13px;color:#18304a;display:block;margin:4px 0}
+.listing-manage-card p{font-size:11px;color:#748292;margin:4px 0}.listing-manage-card b{font-size:12px;color:#078747}
+.listing-actions{display:flex;gap:7px;margin-top:8px}.listing-actions button{border:1px solid #dce5e5;background:#f7faf9;color:#28415a;padding:6px 9px;border-radius:8px;font-size:10px}
+.plan-card{background:#0b203a;color:#fff;border-radius:17px;padding:18px;margin:10px 0;position:relative;overflow:hidden}
+.plan-card:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;border:22px solid #ffffff0c;right:-45px;top:-55px}
+.plan-card h3{font-size:17px}.plan-card p{font-size:11px;color:#d1dce7;margin:8px 0 14px;max-width:80%}
+.plan-card button{border:0;border-radius:10px;background:#06b94f;color:#fff;padding:10px 14px;font-weight:850;font-size:11px}
+.plan-card .plan-tag{font-size:9px;color:#9ce7bb;font-weight:800;letter-spacing:.7px}
+.preference-row{display:flex;justify-content:space-between;align-items:center;padding:15px;background:#fff;border-bottom:1px solid #edf0f1;font-size:12px;color:#243950}
+.preference-row input{accent-color:#079b4c;width:18px;height:18px}
+.feedback-box{background:#fff;border:1px solid #e1e8e8;border-radius:14px;padding:15px}
+.feedback-box label{display:block;font-size:12px;font-weight:700;color:#20364d;margin:12px 0 6px}
+.feedback-box input,.feedback-box textarea,.feedback-box select{width:100%;border:1px solid #dce4e7;border-radius:10px;padding:11px;font:inherit;font-size:12px;background:#fff}
+.feedback-box textarea{min-height:105px;resize:vertical}
+.account-primary{border:0;background:#079b4c;color:#fff;border-radius:11px;padding:13px 16px;font-size:13px;font-weight:850;width:100%;margin-top:12px}
+.account-note{font-size:11px;color:#7b8997;line-height:1.5;margin:12px 2px}
 </style>
 </head>
 <body>
@@ -433,7 +470,7 @@ body{
       <button class="icon-btn" onclick="openSheet()" aria-label="Créer une publication">
         <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
       </button>
-      <button class="icon-btn" onclick="alert('Messagerie BUILDTRACE')" aria-label="Messages">
+      <button class="icon-btn" onclick="go('messages')" aria-label="Messages">
         <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-9 8.4 9.5 9.5 0 01-4-.9L3 21l1.8-4.5a8 8 0 01-1.3-4.3 8.5 8.5 0 018.8-8.2 8.5 8.5 0 018.7 7.5Z"/><path d="m7.5 13 3-3 2.5 2 3.5-3"/></svg>
         <span class="count-badge">2</span>
       </button>
@@ -551,17 +588,95 @@ body{
       <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
       Marketplace
     </button>
-    <button class="ni" onclick="alert('Messages — à venir')">
+    <button class="ni" onclick="go('messages')">
       <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
       Messages
     </button>
-    <button class="ni" onclick="alert('Profil — à venir')">
+    <button class="ni" onclick="go('profile')">
       <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       Profil
     </button>
   </nav>
 </div>
 
+<!-- Écran : Profil utilisateur -->
+<div class="screen account-screen" id="s-profile">
+  <header class="account-cover">
+    <div class="account-top"><h1>Mon profil</h1><button onclick="go('settings')" aria-label="Paramètres">⚙</button></div>
+    <div class="account-identity"><div class="account-avatar">AH</div><div><h2>Anama Herbert</h2><p>herbert.anama@gmail.com</p><span class="account-role">Utilisateur</span></div></div>
+  </header>
+  <div class="account-stats"><div><strong>12</strong><span>Publications</span></div><div><strong>8</strong><span>Favoris</span></div><div><strong>3</strong><span>Abonnements</span></div></div>
+  <p class="account-section-label">Mon activité</p>
+  <div class="account-menu">
+    <button onclick="go('my-listings')"><svg viewBox="0 0 24 24"><path d="M4 5h16v15H4zM8 3v4m8-4v4M4 10h16"/></svg>Mes produits et annonces <span class="arrow">›</span></button>
+    <button onclick="go('favorites')"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 00-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 000-7.8Z"/></svg>Mes favoris <span class="arrow">›</span></button>
+    <button onclick="go('messages')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Mes conversations <span class="arrow">›</span></button>
+    <button onclick="go('subscriptions')"><svg viewBox="0 0 24 24"><path d="M4 7h16v13H4zM8 7V4h8v3M4 12h16"/></svg>Mes abonnements <span class="arrow">›</span></button>
+  </div>
+  <p class="account-section-label">Compte et assistance</p>
+  <div class="account-menu">
+    <button onclick="go('settings')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.6a8 8 0 01-1.6.9l-.3 1.8h-2.8l-.3-1.8a8 8 0 01-1.6-.9l-1.7.6-1.4-2.4 1.4-1.1a7 7 0 010-1.9l-1.4-1.1 1.4-2.4 1.7.6a8 8 0 011.6-.9l.3-1.8h2.8l.3 1.8a8 8 0 011.6.9l1.7-.6 1.4 2.4-1.4 1.1a7 7 0 010 1.8Z"/></svg>Paramètres <span class="arrow">›</span></button>
+    <button onclick="go('feedback')"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 01-9 8.4 9.5 9.5 0 01-4-.9L3 21l1.8-4.5a8 8 0 01-1.3-4.3 8.5 8.5 0 018.8-8.2 8.5 8.5 0 018.7 7.5Z"/></svg>Envoyer un feedback <span class="arrow">›</span></button>
+    <button onclick="alert('BUILDTRACE — plateforme de vente et location de matériaux.')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5m0-8h.01"/></svg>À propos de BUILDTRACE <span class="arrow">›</span></button>
+  </div>
+</div>
+
+<!-- Écran : Mes annonces -->
+<div class="screen account-screen" id="s-my-listings">
+  <header class="account-page-head"><button onclick="go('profile')">‹</button><h1>Mes produits et annonces</h1></header>
+  <div class="account-page-content">
+    <div style="display:flex;gap:8px;margin-bottom:14px"><button class="market-filter active" onclick="setMyListingFilter('all',this)">Toutes</button><button class="market-filter" onclick="setMyListingFilter('sale',this)">Vente</button><button class="market-filter" onclick="setMyListingFilter('rent',this)">Location</button></div>
+    <article class="listing-manage-card" data-my-kind="sale"><img src="https://images.unsplash.com/photo-1590725140246-20acddi7e9a8?auto=format&fit=crop&w=300&q=80" alt="Briques"><div class="info"><strong>Briques rouges</strong><p>À vendre · Lomé</p><b>45 000 FCFA</b><div class="listing-actions"><button>Modifier</button><button>Voir l'annonce</button></div></div></article>
+    <article class="listing-manage-card" data-my-kind="rent"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=300&q=80" alt="Échafaudage"><div class="info"><strong>Échafaudage métallique</strong><p>À louer · Lomé</p><b>80 000 FCFA/mois</b><div class="listing-actions"><button>Modifier</button><button>Voir l'annonce</button></div></div></article>
+    <button class="account-primary" onclick="go('add')">＋ Ajouter un matériau</button>
+    <p class="account-note">Exemples d'annonces pour la maquette. La gestion réelle sera reliée à votre compte après connexion du backend.</p>
+  </div>
+</div>
+
+<!-- Écran : Favoris -->
+<div class="screen account-screen" id="s-favorites">
+  <header class="account-page-head"><button onclick="go('profile')">‹</button><h1>Mes favoris</h1></header>
+  <div class="account-page-content">
+    <article class="listing-manage-card" onclick="openMarketProduct('Briques rouges','45 000 FCFA','À vendre · Lomé')"><img src="https://images.unsplash.com/photo-1590725140246-20acddi7e9a8?auto=format&fit=crop&w=300&q=80" alt="Briques"><div class="info"><strong>Briques rouges</strong><p>À vendre · Lomé</p><b>45 000 FCFA</b></div></article>
+    <article class="listing-manage-card" onclick="openMarketProduct('Échafaudage métallique','80 000 FCFA/mois','À louer · Lomé')"><img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=300&q=80" alt="Échafaudage"><div class="info"><strong>Échafaudage métallique</strong><p>À louer · Lomé</p><b>80 000 FCFA/mois</b></div></article>
+    <p class="account-note">Les favoris seront synchronisés avec votre compte lorsque le backend sera connecté.</p>
+  </div>
+</div>
+
+<!-- Écran : Abonnements -->
+<div class="screen account-screen" id="s-subscriptions">
+  <header class="account-page-head"><button onclick="go('profile')">‹</button><h1>Abonnements BUILDTRACE</h1></header>
+  <div class="account-page-content">
+    <div class="plan-card"><span class="plan-tag">VISIBILITÉ & PUBLICATION</span><h3>Starter</h3><p>Publiez vos matériaux et présentez vos offres de vente ou de location.</p><button onclick="alert('Le paiement et l’activation des abonnements seront configurés ultérieurement.')">Découvrir Starter</button></div>
+    <div class="plan-card" style="background:linear-gradient(120deg,#102c4a,#087a4a)"><span class="plan-tag">MISE EN AVANT PRIORITAIRE</span><h3>Premium ★</h3><p>Profitez d'une meilleure visibilité et d'un classement prioritaire dans les résultats.</p><button onclick="alert('Le paiement et l’activation des abonnements seront configurés ultérieurement.')">Découvrir Premium</button></div>
+    <p class="account-note">Les tarifs, les durées et les paiements seront définis dans le dashboard administrateur. Aucun paiement n'est effectué dans cette maquette.</p>
+  </div>
+</div>
+
+<!-- Écran : Paramètres -->
+<div class="screen account-screen" id="s-settings">
+  <header class="account-page-head"><button onclick="go('profile')">‹</button><h1>Paramètres</h1></header>
+  <div class="account-page-content">
+    <p class="account-section-label">Apparence</p>
+    <div class="preference-row"><span>Thème sombre</span><input type="checkbox" id="darkThemeToggle" onchange="toggleAppTheme(this.checked)"></div>
+    <p class="account-section-label">Compte</p>
+    <div class="account-menu"><button onclick="alert('Modification du profil à connecter.')">Modifier mes informations <span class="arrow">›</span></button><button onclick="alert('Gestion du mot de passe à connecter.')">Sécurité et mot de passe <span class="arrow">›</span></button><button onclick="go('feedback')">Aide et feedback <span class="arrow">›</span></button></div>
+    <p class="account-note">Les préférences de cette maquette sont locales à la page. Leur sauvegarde sera ajoutée avec le backend.</p>
+  </div>
+</div>
+
+<!-- Écran : Feedback -->
+<div class="screen account-screen" id="s-feedback">
+  <header class="account-page-head"><button onclick="go('profile')">‹</button><h1>Votre avis nous intéresse</h1></header>
+  <div class="account-page-content">
+    <form class="feedback-box" onsubmit="submitFeedback(event)">
+      <label for="feedbackType">Type de retour</label><select id="feedbackType"><option>Suggestion d'amélioration</option><option>Signaler un problème</option><option>Question</option><option>Autre</option></select>
+      <label for="feedbackMessage">Votre message</label><textarea id="feedbackMessage" placeholder="Décrivez votre idée ou le problème rencontré..." required></textarea>
+      <button class="account-primary" type="submit">Envoyer mon feedback</button>
+      <p id="feedbackStatus" class="account-note"></p>
+    </form>
+  </div>
+</div>
 <!-- Écran 4 : Ajouter un matériau (vente / location) -->
 <div class="screen" id="s-add">
   <div class="subpage-header">
@@ -845,7 +960,20 @@ function submitProduct(event){
   return false;
 }
 
-function go(id){
+
+function setMyListingFilter(kind,button){
+  document.querySelectorAll('[data-my-kind]').forEach(card=>card.hidden=kind!=='all'&&card.dataset.myKind!==kind);
+  button.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b===button));
+}
+function toggleAppTheme(enabled){
+  document.body.classList.toggle('dark-mode',enabled);
+  document.querySelectorAll('.account-screen').forEach(screen=>screen.classList.toggle('dark-mode',enabled));
+}
+function submitFeedback(event){
+  event.preventDefault();
+  document.getElementById('feedbackStatus').textContent='Merci ! Votre retour est prêt. Son envoi au dashboard administrateur sera activé avec le backend.';
+}
+\nfunction go(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s-'+id).classList.add('active');
   window.scrollTo(0,0);
