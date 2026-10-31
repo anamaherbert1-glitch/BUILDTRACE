@@ -611,6 +611,136 @@ input::placeholder,textarea::placeholder{color:#687386;opacity:1}
   #s-chat .chat-content { padding-left: 100px; padding-right: 100px; }
 }
 
+
+/* ===== RESPONSIVE GLOBAL — TÉLÉPHONE, TABLETTE ET ORDINATEUR ===== */
+html{scroll-behavior:smooth}
+img,video{max-width:100%}
+button,input,select,textarea{font:inherit}
+.screen{width:100%;min-width:0}
+.screen>*{min-width:0}
+@media (min-width:768px){
+  body{font-size:15px}
+  .screen.active:not(#s-welcome):not(#s-auth){padding-left:88px}
+  .bn{
+    position:fixed;inset:0 auto 0 0;width:88px;max-width:none;height:100dvh;
+    margin:0;padding:22px 8px;display:flex;flex-direction:column;
+    justify-content:center;gap:17px;border-top:0;border-right:1px solid #e1e7e5;
+    box-shadow:5px 0 24px rgba(10,22,40,.06);z-index:45
+  }
+  .bn .ni{width:100%;min-width:0;min-height:58px;padding:8px 3px;gap:6px;font-size:10px}
+  .bn .ni svg{width:23px;height:23px}
+  .bn .na{width:52px;height:52px;margin:2px auto;flex-shrink:0}
+  .sheet-bg{align-items:center;padding:24px}
+  .sheet{max-width:520px;border-radius:22px;padding:26px}
+  .home-header,.market-header{padding:18px 28px}
+  .home-body{max-width:1500px;padding:24px 30px 50px}
+  .home-search{max-width:720px;height:52px}
+  .premium-banner,.home-ad-slot{min-height:170px}
+  .premium-copy h2{font-size:21px}
+  .premium-copy p,.ad-copy small{font-size:14px}
+  .premium-crown{font-size:78px;right:30px}
+  .feed-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .feed-grid .prod-card .img{height:180px}
+  .feed-grid .prod-card .body{padding:14px}
+  .feed-grid .prod-card h3{font-size:15px}
+  .feed-grid .prod-card .price{font-size:16px}
+  .rec-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .rec-item .img{width:130px;height:120px}
+  .section{margin-bottom:28px}
+  .section-head h2{font-size:20px}
+  .prod-card{flex-basis:220px}
+  .prod-card .img{height:145px}
+  .prod-card .body{padding:13px}
+  .prod-card h3{font-size:15px}
+  .prod-card .price{font-size:16px}
+  .market-header h1{font-size:27px}
+  .market-content{max-width:1500px;padding:24px 30px 48px}
+  .market-search-row{max-width:850px}
+  .market-search{height:50px}
+  .market-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .market-card-photo{height:190px}
+  .market-card-body{padding:14px}
+  .market-card-body h3{font-size:16px}
+  .market-price{font-size:16px}
+  .market-tabs{gap:10px;padding-bottom:18px}
+  .market-filter{font-size:13px;padding:10px 17px}
+  .search-screen{padding-bottom:30px}
+  .search-head{padding:22px 30px}
+  .search-head-top h1{font-size:25px}
+  .search-intro{font-size:14px}
+  .search-field{max-width:850px;height:52px}
+  .search-filters{padding:18px 30px 8px;flex-wrap:wrap}
+  .search-extra{max-width:900px;padding:12px 30px}
+  .search-result-head{padding:20px 30px 14px}
+  .search-results{padding:0 30px 35px;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+  .search-results .market-card-photo{height:190px}
+  .account-screen{padding:0 30px 45px}
+  .account-cover{margin:26px auto 0;max-width:1400px;border-radius:20px;padding:30px 34px}
+  .account-stats{max-width:1400px;margin:18px auto;padding:22px}
+  .account-menu{max-width:1400px;margin:14px auto}
+  .account-section-label{max-width:1400px;margin:22px auto 9px}
+  .account-page-head{padding:22px 30px}
+  .account-page-content{max-width:1100px;padding:26px 30px}
+  .listing-manage-card{padding:15px;gap:16px}
+  .listing-manage-card img{width:140px;height:112px}
+  .listing-manage-card strong{font-size:15px}
+  .plan-card{padding:25px;margin:14px 0}
+  .plan-card h3{font-size:21px}
+  .feedback-box{padding:24px}
+  .messages-screen{padding-bottom:30px}
+  .chat-screen{padding-bottom:0}
+  .chat-content{max-width:1500px}
+}
+@media (min-width:1100px){
+  .screen.active:not(#s-welcome):not(#s-auth){padding-left:96px}
+  .bn{width:96px}
+  .home-header,.market-header{padding-left:38px;padding-right:38px}
+  .home-body,.market-content{padding-left:42px;padding-right:42px}
+  .feed-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+  .feed-grid .prod-card .img{height:205px}
+  .rec-list{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .market-grid,.search-results{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+  .market-card-photo,.search-results .market-card-photo{height:210px}
+  .search-head{padding-left:42px;padding-right:42px}
+  .search-filters,.search-extra,.search-result-head{padding-left:42px;padding-right:42px}
+  .search-results{padding-left:42px;padding-right:42px}
+  #s-messages{padding:34px clamp(30px,4vw,76px)}
+  #s-chat{padding:28px clamp(30px,4vw,76px)}
+}
+@media (min-width:1500px){
+  .home-body,.market-content{max-width:1700px}
+  .feed-grid{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .market-grid,.search-results{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .market-card-photo,.search-results .market-card-photo{height:230px}
+}
+/* Tablettes et petites fenêtres : éviter les débordements */
+@media (min-width:600px) and (max-width:767px){
+  .home-body,.market-content{max-width:760px;padding-left:22px;padding-right:22px}
+  .market-grid,.search-results{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .feed-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .rec-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .account-page-content{max-width:700px}
+}
+/* Formulaires et panneaux de détail confortables sur grand écran */
+@media (min-width:768px){
+  #s-add .account-page-content,
+  #s-feedback .account-page-content,
+  #s-settings .account-page-content{max-width:1000px}
+  #s-add .feedback-box,#s-feedback .feedback-box{padding:26px}
+  #s-detail .account-page-content{max-width:1200px}
+  .favorite-item{padding:15px;gap:16px}
+  .favorite-item img{width:130px;height:112px}
+  .favorite-item-info strong{font-size:15px}
+  .favorite-item-info p{font-size:13px}
+  .favorite-item-info b{font-size:14px}
+  .favorite-item-actions button{font-size:12px;padding:9px 12px}
+}
+/* Sur téléphone, conserver la navigation basse et les colonnes compactes */
+@media (max-width:767px){
+  .screen.active:not(#s-welcome):not(#s-auth){padding-left:0}
+  .bn{left:0;right:0;top:auto;bottom:0;width:100%;height:auto;max-width:420px}
+}
+
 </style>
 </head>
 <body>
