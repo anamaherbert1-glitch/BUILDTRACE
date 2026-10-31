@@ -281,6 +281,54 @@ body{
 .photo-preview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:-10px 0 6px}.photo-preview:empty{display:none}.photo-preview img{width:100%;height:86px;object-fit:cover;border-radius:10px;border:1px solid #dce4ed}.inline-status{font-size:11px;line-height:1.45;color:#64748b;margin:-6px 0 0}.inline-status.success{color:#087a40;background:#eaf6ef;padding:10px;border-radius:10px}.inline-status.warning{color:#855400;background:#fff7e6;padding:10px;border-radius:10px}.product-form label:has(input:required)::after{content:"";}.product-form input[type=number]{font-variant-numeric:tabular-nums}
 
 
+/* Fiche produit et messagerie */
+.detail-screen,.messages-screen,.chat-screen{background:#f4f7f6;min-height:100dvh}
+.detail-top{height:275px;position:relative;background:#19324d center/cover no-repeat}
+.detail-top:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,18,36,.28),transparent 45%,rgba(4,18,36,.12))}
+.detail-topbar{position:absolute;z-index:2;top:14px;left:14px;right:14px;display:flex;justify-content:space-between}
+.detail-icon{width:40px;height:40px;border:0;border-radius:50%;background:#fff;color:#122a45;display:grid;place-items:center;box-shadow:0 2px 9px #0002}
+.detail-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.9}
+.detail-photo-dots{position:absolute;z-index:2;bottom:13px;left:0;right:0;display:flex;justify-content:center;gap:6px}
+.detail-photo-dots i{width:7px;height:7px;border-radius:50%;background:#ffffff88}.detail-photo-dots i:first-child{background:#fff}
+.detail-body{padding:17px 16px 104px;max-width:560px;margin:auto}
+.detail-type{font-size:10px;font-weight:800;color:#078747;text-transform:uppercase;letter-spacing:.6px}
+.detail-title-row{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;margin:5px 0}
+.detail-title-row h1{font-size:22px;line-height:1.2;color:#102944}
+.detail-price{font-size:21px;font-weight:900;color:#078747;margin:8px 0 12px}
+.detail-price small{font-size:12px;font-weight:600;color:#68798b}
+.detail-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0}
+.detail-stat{background:#fff;border:1px solid #e0e7e9;border-radius:12px;padding:11px 8px;text-align:center}
+.detail-stat b{display:block;color:#172e49;font-size:12px}.detail-stat span{font-size:10px;color:#758294}
+.detail-section{background:#fff;border:1px solid #e4e9eb;border-radius:14px;padding:14px;margin:12px 0}
+.detail-section h3{font-size:14px;color:#142b45;margin-bottom:8px}
+.detail-section p{font-size:12px;line-height:1.55;color:#536477}
+.detail-seller{display:flex;align-items:center;gap:10px}
+.seller-avatar{width:42px;height:42px;border-radius:50%;background:#dbe9f1;color:#12395e;display:grid;place-items:center;font-weight:850}
+.detail-seller strong{font-size:12px;color:#162e49;display:block}.detail-seller small{font-size:10px;color:#778698}
+.detail-seller .verified{margin-left:auto;color:#078747;font-size:10px;font-weight:800}
+.detail-cta{position:fixed;bottom:0;left:0;right:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid #e4e9ec;z-index:35;max-width:560px;margin:auto}
+.detail-cta button{width:100%;height:48px;border:0;border-radius:13px;background:#079b4c;color:#fff;font-weight:850;font-size:14px}
+.messages-content{max-width:540px;margin:auto;padding:14px 14px 95px}
+.messages-title{background:var(--navy);color:#fff;padding:18px 16px 16px}.messages-title h1{font-size:22px}.messages-title p{font-size:11px;color:#c8d5e5;margin-top:4px}
+.message-search{margin:13px 0;background:#fff;border:1px solid #e0e7eb;border-radius:12px;padding:11px 13px;color:#778697;font-size:12px}
+.conversation{display:flex;align-items:center;gap:11px;padding:13px 3px;border-bottom:1px solid #e3e9e8;cursor:pointer}
+.conversation-avatar{width:48px;height:48px;border-radius:50%;background:#dbe8ef;color:#183b5b;display:grid;place-items:center;font-weight:850;flex-shrink:0}
+.conversation-main{min-width:0;flex:1}.conversation-main strong{font-size:13px;color:#152d48}.conversation-main p{font-size:11px;color:#6f7e8e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px}
+.conversation-meta{text-align:right;font-size:10px;color:#8592a0}.unread-dot{display:inline-grid;place-items:center;background:#079b4c;color:#fff;width:18px;height:18px;border-radius:50%;font-size:10px;margin-top:5px}
+.chat-head{background:var(--navy);color:#fff;padding:13px 14px;display:flex;align-items:center;gap:10px}
+.chat-head button{border:0;background:transparent;color:#fff;font-size:23px}
+.chat-head .conversation-avatar{width:39px;height:39px;background:#dce8ef}
+.chat-head strong{font-size:13px;display:block}.chat-head small{font-size:10px;color:#c5d2e1}
+.chat-content{max-width:540px;margin:auto;padding:14px 13px 92px;min-height:calc(100dvh - 65px);display:flex;flex-direction:column;gap:12px}
+.chat-product{display:flex;gap:10px;padding:10px;background:#fff;border:1px solid #e1e8e9;border-radius:13px}
+.chat-product img{width:72px;height:64px;object-fit:cover;border-radius:9px}
+.chat-product strong{font-size:12px;color:#172f49;display:block;margin:4px 0}.chat-product span{font-size:11px;color:#078747;font-weight:800}
+.chat-bubble{max-width:82%;padding:11px 13px;border-radius:14px;font-size:12px;line-height:1.5;color:#24384d;background:#fff;border:1px solid #e3e9eb;align-self:flex-start}
+.chat-bubble.mine{background:#d9f6df;border-color:#c5ebce;align-self:flex-end}
+.chat-time{display:block;text-align:right;font-size:9px;color:#7d8b98;margin-top:5px}
+.chat-compose{position:fixed;bottom:0;left:0;right:0;max-width:540px;margin:auto;background:#fff;border-top:1px solid #e0e7e9;padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;z-index:36}
+.chat-compose input{flex:1;min-width:0;border:1px solid #dce4e8;border-radius:22px;padding:0 14px;font-size:12px;outline:none}
+.chat-compose button{width:43px;height:43px;border:0;border-radius:50%;background:#079b4c;color:#fff;font-size:18px}
 </style>
 </head>
 <body>
@@ -631,6 +679,54 @@ body{
   </nav>
 </div>
 
+<!-- Écran 6 : Fiche détaillée d'un matériau -->
+<div class="screen detail-screen" id="s-detail">
+  <div class="detail-top" id="detailHero" style="background-image:url('https://images.unsplash.com/photo-1590725140246-20acddi7e9a8?auto=format&fit=crop&w=900&q=85')">
+    <div class="detail-topbar">
+      <button class="detail-icon" onclick="go('market')" aria-label="Retour"><svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6M9 12h12"/></svg></button>
+      <div style="display:flex;gap:8px"><button class="detail-icon" aria-label="Partager" onclick="alert('Le partage sera activé ultérieurement.')"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.7 6.6-4.4m-6.6 7 6.6 4.4"/></svg></button><button class="detail-icon" aria-label="Favori" onclick="this.classList.toggle('liked')"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 00-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 00-.1-7.8Z"/></svg></button></div>
+    </div>
+    <div class="detail-photo-dots"><i></i><i></i><i></i><i></i></div>
+  </div>
+  <div class="detail-body">
+    <div class="detail-type" id="detailKind">À vendre · Matériaux de construction</div>
+    <div class="detail-title-row"><h1 id="detailName">Briques rouges</h1><span style="font-size:11px;color:#d99a16;font-weight:800">★ 4.8</span></div>
+    <div class="detail-price" id="detailPrice">45 000 FCFA</div>
+    <div class="detail-stats">
+      <div class="detail-stat"><b id="detailQuantity">5 000 pcs</b><span>Quantité</span></div>
+      <div class="detail-stat"><b id="detailDimensions">20 × 10 × 6 cm</b><span>Dimensions</span></div>
+      <div class="detail-stat"><b id="detailCondition">Bon état</b><span>État</span></div>
+    </div>
+    <section class="detail-section"><h3>Description</h3><p id="detailDescription">Briques de qualité, adaptées aux travaux de construction. Photos et caractéristiques communiquées par le vendeur.</p></section>
+    <section class="detail-section"><h3>Vendeur</h3><div class="detail-seller"><div class="seller-avatar">BP</div><div><strong id="detailSeller">BTP Pro</strong><small>Sur BUILDTRACE · Profil vendeur</small></div><span class="verified">✓ Vérifié</span></div></section>
+    <section class="detail-section"><h3>Localisation</h3><p id="detailLocation">Lomé, Togo · Contactez le vendeur pour convenir d'une visite.</p></section>
+  </div>
+  <div class="detail-cta"><button onclick="startProductChat()">Contacter le vendeur</button></div>
+</div>
+
+<!-- Écran 7 : Liste des conversations -->
+<div class="screen messages-screen" id="s-messages">
+  <header class="messages-title"><h1>Messages</h1><p>Échangez avec les vendeurs et les acheteurs</p></header>
+  <div class="messages-content">
+    <div class="message-search">⌕  Rechercher une conversation...</div>
+    <div class="conversation" onclick="go('chat')"><div class="conversation-avatar">BP</div><div class="conversation-main"><strong>BTP Pro</strong><p>Oui, les briques sont toujours disponibles.</p></div><div class="conversation-meta">09:45<br><span class="unread-dot">2</span></div></div>
+    <div class="conversation" onclick="go('chat')"><div class="conversation-avatar">AT</div><div class="conversation-main"><strong>Atelier Togo</strong><p>Vous pouvez passer voir la bétonnière demain.</p></div><div class="conversation-meta">Hier</div></div>
+    <div class="conversation" onclick="go('chat')"><div class="conversation-avatar">CM</div><div class="conversation-main"><strong>Construction Moderne</strong><p>Merci pour les informations.</p></div><div class="conversation-meta">Lun.</div></div>
+  </div>
+</div>
+
+<!-- Écran 8 : Discussion liée à une annonce -->
+<div class="screen chat-screen" id="s-chat">
+  <header class="chat-head"><button onclick="go('messages')" aria-label="Retour">‹</button><div class="conversation-avatar">BP</div><div><strong>BTP Pro</strong><small>Vendeur · En ligne</small></div></header>
+  <div class="chat-content">
+    <div class="chat-product"><img id="chatProductImage" src="https://images.unsplash.com/photo-1590725140246-20acddi7e9a8?auto=format&fit=crop&w=300&q=80" alt="Matériau sélectionné"><div><strong id="chatProductName">Briques rouges</strong><span id="chatProductPrice">45 000 FCFA</span><p style="font-size:10px;color:#748394;margin-top:3px">Annonce partagée dans cette conversation</p></div></div>
+    <div class="chat-bubble">Bonjour, je suis intéressé par ce matériau. Est-il toujours disponible ?<span class="chat-time">09:42</span></div>
+    <div class="chat-bubble mine">Bonjour ! Oui, il est disponible. Vous pouvez nous contacter pour convenir d'une visite.<span class="chat-time">09:45 ✓✓</span></div>
+    <div id="chatNewMessages"></div>
+  </div>
+  <form class="chat-compose" onsubmit="sendChatMessage(event)"><input id="chatInput" placeholder="Écrire un message..." autocomplete="off" required><button type="submit" aria-label="Envoyer">➤</button></form>
+</div>
+
 <!-- Sheet Scanner / Ajouter (CDC 3.4) -->
 <div class="sheet-bg" id="sheet" onclick="if(event.target===this)closeSheet()">
   <div class="sheet">
@@ -680,8 +776,34 @@ function toggleMarketSort(){
   const grid=document.getElementById('marketGrid');
   [...grid.children].reverse().forEach(card=>grid.appendChild(card));
 }
+let selectedMarketProduct={name:'Briques rouges',price:'45 000 FCFA',kind:'À vendre · Lomé'};
 function openMarketProduct(name,price,kind){
-  alert(name+'\\n'+price+'\\n'+kind+'\\n\\nLa fiche détaillée du produit sera construite à l’étape suivante.');
+  selectedMarketProduct={name,price,kind};
+  document.getElementById('detailName').textContent=name;
+  document.getElementById('detailPrice').textContent=price;
+  document.getElementById('detailKind').textContent=kind;
+  document.getElementById('chatProductName').textContent=name;
+  document.getElementById('chatProductPrice').textContent=price;
+  go('detail');
+}
+function startProductChat(){
+  document.getElementById('chatProductName').textContent=selectedMarketProduct.name;
+  document.getElementById('chatProductPrice').textContent=selectedMarketProduct.price;
+  go('chat');
+}
+function sendChatMessage(event){
+  event.preventDefault();
+  const input=document.getElementById('chatInput');
+  const value=input.value.trim();
+  if(!value)return;
+  const bubble=document.createElement('div');
+  bubble.className='chat-bubble mine';
+  bubble.textContent=value;
+  const time=document.createElement('span');
+  time.className='chat-time';time.textContent='À l’instant';
+  bubble.appendChild(time);
+  document.getElementById('chatNewMessages').appendChild(bubble);
+  input.value='';
 }
 function setListingMode(mode){
   currentListingMode=mode;
