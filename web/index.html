@@ -1237,7 +1237,7 @@ function submitFeedback(event){
 }
 
 function go(id){
-  const allowed=['welcome','auth','home','search','market','detail','favorites','messages','chat','profile','subscription','settings','feedback'];
+  const allowed=['welcome','auth','home','search','market','detail','favorites','messages','chat','profile','my-listings','subscriptions','settings','feedback','add'];
   if(!allowed.includes(id)||!document.getElementById('s-'+id))return;
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s-'+id).classList.add('active');
@@ -1485,7 +1485,7 @@ window.sendChatMessage=async event=>{
 window.filterConversations=filterConversations;
 window.BUILDTRACE_LOAD_CONVERSATIONS=loadConversationList;
 
-async function restore(){try{const {data:{session},error}=await sb.auth.getSession();if(error)throw error;if(session?.user){user=session.user;await loadProfile();await loadListings();let last='home';try{last=localStorage.getItem('buildtrace_last_screen')||'home';}catch(_){}const safe=['home','search','market','detail','favorites','messages','profile','subscription','settings','feedback'];if(!safe.includes(last))last='home';window.go(last);return;}user=null;try{localStorage.removeItem('buildtrace_last_screen');}catch(_){}await loadListings();window.go('welcome');}catch(err){console.error('Restauration de session BUILDTRACE:',err);status(err.message||'La connexion n’a pas pu être restaurée. Reconnectez-vous.','error');await loadListings();window.go('welcome');}}
+async function restore(){try{const {data:{session},error}=await sb.auth.getSession();if(error)throw error;if(session?.user){user=session.user;await loadProfile();await loadListings();let last='home';try{last=localStorage.getItem('buildtrace_last_screen')||'home';}catch(_){}const safe=['home','search','market','detail','favorites','messages','profile','my-listings','subscriptions','settings','feedback','add'];if(!safe.includes(last))last='home';window.go(last);return;}user=null;try{localStorage.removeItem('buildtrace_last_screen');}catch(_){}await loadListings();window.go('welcome');}catch(err){console.error('Restauration de session BUILDTRACE:',err);status(err.message||'La connexion n’a pas pu être restaurée. Reconnectez-vous.','error');await loadListings();window.go('welcome');}}
 sb.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN'&&session?.user){user=session.user;setTimeout(async()=>{await loadProfile();await loadListings();window.go('home');status('Connexion réussie. Bienvenue sur BUILDTRACE.','success');},0);}if(event==='SIGNED_OUT'){user=null;window.go('welcome');}});
 restore();
 </script>
