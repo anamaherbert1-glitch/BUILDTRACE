@@ -720,6 +720,16 @@ button,input,select,textarea{font:inherit}
 }
 
 </style>
+<script>
+/* BUILDTRACE : toutes les anciennes URLs Vercel reviennent vers l'application officielle. */
+(function(){
+  var canonical='buildtracetrace.vercel.app';
+  var host=window.location.hostname;
+  if(host!==canonical && host.endsWith('.vercel.app') && host.indexOf('buildtracetrace')===0){
+    window.location.replace('https://'+canonical+window.location.pathname+window.location.search+window.location.hash);
+  }
+})();
+</script>
 </head>
 <body>
 
@@ -1462,8 +1472,8 @@ const sb=createClient('https://jeingfrujkqebbmdwpzg.supabase.co','sb_publishable
 let user=null, mode='signup'; const el=id=>document.getElementById(id);
 function status(msg,kind=''){const n=el('authStatus');if(n){n.textContent=msg;n.className='inline-status '+kind;}}
 window.setMode=m=>{mode=m==='l'?'login':'signup';const row=el('authFullName').closest('.fg');row.style.display=mode==='signup'?'':'none';el('authFullName').required=mode==='signup';el('asub').textContent=mode==='signup'?'Créer mon compte':'Se connecter';el('abox').classList.toggle('mode-r',mode==='signup');el('tl').classList.toggle('on',mode==='login');el('tr').classList.toggle('on',mode==='signup');el('afoot').innerHTML=mode==='signup'?'Vous avez déjà un compte ? <a href="#" onclick="setMode(\'l\');return false">Se connecter</a>':'Pas encore de compte ? <a href="#" onclick="setMode(\'r\');return false">Créer un compte</a>';status('');};
-window.doAuth=async e=>{e.preventDefault();const btn=el('asub');btn.disabled=true;status('Connexion à Supabase…');try{const email=el('authEmail').value.trim().toLowerCase(),password=el('pwd').value;if(mode==='signup'){const full_name=el('authFullName').value.trim();if(!full_name)throw Error('Saisissez votre nom et prénom.');const {data,error}=await sb.auth.signUp({email,password,options:{data:{full_name},emailRedirectTo:location.origin+location.pathname}});if(error)throw error;if(data.session){user=data.user;await loadProfile();await loadListings();window.go('home');}else status('Compte créé. Vérifiez votre e-mail pour confirmer votre adresse.','success');}else{const {data,error}=await sb.auth.signInWithPassword({email,password});if(error)throw error;user=data.user;await loadProfile();await loadListings();window.go('home');}}catch(err){status(err.message||'Erreur de connexion.','error');}finally{btn.disabled=false;}return false;};
-async function startOAuth(provider,label){const button=[...document.querySelectorAll('.sb .bs')].find(b=>b.textContent.toLowerCase().includes(label));if(button)button.disabled=true;status('Redirection vers '+(provider==='google'?'Google':'Apple')+'…');try{const {error}=await sb.auth.signInWithOAuth({provider,options:{redirectTo:location.origin+location.pathname,queryParams:provider==='google'?{prompt:'select_account'}:undefined}});if(error)throw error;}catch(err){status(err.message||'Impossible de démarrer la connexion '+label+'.','error');if(button)button.disabled=false;}}
+window.doAuth=async e=>{e.preventDefault();const btn=el('asub');btn.disabled=true;status('Connexion à Supabase…');try{const email=el('authEmail').value.trim().toLowerCase(),password=el('pwd').value;if(mode==='signup'){const full_name=el('authFullName').value.trim();if(!full_name)throw Error('Saisissez votre nom et prénom.');const {data,error}=await sb.auth.signUp({email,password,options:{data:{full_name},emailRedirectTo:'https://buildtracetrace.vercel.app/'}});if(error)throw error;if(data.session){user=data.user;await loadProfile();await loadListings();window.go('home');}else status('Compte créé. Vérifiez votre e-mail pour confirmer votre adresse.','success');}else{const {data,error}=await sb.auth.signInWithPassword({email,password});if(error)throw error;user=data.user;await loadProfile();await loadListings();window.go('home');}}catch(err){status(err.message||'Erreur de connexion.','error');}finally{btn.disabled=false;}return false;};
+async function startOAuth(provider,label){const button=[...document.querySelectorAll('.sb .bs')].find(b=>b.textContent.toLowerCase().includes(label));if(button)button.disabled=true;status('Redirection vers '+(provider==='google'?'Google':'Apple')+'…');try{const {error}=await sb.auth.signInWithOAuth({provider,options:{redirectTo:'https://buildtracetrace.vercel.app/',queryParams:provider==='google'?{prompt:'select_account'}:undefined}});if(error)throw error;}catch(err){status(err.message||'Impossible de démarrer la connexion '+label+'.','error');if(button)button.disabled=false;}}
 window.signInWithGoogle=()=>startOAuth('google','google');
 
 async function loadProfile(){if(!user)return;const {data,error}=await sb.from('profiles').select('full_name,account_type,company_name,city,neighborhood,avatar_url').eq('id',user.id).maybeSingle();if(error)console.error(error);window.BUILDTRACE_MY_PROFILE=data||{};const name=data?.full_name||user.user_metadata?.full_name||'Utilisateur BUILDTRACE';el('profileName').textContent=name;el('profileEmail').textContent=user.email||'';el('profileInitials').textContent=name.split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase();el('profileRole').textContent=data?.account_type==='company'?'Entreprise':'Utilisateur';}
