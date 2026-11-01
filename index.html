@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#071b36">
+<meta name="description" content="BUILDTRACE — Donnez une seconde vie aux matériaux de construction.">
+<title>BUILDTRACE — Construire durablement</title>
+<style>
+:root{--navy:#071b36;--navy2:#0d2d52;--green:#08b84f;--green2:#00d765;--ink:#12243c;--muted:#718096;--line:#e5ebf2;--paper:#f4f7fb;--white:#fff;--shadow:0 18px 55px #071b3618}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--paper)}button,input{font:inherit}button{cursor:pointer}.screen{display:none;min-height:100vh}.screen.active{display:flex}
+#splash{background:radial-gradient(circle at 50% 42%,#123c67 0,#071b36 55%,#041326 100%);color:#fff;align-items:center;justify-content:center;flex-direction:column;gap:18px}
+.brand-mark{width:76px;height:76px;display:block}.brand-word{font-weight:900;font-size:30px;letter-spacing:-1.5px;color:#fff}.brand-word span{color:var(--green2)}.splash-caption{color:#b9c9dc;font-size:12px;letter-spacing:2.3px;text-transform:uppercase}.loader{width:116px;height:4px;background:#ffffff25;border-radius:20px;overflow:hidden;margin-top:22px}.loader:after{content:"";display:block;width:42%;height:100%;background:var(--green2);border-radius:20px;animation:load 1.05s ease-in-out infinite}@keyframes load{from{transform:translateX(-110%)}to{transform:translateX(260%)}}
+#welcome{background:var(--navy);color:#fff;position:relative;overflow:hidden;align-items:center;justify-content:center;padding:32px 22px}
+.welcome-bg{position:absolute;inset:0;background:linear-gradient(180deg,#071b36aa 0%,#071b36a8 45%,#041326 100%),url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1800&q=85') center/cover no-repeat;opacity:.92}
+.welcome-glow{position:absolute;width:520px;height:520px;border-radius:50%;background:#08b84f20;filter:blur(65px);right:-220px;top:10%}
+.welcome-inner{position:relative;z-index:1;width:min(100%,510px);text-align:center;display:flex;flex-direction:column;align-items:center}
+.brand-lockup{display:flex;align-items:center;gap:12px;margin-bottom:32px}.brand-lockup .brand-mark{width:62px;height:62px}.brand-lockup .brand-word{font-size:31px}
+.eyebrow{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:#a9f4c6;font-weight:800;margin:0 0 15px}
+h1{font-size:clamp(34px,7vw,54px);line-height:1.04;letter-spacing:-1.8px;margin:0 0 18px;font-weight:850}h1 em{font-style:normal;color:var(--green2)}
+.welcome-copy{font-size:16px;line-height:1.65;color:#d3dfeb;max-width:390px;margin:0 auto 26px}
+.value-points{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin:0 0 32px}.value-points span{border:1px solid #ffffff35;background:#ffffff12;padding:9px 12px;border-radius:30px;font-size:12px;color:#e7f1fa}
+.actions{width:min(100%,360px);display:grid;gap:12px}.btn{border:0;border-radius:14px;padding:15px 20px;font-weight:800;transition:.18s transform,.18s filter}.btn:active{transform:scale(.98)}.btn-primary{background:linear-gradient(100deg,var(--green),var(--green2));color:#032414;box-shadow:0 10px 25px #00c65b38}.btn-outline{background:#ffffff0b;border:1px solid #ffffff85;color:#fff}.welcome-note{color:#9fb2c8;font-size:11px;margin-top:22px}
+#auth{align-items:center;justify-content:center;padding:26px 18px;background:linear-gradient(145deg,#071b36,#0e345d);position:relative;overflow:auto}
+.auth-shell{width:min(100%,470px);position:relative;z-index:1}.auth-brand{text-align:center;color:#fff;margin-bottom:18px}.auth-brand .brand-mark{width:54px;height:54px;margin:auto auto 6px}.auth-brand .brand-word{font-size:25px}.auth-brand p{margin:7px 0 0;color:#c1d0df;font-size:13px}
+.auth-card{background:#fff;border-radius:25px;padding:26px;box-shadow:0 25px 70px #0004}.auth-tabs{display:grid;grid-template-columns:1fr 1fr;background:#f0f4f8;padding:4px;border-radius:12px;margin-bottom:21px}.auth-tab{border:0;background:transparent;padding:10px;border-radius:9px;color:#64748b;font-size:13px;font-weight:750}.auth-tab.active{background:#fff;color:var(--navy);box-shadow:0 2px 8px #102a4414}
+.auth-title{font-size:25px;letter-spacing:-.7px;margin:0 0 5px;color:var(--navy)}.auth-subtitle{margin:0 0 20px;color:var(--muted);font-size:13px}
+.field{display:grid;gap:7px;margin-bottom:13px}.field label{font-size:12px;font-weight:750;color:#263b54}.field input{width:100%;height:48px;border:1px solid #dce4ed;border-radius:12px;padding:0 14px;outline:none;background:#fbfcfe;color:var(--ink)}.field input:focus{border-color:var(--green);box-shadow:0 0 0 3px #08b84f17}.password-wrap{position:relative}.password-wrap input{padding-right:48px}.show-pass{position:absolute;right:8px;top:7px;border:0;background:transparent;color:#64748b;padding:7px}
+.form-error{display:none;background:#fff1f0;color:#b42318;border-radius:10px;padding:10px 12px;font-size:12px;margin:0 0 12px}.form-error.show{display:block}.auth-submit{width:100%;margin-top:4px}.divider{display:flex;align-items:center;gap:12px;color:#94a3b8;font-size:11px;margin:19px 0}.divider:before,.divider:after{content:"";height:1px;background:#e7edf3;flex:1}.socials{display:grid;grid-template-columns:1fr 1fr;gap:10px}.social-btn{height:46px;border:1px solid #dce4ed;border-radius:12px;background:#fff;color:#1b2d43;font-size:12px;font-weight:750;display:flex;align-items:center;justify-content:center;gap:8px}.social-btn svg{width:18px;height:18px}.auth-foot{text-align:center;color:#7c8ba0;font-size:11px;margin:18px 0 0}.back-link{display:inline-flex;align-items:center;gap:6px;color:#d8e5f2;text-decoration:none;font-size:12px;margin:0 0 14px;background:none;border:0;padding:5px}
+#home{background:#f3f6fa;display:none;flex-direction:column}.topbar{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,calc((100vw - 1160px)/2));position:sticky;top:0;z-index:5}.topbrand{display:flex;align-items:center;gap:8px}.topbrand .brand-mark{width:37px;height:37px}.topbrand .brand-word{font-size:19px;color:var(--navy)}.top-actions{display:flex;align-items:center;gap:10px}.avatar{width:37px;height:37px;border-radius:50%;background:#d9f7e5;color:#087a3b;display:grid;place-items:center;font-weight:850}.icon-btn{width:38px;height:38px;border:1px solid var(--line);background:#fff;border-radius:12px;color:var(--navy)}
+.home-wrap{width:min(1160px,100%);margin:0 auto;padding:26px 20px 100px}.hello{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:23px}.hello h2{font-size:27px;letter-spacing:-.8px;margin:0 0 5px;color:var(--navy)}.hello p{margin:0;color:#738198;font-size:13px}.hello .btn{padding:11px 15px;font-size:12px}
+.searchbar{height:51px;background:#fff;border:1px solid var(--line);border-radius:15px;display:flex;align-items:center;gap:10px;padding:0 15px;color:#8090a5;margin-bottom:23px}.searchbar input{border:0;outline:0;flex:1;min-width:0;background:transparent;color:var(--ink)}
+.promo{background:linear-gradient(110deg,#09264a,#0c4470 65%,#087c47);border-radius:19px;padding:23px 25px;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:28px;overflow:hidden;position:relative}.promo:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:#15db6b22;right:9%;top:-110px}.promo small{color:#8af2b5;text-transform:uppercase;letter-spacing:1.4px;font-weight:800}.promo h3{font-size:21px;margin:7px 0}.promo p{color:#d4e3ef;font-size:12px;margin:0}.promo .btn{position:relative;z-index:1;white-space:nowrap;padding:12px 16px;font-size:12px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:0 0 14px}.section-head h3{margin:0;font-size:18px;color:var(--navy)}.section-head a{font-size:12px;color:#078b43;font-weight:800;text-decoration:none}
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:27px}.quick-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:17px}.quick-icon{width:37px;height:37px;border-radius:11px;background:#e6faed;color:#078b43;display:grid;place-items:center;font-size:18px;margin-bottom:11px}.quick-card b{display:block;font-size:13px;color:var(--navy)}.quick-card small{color:#8190a3;font-size:11px}
+.empty-state{background:#fff;border:1px dashed #ccd7e3;border-radius:17px;padding:28px;text-align:center;color:#75859a}.empty-state strong{display:block;color:#20354e;margin-bottom:6px}.empty-state p{font-size:12px;margin:0}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);height:67px;display:flex;justify-content:center;gap:clamp(12px,6vw,65px);align-items:center;z-index:6}.nav-item{border:0;background:transparent;color:#7d8ba0;font-size:10px;font-weight:700;display:grid;justify-items:center;gap:3px}.nav-item span:first-child{font-size:19px}.nav-item.active{color:#078b43}
+.toast{position:fixed;left:50%;bottom:82px;transform:translateX(-50%);background:#102a46;color:white;padding:11px 16px;border-radius:12px;font-size:12px;box-shadow:var(--shadow);display:none;z-index:20;max-width:90%;text-align:center}.toast.show{display:block}
+@media(min-width:800px){#welcome{padding:55px}.welcome-inner{transform:translateY(-8px)}.auth-card{padding:32px}.home-wrap{padding-top:36px}.welcome-bg{background-position:center 43%}}
+@media(max-width:520px){#auth{padding:18px 14px}.auth-card{padding:21px 18px;border-radius:21px}.auth-brand{margin-bottom:13px}.auth-brand .brand-mark{width:46px;height:46px}.auth-brand .brand-word{font-size:23px}.socials{grid-template-columns:1fr}.hello{align-items:flex-start;flex-direction:column}.promo{padding:19px;align-items:flex-start;flex-direction:column}.promo h3{font-size:19px}.quick-grid{grid-template-columns:1fr 1fr}.quick-card:last-child{display:none}.home-wrap{padding:21px 15px 95px}.topbar{padding:0 15px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<main>
+<section id="splash" class="screen" aria-label="Chargement de BUILDTRACE">
+  <svg class="brand-mark" viewBox="0 0 100 100" role="img" aria-label="Logo BUILDTRACE"><path d="M12 84V39l23-13v58M35 84V17l22-12v79M57 84V42l20-11v53" fill="none" stroke="#fff" stroke-width="7" stroke-linejoin="round"/><path d="M57 84V42l20-11v53" fill="none" stroke="#08d65e" stroke-width="7" stroke-linejoin="round"/><path d="M5 88h88" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>
+  <div class="brand-word">BUILD<span>TRACE</span></div><div class="splash-caption">Construire · Réutiliser · Valoriser</div><div class="loader"></div>
+</section>
+<section id="welcome" class="screen active">
+  <div class="welcome-bg"></div><div class="welcome-glow"></div>
+  <div class="welcome-inner">
+    <div class="brand-lockup"><svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true"><path d="M12 84V39l23-13v58M35 84V17l22-12v79M57 84V42l20-11v53" fill="none" stroke="#fff" stroke-width="7" stroke-linejoin="round"/><path d="M57 84V42l20-11v53" fill="none" stroke="#08d65e" stroke-width="7" stroke-linejoin="round"/><path d="M5 88h88" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg><div class="brand-word">BUILD<span>TRACE</span></div></div>
+    <p class="eyebrow">La construction entre dans une nouvelle ère</p>
+    <h1>Donnez une seconde vie aux <em>matériaux.</em></h1>
+    <p class="welcome-copy">Achetez, vendez et louez des matériaux et équipements de construction. Valorisons ensemble les ressources qui peuvent encore servir.</p>
+    <div class="value-points"><span>♻ Réemploi intelligent</span><span>⌕ Trouvez près de vous</span><span>✓ Matériaux analysés</span></div>
+    <div class="actions"><button class="btn btn-primary" id="startBtn">Commencer gratuitement <span aria-hidden="true">→</span></button><button class="btn btn-outline" id="loginBtn">Se connecter</button></div>
+    <p class="welcome-note">Une plateforme pour construire plus durablement.</p>
+  </div>
+</section>
+<section id="auth" class="screen">
+ <div class="auth-shell">
+  <button class="back-link" id="backWelcome">← Retour</button>
+  <div class="auth-brand"><svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true"><path d="M12 84V39l23-13v58M35 84V17l22-12v79M57 84V42l20-11v53" fill="none" stroke="#fff" stroke-width="7" stroke-linejoin="round"/><path d="M57 84V42l20-11v53" fill="none" stroke="#08d65e" stroke-width="7" stroke-linejoin="round"/><path d="M5 88h88" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg><div class="brand-word">BUILD<span>TRACE</span></div><p>Rejoignez une communauté qui valorise les matériaux.</p></div>
+  <div class="auth-card">
+   <div class="auth-tabs"><button class="auth-tab active" id="tabSignup">Créer un compte</button><button class="auth-tab" id="tabLogin">Se connecter</button></div>
+   <h2 class="auth-title" id="authTitle">Créer votre compte</h2><p class="auth-subtitle" id="authSubtitle">Quelques informations pour commencer.</p>
+   <form id="authForm" novalidate>
+    <div class="field" id="nameField"><label for="fullName">Nom et prénom</label><input id="fullName" name="name" autocomplete="name" placeholder="Ex. : Koffi Mensah" required></div>
+    <div class="field"><label for="email">Adresse e-mail</label><input id="email" name="email" type="email" autocomplete="email" placeholder="vous@exemple.com" required></div>
+    <div class="field"><label for="password">Mot de passe</label><div class="password-wrap"><input id="password" name="password" type="password" autocomplete="new-password" placeholder="8 caractères minimum" minlength="8" required><button type="button" class="show-pass" id="togglePassword" aria-label="Afficher le mot de passe">◉</button></div></div>
+    <p class="form-error" id="formError" role="alert"></p>
+    <button class="btn btn-primary auth-submit" type="submit" id="submitAuth">Créer mon compte</button>
+   </form>
+   <div class="divider">ou continuer avec</div>
+   <div class="socials">
+    <button class="social-btn" type="button" data-provider="Google"><svg viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 24.5c0-1.4-.1-2.8-.4-4.1H24v7.8h11a9.4 9.4 0 0 1-4.1 6.2v5.1h6.7c3.9-3.6 6-8.9 6-15z"/><path fill="#34A853" d="M24 44c5.5 0 10.1-1.8 13.5-4.9l-6.7-5.1c-1.8 1.2-4 1.9-6.8 1.9-5.2 0-9.6-3.5-11.2-8.2H5.9v5.3A20 20 0 0 0 24 44z"/><path fill="#4285F4" d="M12.8 27.7a12 12 0 0 1 0-7.4V15H5.9a20 20 0 0 0 0 18z"/><path fill="#EA4335" d="M24 12.1c3 0 5.7 1 7.8 3.1l5.8-5.8C34.1 6.1 29.5 4 24 4A20 20 0 0 0 5.9 15l6.9 5.3c1.6-4.7 6-8.2 11.2-8.2z"/></svg>Google</button>
+    <button class="social-btn" type="button" data-provider="Apple"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.7 12.8c0-2.3 1.9-3.4 2-3.5a4.3 4.3 0 0 0-3.4-1.8c-1.4-.1-2.8.8-3.5.8s-1.8-.8-3-.8a4.5 4.5 0 0 0-3.8 2.3c-1.6 2.8-.4 7 1.1 9.2.7 1.1 1.6 2.3 2.7 2.2 1.1 0 1.5-.7 2.9-.7s1.8.7 3 .7 2-1.1 2.7-2.2a10 10 0 0 0 1.2-2.5 4 4 0 0 1-1.9-3.7ZM14.3 5.9a4.1 4.1 0 0 0 1-3 4.2 4.2 0 0 0-2.8 1.4 3.9 3.9 0 0 0-1 2.9 3.5 3.5 0 0 0 2.8-1.3Z"/></svg>Apple</button>
+   </div>
+   <p class="auth-foot">En continuant, vous acceptez nos conditions d'utilisation et notre politique de confidentialité.</p>
+  </div>
+ </div>
+</section>
+<section id="home" class="screen">
+ <header class="topbar"><div class="topbrand"><svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true"><path d="M12 84V39l23-13v58M35 84V17l22-12v79M57 84V42l20-11v53" fill="none" stroke="#09284b" stroke-width="7" stroke-linejoin="round"/><path d="M57 84V42l20-11v53" fill="none" stroke="#08b84f" stroke-width="7" stroke-linejoin="round"/><path d="M5 88h88" stroke="#09284b" stroke-width="5" stroke-linecap="round"/></svg><div class="brand-word">BUILD<span>TRACE</span></div></div><div class="top-actions"><button class="icon-btn" aria-label="Notifications">♧</button><div class="avatar" id="avatarInitials">BT</div></div></header>
+ <div class="home-wrap">
+  <div class="hello"><div><h2>Bonjour, <span id="userFirstName">Bienvenue</span> 👋</h2><p>Construisons ensemble un avenir plus durable.</p></div><button class="btn btn-primary" id="publishBtn">＋ Publier un matériel</button></div>
+  <label class="searchbar">⌕ <input placeholder="Rechercher un matériau, un outil, un équipement…" aria-label="Rechercher"></label>
+  <div class="promo"><div><small>La bonne idée, au bon endroit</small><h3>Un matériau peut avoir plusieurs vies.</h3><p>Découvrez les annonces de vente et de location autour de vous.</p></div><button class="btn btn-primary" id="marketBtn">Explorer la marketplace →</button></div>
+  <div class="section-head"><h3>Votre espace BUILDTRACE</h3><a href="#" id="profileLink">Mon profil →</a></div>
+  <div class="quick-grid"><div class="quick-card"><div class="quick-icon">⌕</div><b>Explorer</b><small>Découvrir les matériaux</small></div><div class="quick-card"><div class="quick-icon">♧</div><b>Mes messages</b><small>Échanger avec les vendeurs</small></div><div class="quick-card"><div class="quick-icon">＋</div><b>Publier</b><small>Donner une seconde vie</small></div></div>
+  <div class="section-head"><h3>Les annonces arrivent bientôt</h3><a href="#" id="allListings">Voir tout →</a></div>
+  <div class="empty-state"><strong>Votre marketplace prend forme.</strong><p>Les annonces de matériaux réemployables apparaîtront ici dès que la publication sera activée.</p></div>
+ </div>
+ <nav class="bottom-nav" aria-label="Navigation principale"><button class="nav-item active"><span>⌂</span>Accueil</button><button class="nav-item" data-soon="Recherche"><span>⌕</span>Recherche</button><button class="nav-item" data-soon="Ajouter"><span>⊕</span>Ajouter</button><button class="nav-item" data-soon="Marketplace"><span>▦</span>Marketplace</button><button class="nav-item" data-soon="Profil"><span>♙</span>Profil</button></nav>
+</section>
+<div class="toast" id="toast" role="status"></div>
+</main>
+<script>
+const KEY_ACCOUNT='buildtrace_demo_account_v1',KEY_SESSION='buildtrace_demo_session_v1';
+const $=id=>document.getElementById(id);
+const screens=['welcome','auth','splash','home'];
+function showScreen(id){screens.forEach(s=>$(s).classList.toggle('active',s===id));window.scrollTo(0,0)}
+function toast(message){const el=$('toast');el.textContent=message;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2600)}
+function getAccount(){try{return JSON.parse(localStorage.getItem(KEY_ACCOUNT)||'null')}catch{return null}}
+function openAuth(mode){setAuthMode(mode);showScreen('auth')}
+function setAuthMode(mode){const signup=mode==='signup';$('tabSignup').classList.toggle('active',signup);$('tabLogin').classList.toggle('active',!signup);$('nameField').style.display=signup?'grid':'none';$('authTitle').textContent=signup?'Créer votre compte':'Ravi de vous revoir';$('authSubtitle').textContent=signup?'Quelques informations pour commencer.':'Connectez-vous pour retrouver votre espace.';$('submitAuth').textContent=signup?'Créer mon compte':'Se connecter';$('password').autocomplete=signup?'new-password':'current-password';$('formError').classList.remove('show');$('formError').textContent='';$('authForm').dataset.mode=mode}
+function enterApp(account){$('userFirstName').textContent=(account?.name||'Bienvenue').trim().split(/\s+/)[0];$('avatarInitials').textContent=(account?.name||'BT').split(/\s+/).slice(0,2).map(x=>x[0]).join('').toUpperCase();showScreen('home')}
+function showSplashThenHome(){showScreen('splash');const started=Date.now();const finish=()=>{const remaining=Math.max(0,650-(Date.now()-started));setTimeout(()=>enterApp(getAccount()),remaining)};if(document.readyState==='complete')finish();else window.addEventListener('load',finish,{once:true});}
+function init(){const account=getAccount(),session=localStorage.getItem(KEY_SESSION)==='active';if(account&&session)showSplashThenHome();else showScreen('welcome')}
+$('startBtn').addEventListener('click',()=>openAuth('signup'));
+$('loginBtn').addEventListener('click',()=>openAuth('login'));
+$('backWelcome').addEventListener('click',()=>showScreen('welcome'));
+$('tabSignup').addEventListener('click',()=>setAuthMode('signup'));
+$('tabLogin').addEventListener('click',()=>setAuthMode('login'));
+$('togglePassword').addEventListener('click',()=>{$('password').type=$('password').type==='password'?'text':'password'});
+$('authForm').addEventListener('submit',e=>{e.preventDefault();const mode=$('authForm').dataset.mode,email=$('email').value.trim(),password=$('password').value,name=$('fullName').value.trim();let message='';if(!email||!/^\S+@\S+\.\S+$/.test(email))message='Veuillez saisir une adresse e-mail valide.';else if(password.length<8)message='Le mot de passe doit contenir au moins 8 caractères.';else if(mode==='signup'&&!name)message='Veuillez saisir votre nom et prénom.';else if(mode==='login'&&!getAccount())message='Aucun compte de démonstration. Créez d’abord votre compte.';else if(mode==='login'&&getAccount()?.email!==email)message='Aucun compte trouvé avec cette adresse e-mail.';if(message){$('formError').textContent=message;$('formError').classList.add('show');return}
+let account;if(mode==='signup'){account={name,email,createdAt:new Date().toISOString()};localStorage.setItem(KEY_ACCOUNT,JSON.stringify(account))}else account=getAccount();localStorage.setItem(KEY_SESSION,'active');$('authForm').reset();showSplashThenHome();});
+document.querySelectorAll('[data-provider]').forEach(btn=>btn.addEventListener('click',()=>toast('La connexion '+btn.dataset.provider+' sera activée lors du branchement de Supabase Auth.')));
+$('publishBtn').addEventListener('click',()=>toast('Le formulaire de publication sera ajouté dans la prochaine étape.'));
+$('marketBtn').addEventListener('click',()=>toast('La marketplace sera développée dans la prochaine étape.'));
+$('profileLink').addEventListener('click',e=>{e.preventDefault();toast('La page Profil sera ajoutée dans la prochaine étape.')});
+$('allListings').addEventListener('click',e=>{e.preventDefault();toast('Les annonces seront disponibles prochainement.')});
+document.querySelectorAll('[data-soon]').forEach(btn=>btn.addEventListener('click',()=>toast('Écran « '+btn.dataset.soon+' » prévu dans la prochaine phase.')));
+init();
+</script>
+</body>
+</html>
