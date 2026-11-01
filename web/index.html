@@ -26,27 +26,6 @@ body{
 .screen{display:none;min-height:100dvh;flex-direction:column}
 .screen.active{display:flex}
 
-/* ===== PAGE DE BIENVENUE (CDC 3.1) ===== */
-#s-welcome{position:relative;color:#fff;overflow:hidden;background:#061a38;min-height:100svh}
-#s-welcome::before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(4,20,48,.08) 0%,rgba(4,20,48,.18) 30%,rgba(4,20,48,.92) 72%,#061a38 100%),url("https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=90") center 38%/cover no-repeat}
-.welcome-inner{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:42px 24px max(30px,env(safe-area-inset-bottom));max-width:430px;margin:0 auto;width:100%;min-height:100svh}
-.w-logo{display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;padding-top:5px}
-.w-logo-box{width:74px;height:74px;background:transparent;border-radius:0;display:grid;place-items:center;filter:drop-shadow(0 4px 8px rgba(0,0,0,.25))}
-.w-logo-t{font-size:29px;font-weight:850;letter-spacing:.2px;text-shadow:0 2px 8px rgba(0,0,0,.25)}
-.w-logo-t b{color:#00e85b}
-.w-tag{font-size:12px;color:rgba(255,255,255,.9);letter-spacing:.2px}
-.w-hero{text-align:center;margin:auto 0 24px;padding-top:24px}
-.w-hero h1{font-size:26px;font-weight:850;line-height:1.17;margin-bottom:12px;letter-spacing:-.45px}
-.w-hero p{font-size:14px;line-height:1.48;color:rgba(255,255,255,.92);max-width:315px;margin:0 auto}
-.w-benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 24px;text-align:center}
-.w-benefit{display:flex;flex-direction:column;align-items:center;gap:7px;font-size:11px;font-weight:650;line-height:1.25;color:#fff}
-.w-benefit-icon{width:48px;height:48px;border-radius:50%;background:rgba(0,205,100,.88);display:grid;place-items:center;box-shadow:0 4px 15px rgba(0,0,0,.22)}
-.w-benefit-icon svg{width:23px;height:23px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.w-btns{display:flex;flex-direction:column;gap:10px}
-.btn{height:51px;border-radius:28px;font-size:15px;font-weight:750;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.btn-primary{background:#00df50;color:#003a19;box-shadow:0 6px 22px rgba(0,220,80,.34)}
-.btn-outline{background:rgba(2,22,55,.5);color:#fff;border:1.5px solid rgba(255,255,255,.88)}
-
 /* ===== AUTH compact (CDC 3.2 — visible sans scroll) ===== */
 #s-auth{background:#071a39;position:relative;overflow:hidden}
 #s-auth::after{content:"";position:absolute;left:-8%;right:-8%;bottom:-5px;height:115px;pointer-events:none;opacity:.95;background:linear-gradient(180deg,transparent,#071a39 25%),url("https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1000&q=75") center 60%/cover no-repeat}
@@ -230,7 +209,6 @@ body{
 .sheet-opt span{font-size:12px;color:var(--muted)}
 
 @supports(padding:max(0px)){
-  .welcome-inner{padding-top:max(48px,env(safe-area-inset-top))}
   .home-header{padding-top:max(12px,env(safe-area-inset-top))}
   .auth-box{padding-top:max(16px,env(safe-area-inset-top))}
 }
@@ -745,39 +723,8 @@ button,input,select,textarea{font:inherit}
 </head>
 <body>
 
-<!-- ========== 3.1 PAGE DE BIENVENUE ========== -->
-<div class="screen active" id="s-welcome">
-  <div class="welcome-inner">
-    <div class="w-logo">
-      <div class="w-logo-box">
-        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" aria-label="Logo BUILDTRACE">
-          <path d="M8 58V25L25 12V58H8Z" fill="#F8FBFF" stroke="#fff" stroke-width="2"/>
-          <path d="M25 58V8L45 20V58H25Z" fill="#fff" stroke="#fff" stroke-width="2"/>
-          <path d="M45 58V31L63 20V58H45Z" fill="#00D85A" stroke="#00D85A" stroke-width="2"/>
-          <path d="M17 58V39M35 58V29M54 58V42" stroke="#08244A" stroke-width="4"/>
-        </svg>
-      </div>
-      <div class="w-logo-t">BUILD<span style="color:#00e85b">TRACE</span></div>
-      <div class="w-tag">Découvrez · Publiez · Louez · Vendez</div>
-    </div>
-
-    <div class="w-hero">
-      <h1>La plateforme intelligente<br>de <span style="color:#00e85b">vente</span>, de <span style="color:#00e85b">location</span> et<br>de découverte de matériaux<br>de construction.</h1>
-    </div>
-    <div class="w-benefits">
-      <div class="w-benefit"><span class="w-benefit-icon"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg></span><span>Trouvez<br>facilement</span></div>
-      <div class="w-benefit"><span class="w-benefit-icon"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span><span>Analysez<br>avec l'IA</span></div>
-      <div class="w-benefit"><span class="w-benefit-icon"><svg viewBox="0 0 24 24"><path d="M16 11 8 7l-4 4 5 5 3-2 3 2 5-5-4-4Z"/><path d="m8 7 3-3 5 2 3-2 3 3-4 4"/></svg></span><span>Connectez-vous</span></div>
-    </div>
-    <div class="w-btns">
-      <button class="btn btn-outline" onclick="go('auth');setMode('l')">Continuer <span style="margin-left:9px">→</span></button>
-      <button class="btn btn-primary" onclick="go('auth');setMode('r')">Commencer gratuitement</button>
-    </div>
-  </div>
-</div>
-
 <!-- ========== 3.2 INSCRIPTION / CONNEXION ========== -->
-<div class="screen" id="s-auth">
+<div class="screen active" id="s-auth">
   <div class="auth-box mode-r" id="abox">
     <div class="auth-logo">
       <svg width="48" height="48" viewBox="0 0 72 72" fill="none" aria-label="Logo BUILDTRACE">
@@ -1367,16 +1314,12 @@ function submitFeedback(event){
 }
 
 function go(id){
-  const allowed=['welcome','auth','home','search','market','detail','favorites','messages','chat','profile','my-listings','subscriptions','settings','feedback','add'];
+  const allowed=['auth','home','search','market','detail','favorites','messages','chat','profile','my-listings','subscriptions','settings','feedback','add'];
+  if(id==='welcome')id='auth';
   if(!allowed.includes(id)||!document.getElementById('s-'+id))return;
-  // La vitrine ne s'affiche qu'une seule fois sur cet appareil/navigateur.
-  let welcomeSeen=false;
-  try{welcomeSeen=localStorage.getItem('buildtrace_welcome_seen')==='1';}catch(_){}
-  if(id==='welcome'&&welcomeSeen)id='auth';
-  else if(id==='welcome'){try{localStorage.setItem('buildtrace_welcome_seen','1');}catch(_){}}
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById('s-'+id).classList.add('active');
-  try{if(id==='welcome'||id==='auth')localStorage.removeItem('buildtrace_last_screen');else localStorage.setItem('buildtrace_last_screen',id);}catch(_){}
+  try{if(id==='auth')localStorage.removeItem('buildtrace_last_screen');else localStorage.setItem('buildtrace_last_screen',id);}catch(_){}
   if(id==='favorites')renderFavorites();
   if(id==='market'||id==='search')syncFavoriteButtons();
   if(id==='messages'&&window.BUILDTRACE_LOAD_CONVERSATIONS)window.BUILDTRACE_LOAD_CONVERSATIONS();
@@ -1620,8 +1563,8 @@ window.sendChatMessage=async event=>{
 window.filterConversations=filterConversations;
 window.BUILDTRACE_LOAD_CONVERSATIONS=loadConversationList;
 
-async function restore(){try{const {data:{session},error}=await sb.auth.getSession();if(error)throw error;if(session?.user){user=session.user;try{localStorage.setItem('buildtrace_welcome_seen','1');}catch(_){}await loadProfile();await loadListings();let last='home';try{last=localStorage.getItem('buildtrace_last_screen')||'home';}catch(_){}const safe=['home','search','market','detail','favorites','messages','profile','my-listings','subscriptions','settings','feedback','add'];if(!safe.includes(last))last='home';window.go(last);return;}user=null;try{localStorage.removeItem('buildtrace_last_screen');}catch(_){}await loadListings();let seen=false;try{seen=localStorage.getItem('buildtrace_welcome_seen')==='1';}catch(_){}window.go(seen?'auth':'welcome');}catch(err){console.error('Restauration de session BUILDTRACE:',err);status(err.message||'La connexion n’a pas pu être restaurée. Reconnectez-vous.','error');await loadListings();let seen=false;try{seen=localStorage.getItem('buildtrace_welcome_seen')==='1';}catch(_){}window.go(seen?'auth':'welcome');}}
-sb.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN'&&session?.user){user=session.user;try{localStorage.setItem('buildtrace_welcome_seen','1');}catch(_){}setTimeout(async()=>{await loadProfile();await loadListings();window.go('home');status('Connexion réussie. Bienvenue sur BUILDTRACE.','success');},0);}if(event==='SIGNED_OUT'){user=null;window.go('auth');}});
+async function restore(){try{const {data:{session},error}=await sb.auth.getSession();if(error)throw error;if(session?.user){user=session.user;await loadProfile();await loadListings();let last='home';try{last=localStorage.getItem('buildtrace_last_screen')||'home';}catch(_){}const safe=['home','search','market','detail','favorites','messages','profile','my-listings','subscriptions','settings','feedback','add'];if(!safe.includes(last))last='home';window.go(last);return;}user=null;try{localStorage.removeItem('buildtrace_last_screen');}catch(_){}await loadListings();window.go('auth');}catch(err){console.error('Restauration de session BUILDTRACE:',err);status(err.message||'La connexion n’a pas pu être restaurée. Reconnectez-vous.','error');await loadListings();window.go('auth');}}
+sb.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_IN'&&session?.user){user=session.user;setTimeout(async()=>{await loadProfile();await loadListings();window.go('home');status('Connexion réussie. Bienvenue sur BUILDTRACE.','success');},0);}if(event==='SIGNED_OUT'){user=null;window.go('auth');}});
 restore();
 </script>
 </body>
