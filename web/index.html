@@ -1502,7 +1502,7 @@ async function refreshChatMessages(){
   if(!activeChatId)return;
   const {data,error}=await sb.from('messages').select('id,conversation_id,sender_id,content,created_at').eq('conversation_id',activeChatId).order('created_at',{ascending:true}).limit(200);
   if(error){chatText('chatStatus','Impossible de charger les messages : '+error.message,'error');return;}
-  renderChatMessages(data);await markConversationRead(activeChatId);
+  renderChatMessages(data);await markConversationRead(activeChatId);await markConversationRead(activeChatId);
 }
 async function loadConversationList(){
   const list=el('conversationList');if(!list)return;
