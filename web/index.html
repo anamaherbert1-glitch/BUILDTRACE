@@ -1497,7 +1497,6 @@ async function getOrCreateConversation(listing){
      const time=document.createElement('span');time.className='chat-time';time.textContent=chatTime(row.created_at);bubble.appendChild(time);line.append(bubble);wrap.appendChild(line);
    });
    const content=document.querySelector('.chat-content');if(content)content.scrollTop=content.scrollHeight;
- }
 }
 async function refreshChatMessages(){
   if(!activeChatId)return;
@@ -1546,7 +1545,7 @@ window.BUILDTRACE_OPEN_CONVERSATION=async id=>{
    const {data:profile}=await sb.from('profiles').select('full_name,company_name,avatar_url').eq('id',activeChatPeer).maybeSingle();
    window.BUILDTRACE_PEER_PROFILE=profile||{};
   const name=profile?.company_name||profile?.full_name||'Utilisateur BUILDTRACE';
-  el('chatContactName').textContent=name;el('chatContactInitials').textContent='';el('chatContactInitials').append(avatarNode(name,profile?.avatar_url));
+   el('chatContactName').textContent=name;const headAvatar=el('chatContactInitials');headAvatar.textContent=initialsFor(name);if(profile?.avatar_url){const img=document.createElement('img');img.src=profile.avatar_url;img.alt='Photo de profil de '+name;img.className='chat-avatar-photo';headAvatar.textContent='';headAvatar.append(img);}
   el('chatContactStatus').textContent='Conversation BUILDTRACE';
   if(convo.listing_id){const {data:listing}=await sb.from('listings').select('title,photo_urls,sale_price_xof,rental_price_xof,listing_type,rental_period').eq('id',convo.listing_id).maybeSingle();if(listing){el('chatProductName').textContent=listing.title;const price=listing.listing_type==='rent'?listing.rental_price_xof:listing.sale_price_xof;el('chatProductPrice').textContent=Number(price||0).toLocaleString('fr-FR')+' FCFA';if(listing.photo_urls?.[0])el('chatProductImage').src=listing.photo_urls[0];}}
   go('chat');chatText('chatStatus','');await refreshChatMessages();
