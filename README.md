@@ -1,33 +1,32 @@
 # BUILDTRACE
 
-Première base frontend de BUILDTRACE.
+Première étape frontend : les trois écrans d'entrée de BUILDTRACE.
 
-## Contenu actuel
+## Écrans implémentés
 
-- Écran de bienvenue affiché tant qu'aucun compte n'a été créé.
-- Écrans de création de compte et de connexion (interface de démonstration).
-- Splash screen avec le logo BUILDTRACE après création du compte et aux lancements suivants si la session reste active.
-- Première interface d'accueil après connexion.
+1. **Bienvenue** : photo de chantier, logo SVG, slogan, bénéfices et boutons d'inscription/connexion.
+2. **Inscription** : logo, boutons Google et Apple, e-mail et mot de passe. La mise en page est optimisée pour tenir sur un écran mobile.
+3. **Connexion** : thème bleu nuit, logo, boutons Google et Apple, e-mail, mot de passe et lien de récupération.
 
-## Parcours prévu
+Les pictogrammes d'interface et le logo sont intégrés en SVG. Les photos utilisent une image distante.
 
-1. Aucun compte enregistré : afficher l'écran de bienvenue à chaque ouverture.
-2. Création de compte réussie : ouvrir l'espace utilisateur.
-3. Session active lors d'une ouverture suivante : afficher brièvement le splash screen, puis l'accueil.
-4. Session terminée : afficher l'écran de connexion, sans revenir à la page de bienvenue.
+## Règles du parcours utilisateur
 
-## État technique
+- Aucun compte créé : afficher l'écran de bienvenue.
+- Après création du compte et première entrée : ouvrir l'application.
+- Aux ouvertures suivantes avec une session active : afficher brièvement le splash screen BUILDTRACE, puis l'accueil.
+- Compte déjà créé mais session inactive : afficher directement la connexion, jamais la page de bienvenue.
 
-Cette étape est uniquement frontend. L'inscription et la connexion sont simulées dans le navigateur avec un profil de démonstration et un indicateur de session dans `localStorage`. Aucun mot de passe n'est enregistré. Ce mécanisme doit être remplacé par Supabase Auth avant toute mise en production.
+## État technique et sécurité
 
-Les boutons Google et Apple sont des emplacements d'interface : les fournisseurs OAuth seront configurés lors du branchement de Supabase Auth.
+Cette version est un prototype frontend autonome. L'authentification est encore simulée dans le navigateur. Le mot de passe de démonstration est stocké localement : **ne pas utiliser de vrai mot de passe sur cette version**.
+
+Les boutons Google et Apple sont des éléments d'interface, pas encore des connexions OAuth fonctionnelles. Le branchement de Supabase Auth remplacera la simulation avant une mise en production réelle.
 
 ## Démarrage
 
-Le projet est actuellement une page HTML autonome : ouvrir `index.html` dans un navigateur ou déployer le dossier comme site statique.
+Ouvrir `index.html` dans un navigateur ou déployer le dossier comme site statique.
 
-## Prochaines étapes
+## Étape suivante
 
-- Valider le rendu sur mobile et ordinateur.
-- Brancher Supabase Auth et remplacer la simulation locale.
-- Construire les écrans Recherche, Marketplace, publication, messagerie et Profil.
+Valider ces trois écrans sur mobile avant de développer les écrans Marketplace, publication, messagerie et Profil.
