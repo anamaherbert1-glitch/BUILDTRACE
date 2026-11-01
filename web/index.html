@@ -1489,14 +1489,15 @@ async function getOrCreateConversation(listing){
   if(created.error.code==='23505'){const retry=await find();if(!retry.error&&retry.data)return retry.data;}
   throw created.error;
 }
-function renderChatMessages(rows){
-  const wrap=el('chatMessages');wrap.innerHTML='';
-  (rows||[]).forEach(row=>{
-    const bubble=document.createElement('div');bubble.className='chat-bubble'+(row.sender_id===user?.id?' mine':'');
-    bubble.textContent=row.content;
-    const time=document.createElement('span');time.className='chat-time';time.textContent=chatTime(row.created_at);bubble.appendChild(time);wrap.appendChild(bubble);
-  });
-  const content=document.querySelector('.chat-content');if(content)content.scrollTop=content.scrollHeight;
+ function renderChatMessages(rows){
+   const wrap=el('chatMessages');wrap.innerHTML='';
+   (rows||[]).forEach(row=>{
+     const mine=row.sender_id===user?.id,profile=mine?(window.BUILDTRACE_MY_PROFILE||{}):(window.BUILDTRACE_PEER_PROFILE||{}),name=profile.company_name||profile.full_name||(mine?'Moi':'Utilisateur BUILDTRACE'),line=document.createElement('div');line.className='chat-bubble-row'+(mine?' mine':'');line.append(avatarNode(name,profile.avatar_url));
+     const bubble=document.createElement('div');bubble.className='chat-bubble'+(mine?' mine':'');bubble.textContent=row.content;
+     const time=document.createElement('span');time.className='chat-time';time.textContent=chatTime(row.created_at);bubble.appendChild(time);line.append(bubble);wrap.appendChild(line);
+   });
+   const content=document.querySelector('.chat-content');if(content)content.scrollTop=content.scrollHeight;
+ }
 }
 async function refreshChatMessages(){
   if(!activeChatId)return;
@@ -1516,12 +1517,14 @@ async function loadConversationList(){
   el('conversationEmpty').style.display='none';chatText('conversationStatus','');
   for(const convo of conversations){
     const peerId=convo.buyer_id===user.id?convo.seller_id:convo.buyer_id;
-    const [profileRes,listingRes,messageRes]=await Promise.all([
-      sb.from('profiles').select('full_name,company_name').eq('id',peerId).maybeSingle(),
-      convo.listing_id?sb.from('listings').select('title').eq('id',convo.listing_id).maybeSingle():Promise.resolve({data:null}),
-      sb.from('messages').select('content,created_at').eq('conversation_id',convo.id).order('created_at',{ascending:false}).limit(1).maybeSingle()
-    ]);
+     const [profileRes,listingRes,messageRes,readRes]=await Promise.all([
+       sb.from('profiles').select('full_name,company_name,avatar_url').eq('id',peerId).maybeSingle(),
+       convo.listing_id?sb.from('listings').select('title').eq('id',convo.listing_id).maybeSingle():Promise.resolve({data:null}),
+       sb.from('messages').select('content,created_at,sender_id').eq('conversation_id',convo.id).order('created_at',{ascending:false}).limit(1).maybeSingle(),
+       sb.from('conversation_reads').select('last_read_at').eq('conversation_id',convo.id).eq('user_id',user.id).maybeSingle()
+     ]);
     const name=profileRes.data?.company_name||profileRes.data?.full_name||'Utilisateur BUILDTRACE';
+     const unread=messageRes.data&&messageRes.data.sender_id!==user.id&&(!readRes.data?.last_read_at||new Date(messageRes.data.created_at)>new Date(readRes.data.last_read_at));
     const preview=messageRes.data?.content||'Conversation créée · Envoyez le premier message';
     const row=document.createElement('button');row.type='button';row.className='conversation';row.dataset.search=(name+' '+preview+' '+(listingRes.data?.title||'')).toLocaleLowerCase('fr');
     const avatar=avatarNode(name,profileRes.data?.avatar_url);
@@ -1540,7 +1543,8 @@ window.BUILDTRACE_OPEN_CONVERSATION=async id=>{
   const {data:convo,error}=await sb.from('conversations').select('*').eq('id',id).maybeSingle();
   if(error||!convo){chatText('conversationStatus',error?.message||'Conversation introuvable.','error');return;}
   activeChatId=convo.id;activeChatPeer=convo.buyer_id===user.id?convo.seller_id:convo.buyer_id;
-  const {data:profile}=await sb.from('profiles').select('full_name,company_name').eq('id',activeChatPeer).maybeSingle();
+   const {data:profile}=await sb.from('profiles').select('full_name,company_name,avatar_url').eq('id',activeChatPeer).maybeSingle();
+   window.BUILDTRACE_PEER_PROFILE=profile||{};
   const name=profile?.company_name||profile?.full_name||'Utilisateur BUILDTRACE';
   el('chatContactName').textContent=name;el('chatContactInitials').textContent='';el('chatContactInitials').append(avatarNode(name,profile?.avatar_url));
   el('chatContactStatus').textContent='Conversation BUILDTRACE';
