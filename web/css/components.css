@@ -1,0 +1,90 @@
+/* Boutons */
+.bt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 0 20px;
+  border-radius: var(--bt-radius-sm);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  transition: transform 0.12s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.bt-btn:active {
+  transform: scale(0.98);
+}
+
+.bt-btn-primary {
+  background: linear-gradient(180deg, var(--bt-green), var(--bt-green-dark));
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(0, 168, 67, 0.28);
+}
+
+.bt-btn-ghost {
+  background: transparent;
+  color: var(--bt-ink);
+  border: 1.5px solid var(--bt-line);
+}
+
+/* Champs */
+.bt-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border-radius: var(--bt-radius-sm);
+  border: 1.5px solid var(--bt-line);
+  background: var(--bt-surface);
+  color: var(--bt-ink);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.bt-input:focus {
+  outline: none;
+  border-color: var(--bt-green);
+  box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.15);
+}
+
+/* Cartes */
+.bt-card {
+  background: var(--bt-surface);
+  border: 1px solid var(--bt-line);
+  border-radius: var(--bt-radius);
+  box-shadow: var(--bt-shadow);
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.bt-card:hover {
+  border-color: #c5d5cb;
+  box-shadow: var(--bt-shadow-lg);
+}
+
+.bt-price {
+  color: var(--bt-green-dark);
+  font-weight: 800;
+}
+
+.bt-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--bt-radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--bt-green-light);
+  color: var(--bt-green-dark);
+}
+
+.bt-status {
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.bt-status.error {
+  color: #dc2626;
+}
+
+.bt-status.success {
+  color: var(--bt-green-dark);
+}

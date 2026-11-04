@@ -1,0 +1,46 @@
+/* BUILDTRACE Design Tokens */
+:root {
+  /* Brand */
+  --bt-green: #00c853;
+  --bt-green-dark: #00a843;
+  --bt-green-light: #e8f8ef;
+  --bt-navy: #0a1628;
+
+  /* Surfaces */
+  --bt-bg: #f4f6f5;
+  --bt-surface: #ffffff;
+  --bt-surface-soft: #f0f4f2;
+
+  /* Text */
+  --bt-ink: #12201a;
+  --bt-muted: #5f7168;
+
+  /* Lines & elevation */
+  --bt-line: #dce5df;
+  --bt-shadow: 0 4px 20px rgba(10, 22, 40, 0.06);
+  --bt-shadow-lg: 0 12px 40px rgba(10, 22, 40, 0.1);
+
+  /* Shape */
+  --bt-radius: 16px;
+  --bt-radius-sm: 12px;
+  --bt-radius-full: 999px;
+
+  /* Layout */
+  --bt-max: 1180px;
+  --bt-nav-h: 72px;
+  --bt-rail: 96px;
+
+  /* Type */
+  --bt-font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body.dark-mode {
+  --bt-bg: #071b15;
+  --bt-surface: #102a20;
+  --bt-surface-soft: #163629;
+  --bt-ink: #effaf3;
+  --bt-muted: #b4cabe;
+  --bt-line: #315444;
+  --bt-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+  color-scheme: dark;
+}
