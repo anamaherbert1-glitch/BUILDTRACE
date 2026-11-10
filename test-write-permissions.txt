@@ -1,0 +1,1 @@
+Test d'écriture - si ce fichier apparaît, les permissions d'écriture fonctionnent.
